@@ -14,7 +14,7 @@ export default function SignUp() {
         </div>
         <form className="signup-form__container flex flex-col justify-between gap-2 border rounded-md shadow py-3 px-[20px] sm:px-[50px] w-full max-w-[550px] items-center bg-white dark:bg-slate-800 min-h-[620px]">
           <h2 className="text-center text-[30px] text-slate-800 dark:text-white font-medium">
-            ¡Bienvenido!
+            ¡Hola Invitado!
           </h2>
           <hr className="w-full" />
           <div className="my-2 flex items-center gap-3">
@@ -49,7 +49,10 @@ export default function SignUp() {
             <p className="font-medium text-sm text-slate-800 dark:text-white">
               ¿Ya tienes cuenta?
             </p>
-            <Link className="font-medium text-slate-800 dark:text-white hover:underline hover:text-teal-600 dark:hover:text-teal-500">
+            <Link
+              to="/sign-in"
+              className="font-medium text-slate-800 dark:text-white hover:underline hover:text-teal-600 dark:hover:text-teal-500"
+            >
               Iniciar sesión
             </Link>
           </div>
