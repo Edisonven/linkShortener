@@ -20,7 +20,7 @@ export default function SignUp() {
             <p className="text-slate-800 font-medium mb-2 dark:text-white">
               Registrate con
             </p>
-            <button className="flex items-center gap-2 border-2 w-[max-content] px-3 py-1 rounded-md font-medium text-slate-800 dark:text-white">
+            <button className="flex items-center gap-2 border-2 w-[max-content] px-3 py-1 rounded-md font-medium text-slate-800 dark:text-white hover:brightness-90">
               <img className="w-[30px]" src={google} alt="" />
               Google
             </button>
@@ -39,7 +39,9 @@ export default function SignUp() {
             <input className="base-input" type="text" placeholder=" " />
           </div>
           <div>
-            <button>Registrarse</button>
+            <button className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300">
+              Registrarse
+            </button>
           </div>
         </form>
       </div>
