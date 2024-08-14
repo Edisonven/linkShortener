@@ -6,6 +6,7 @@ import {
   setRegisterData,
   setRegisterErrors,
   resetRegisterForm,
+  setResetRegisterErrors,
 } from "../../features/users/signInSlice";
 import { useEffect } from "react";
 
@@ -25,8 +26,30 @@ export default function SignUp() {
   };
 
   const handleSubmitData = (e) => {
+    if (name.trim() === "") {
+      dispatch(
+        setRegisterErrors({
+          field: "name",
+          error: "Ingresa tu nombre completo",
+        })
+      );
+    } else if (email.trim() === "") {
+      dispatch(
+        setRegisterErrors({
+          field: "email",
+          error: "Ingresa tu correo",
+        })
+      );
+    }
+
     e.preventDefault();
   };
+
+useEffect(()=>{
+if(name !=="" || email !=="" || password !=="" || confirmPassword !==""){
+ dispatch(setResetRegisterErrors())
+}
+},[name, email, password, confirmPassword])
 
   return (
     <section className="signup__container mt-[50px] p-5">
@@ -74,6 +97,9 @@ export default function SignUp() {
               <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
                 Nombre completo
               </span>
+              {errors.name && (
+                <span className="text-red-600 font-medium">{errors.name}.</span>
+              )}
             </div>
             <div className="base-input__container">
               <input
@@ -94,7 +120,7 @@ export default function SignUp() {
                 value={password}
                 name="password"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-                type="text"
+                type="password"
                 placeholder=" "
               />
               <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
@@ -107,7 +133,7 @@ export default function SignUp() {
                 value={confirmPassword}
                 name="confirmPassword"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-                type="text"
+                type="password"
                 placeholder=" "
               />
               <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">

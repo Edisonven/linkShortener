@@ -28,6 +28,8 @@ const registerSlice = createSlice({
       state.email = "";
       state.password = "";
       state.confirmPassword = "";
+    },
+    setResetRegisterErrors: (state) => {
       state.errors = {
         name: "",
         email: "",
@@ -68,8 +70,12 @@ const loginSlice = createSlice({
   },
 });
 
-export const { setRegisterData, setRegisterErrors, resetRegisterForm } =
-  registerSlice.actions;
+export const {
+  setRegisterData,
+  setRegisterErrors,
+  setResetRegisterErrors,
+  resetRegisterForm,
+} = registerSlice.actions;
 
 export const { setLoginData, setLoginErrors, resetLoginForm } =
   loginSlice.actions;
