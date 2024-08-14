@@ -3,9 +3,9 @@ import google from "/images/application/google-logo.png";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setUserData,
-  setErrors,
-  resetForm,
+  setRegisterData,
+  setRegisterErrors,
+  resetRegisterForm,
 } from "../../features/users/signInSlice";
 import { useEffect } from "react";
 
@@ -16,12 +16,12 @@ export default function SignUp() {
   );
 
   useEffect(() => {
-    dispatch(resetForm());
+    dispatch(resetRegisterForm());
   }, [dispatch]);
 
   const handleSignupChange = (e) => {
     const { name, value } = e.target;
-    dispatch(setUserData({ field: name, value }));
+    dispatch(setRegisterData({ field: name, value }));
   };
 
   const handleSubmitData = (e) => {

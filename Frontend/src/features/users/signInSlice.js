@@ -17,13 +17,13 @@ const registerSlice = createSlice({
   name: "register",
   initialState: initialRegisterState,
   reducers: {
-    setUserData: (state, action) => {
+    setRegisterData: (state, action) => {
       state[action.payload.field] = action.payload.value;
     },
-    setErrors: (state, action) => {
+    setRegisterErrors: (state, action) => {
       state.errors[action.payload.field] = action.payload.error;
     },
-    resetForm: (state) => {
+    resetRegisterForm: (state) => {
       state.name = "";
       state.email = "";
       state.password = "";
@@ -41,24 +41,37 @@ const registerSlice = createSlice({
 const initialLoginState = {
   username: "",
   password: "",
+  errors: {
+    username: "",
+    password: "",
+  },
 };
 
-export const loginSlice = createSlice({
+const loginSlice = createSlice({
   name: "login",
   initialState: initialLoginState,
   reducers: {
-    setUsername: (state, action) => {
-      state.username = action.payload;
+    setLoginData: (state, action) => {
+      state[action.payload.field] = action.payload.value;
     },
-    setPassword: (state, action) => {
-      state.password = action.payload;
+    setLoginErrors: (state, action) => {
+      state.errors[action.payload.field] = action.payload.error;
+    },
+    resetLoginForm: (state) => {
+      state.username = "";
+      state.password = "";
+      state.errors = {
+        username: "",
+        password: "",
+      };
     },
   },
 });
 
-export const { setUserData, setErrors, resetForm } = registerSlice.actions;
+export const { setRegisterData, setRegisterErrors, resetRegisterForm } =
+  registerSlice.actions;
 
-export const { setUsername, setPassword: setLoginPassword } =
+export const { setLoginData, setLoginErrors, resetLoginForm } =
   loginSlice.actions;
 
 export const registerReducer = registerSlice.reducer;
