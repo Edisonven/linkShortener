@@ -1,8 +1,12 @@
 import { BiLink } from "react-icons/bi";
 import google from "/images/application/google-logo.png";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SignUp() {
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.registerReducer);
+
   return (
     <section className="signup__container mt-[50px] p-5">
       <div className="flex flex-col items-center justify-center">
@@ -36,6 +40,7 @@ export default function SignUp() {
           <div className="flex flex-col gap-5 w-full">
             <div className="base-input__container">
               <input
+                name="nombre"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
                 type="text"
                 placeholder=" "
@@ -46,6 +51,7 @@ export default function SignUp() {
             </div>
             <div className="base-input__container">
               <input
+                name="email"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
                 type="text"
                 placeholder=" "
@@ -56,6 +62,7 @@ export default function SignUp() {
             </div>
             <div className="base-input__container">
               <input
+                name="password"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
                 type="text"
                 placeholder=" "
@@ -66,6 +73,7 @@ export default function SignUp() {
             </div>
             <div className="base-input__container">
               <input
+                name="confirm-paswword"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
                 type="text"
                 placeholder=" "
@@ -76,7 +84,10 @@ export default function SignUp() {
             </div>
           </div>
           <div>
-            <button className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300">
+            <button
+              type="submit"
+              className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300"
+            >
               Registrarse
             </button>
           </div>
