@@ -33,11 +33,47 @@ export default function SignUp() {
           <p className="text-slate-800 dark:text-white text-center font-normal">
             Ingresa tus datos para crear tu cuenta
           </p>
-          <div className="flex flex-col gap-3 w-full">
-            <input className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white" type="text" placeholder=" " />
-            <input className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white" type="text" placeholder=" " />
-            <input className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white" type="text" placeholder=" " />
-            <input className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white" type="text" placeholder=" " />
+          <div className="flex flex-col gap-5 w-full">
+            <div className="base-input__container">
+              <input
+                className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
+                type="text"
+                placeholder=" "
+              />
+              <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
+                Nombre completo
+              </span>
+            </div>
+            <div className="base-input__container">
+              <input
+                className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
+                type="text"
+                placeholder=" "
+              />
+              <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
+                Email
+              </span>
+            </div>
+            <div className="base-input__container">
+              <input
+                className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
+                type="text"
+                placeholder=" "
+              />
+              <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
+                Contraseña
+              </span>
+            </div>
+            <div className="base-input__container">
+              <input
+                className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
+                type="text"
+                placeholder=" "
+              />
+              <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
+                Confirmar contraseña
+              </span>
+            </div>
           </div>
           <div>
             <button className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300">

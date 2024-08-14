@@ -21,8 +21,20 @@ export default function SignIn() {
             Por favor, ingresa tus datos para ingresar
           </p>
           <div className="flex flex-col gap-3 w-full">
-          <input className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white" type="text" placeholder=" " />
-          <input className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white" type="text" placeholder=" " />
+            <div className="bade-input__container">
+              <input
+                className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
+                type="text"
+                placeholder=" "
+              />
+            </div>
+            <div className="base-input__container">
+              <input
+                className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
+                type="text"
+                placeholder=" "
+              />
+            </div>
           </div>
           <div>
             <button className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300">
