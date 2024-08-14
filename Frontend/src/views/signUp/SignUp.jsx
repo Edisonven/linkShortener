@@ -2,27 +2,26 @@ import { BiLink } from "react-icons/bi";
 import google from "/images/application/google-logo.png";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import {
+  setUserData,
+  setErrors,
+  resetForm,
+} from "../../features/users/signInSlice";
+import { useEffect } from "react";
 
 export default function SignUp() {
   const dispatch = useDispatch();
-  const { name, email, password, confirmPassword } = useSelector(
+  const { name, email, password, confirmPassword, errors } = useSelector(
     (state) => state.registerReducer
   );
 
-  const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  useEffect(() => {
+    dispatch(resetForm());
+  }, [dispatch]);
 
   const handleSignupChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    dispatch(setUserData({ field: name, value }));
   };
 
   const handleSubmitData = (e) => {
@@ -66,7 +65,7 @@ export default function SignUp() {
             <div className="base-input__container">
               <input
                 onChange={handleSignupChange}
-                value={userData.name}
+                value={name}
                 name="name"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
                 type="text"
@@ -79,7 +78,7 @@ export default function SignUp() {
             <div className="base-input__container">
               <input
                 onChange={handleSignupChange}
-                value={userData.email}
+                value={email}
                 name="email"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
                 type="text"
@@ -92,7 +91,7 @@ export default function SignUp() {
             <div className="base-input__container">
               <input
                 onChange={handleSignupChange}
-                value={userData.password}
+                value={password}
                 name="password"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
                 type="text"
@@ -105,7 +104,7 @@ export default function SignUp() {
             <div className="base-input__container">
               <input
                 onChange={handleSignupChange}
-                value={userData.confirmPassword}
+                value={confirmPassword}
                 name="confirmPassword"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
                 type="text"
