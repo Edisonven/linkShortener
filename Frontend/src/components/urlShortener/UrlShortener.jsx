@@ -23,11 +23,11 @@ export default function UrlShortener() {
             name="url"
             type="text"
             placeholder="Ingresa una URL..."
-            className="w-full flex border rounded-sm p-2"
+            className="w-full flex border-none outline outline-1 outline-slate-300 rounded-md p-2 focus:outline-slate-500"
           />
 
           <button
-            className="text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 rounded-md mt-6 dark:bg-gray-300 select-none px-3 py-2"
+            className="text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 rounded-md mt-6 dark:bg-gray-300 select-none px-3 py-2 hover:brightness-[80%]"
             type="submit"
           >
             Acortar URL
