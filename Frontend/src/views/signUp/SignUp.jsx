@@ -17,8 +17,8 @@ export default function SignUp() {
             ¡Hola Invitado!
           </h2>
           <hr className="w-full" />
-          <div className="my-2 flex items-center gap-3">
-            <p className="text-slate-800 font-medium mb-2 dark:text-white">
+          <div className="my-2 flex items-center gap-3 mb-2">
+            <p className="text-slate-800 font-medium dark:text-white">
               Registrate con
             </p>
             <button className="flex items-center gap-2 border-2 w-[max-content] px-3 py-1 rounded-md font-medium text-slate-800 dark:text-white hover:brightness-90">

@@ -12,7 +12,7 @@ export default function UrlShortener() {
           Gestiona tus links de manera más practica y compartelos
         </h3>
 
-        <form className="flex flex-col items-center mt-6 border rounded-md shadow w-full p-3">
+        <form className="flex flex-col items-center mt-6 border rounded-md shadow w-full p-3 bg-white dark:bg-[#0D1117]">
           <label
             htmlFor="url"
             className="text-slate-800 font-medium dark:text-white mb-5"
