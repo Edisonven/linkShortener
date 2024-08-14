@@ -3,7 +3,7 @@ import google from "/images/application/google-logo.png";
 
 export default function SignUp() {
   return (
-    <section className="signup__container mt-[50px]">
+    <section className="signup__container mt-[50px] p-5">
       <div className="flex flex-col items-center justify-center">
         <div className="flex items-center">
           <BiLink className="text-slate-800 text-xl dark:text-white" />
@@ -11,7 +11,7 @@ export default function SignUp() {
             URL Shortener
           </h1>
         </div>
-        <form className="signup-form__container flex flex-col gap-2 border rounded-md shadow py-3 px-6 w-full max-w-[600px] items-center">
+        <form className="signup-form__container flex flex-col justify-between gap-2 border rounded-md shadow py-3 px-[20px] sm:px-[50px] w-full max-w-[550px] items-center bg-white dark:bg-slate-800 min-h-[600px]">
           <h2 className="text-center text-[30px] text-slate-800 dark:text-white font-medium">
             ¡Bienvenido!
           </h2>
@@ -32,10 +32,15 @@ export default function SignUp() {
           <p className="text-slate-800 dark:text-white text-center font-normal">
             Ingresa tus datos para crear tu cuenta
           </p>
-          <input className="base-input" type="text" placeholder=" " />
-          <input className="base-input" type="text" placeholder=" " />
-          <input className="base-input" type="text" placeholder=" " />
-          <input className="base-input" type="text" placeholder=" " />
+          <div className="flex flex-col gap-3 w-full">
+            <input className="base-input" type="text" placeholder=" " />
+            <input className="base-input" type="text" placeholder=" " />
+            <input className="base-input" type="text" placeholder=" " />
+            <input className="base-input" type="text" placeholder=" " />
+          </div>
+          <div>
+            <button>Registrarse</button>
+          </div>
         </form>
       </div>
     </section>
