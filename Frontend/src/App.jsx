@@ -1,9 +1,9 @@
 import "./App.css";
-import Home from "../views/home/Home";
+import Home from "./views/home/Home";
 import Navbar from "./components/navbar/Navbar";
 import { Routes, Route } from "react-router-dom";
-import SignIn from "../views/signIn/SignIn";
-import SignUp from "../views/signUp/SignUp";
+import SignIn from "./views/signIn/SignIn"
+import SignUp from "./views/signUp/SignUp";
 
 function App() {
   return (

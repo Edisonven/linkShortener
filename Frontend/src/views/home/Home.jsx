@@ -1,4 +1,4 @@
-import UrlShortener from "../../src/components/urlShortener/UrlShortener";
+import UrlShortener from "../../components/urlShortener/UrlShortener";
 
 export default function Home() {
   return (
