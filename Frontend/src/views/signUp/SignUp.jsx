@@ -1,4 +1,5 @@
 import { BiLink } from "react-icons/bi";
+import google from "/images/application/google-logo.png";
 
 export default function SignUp() {
   return (
@@ -10,10 +11,24 @@ export default function SignUp() {
             URL Shortener
           </h1>
         </div>
-        <form className="signup-form__container flex flex-col gap-2 border rounded-md shadow p-3 w-full max-w-[600px]">
-          <h2 className="text-center text-[30px] mb-4 text-slate-800 dark:text-white font-medium">
+        <form className="signup-form__container flex flex-col gap-2 border rounded-md shadow py-3 px-6 w-full max-w-[600px] items-center">
+          <h2 className="text-center text-[30px] text-slate-800 dark:text-white font-medium">
             ¡Bienvenido!
           </h2>
+          <hr className="w-full" />
+          <div className="my-2 flex items-center gap-3">
+            <p className="text-slate-800 font-medium mb-2 dark:text-white">
+              Registrate con
+            </p>
+            <button className="flex items-center gap-2 border-2 w-[max-content] px-3 py-1 rounded-md font-medium text-slate-800 dark:text-white">
+              <img className="w-[30px]" src={google} alt="" />
+              Google
+            </button>
+          </div>
+          <hr className="w-full" />
+          <span className="text-slate-800 dark:text-white font font-medium">
+            O si prefieres
+          </span>
           <p className="text-slate-800 dark:text-white text-center font-normal">
             Ingresa tus datos para crear tu cuenta
           </p>
