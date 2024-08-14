@@ -12,7 +12,7 @@ export default function SignUp() {
             URL Shortener
           </h1>
         </div>
-        <form className="signup-form__container flex flex-col justify-between gap-2 border rounded-md shadow py-3 px-[20px] sm:px-[50px] w-full max-w-[550px] items-center bg-white dark:bg-slate-800 min-h-[620px]">
+        <form className="signup-form__container flex flex-col justify-between gap-2 border rounded-md shadow py-3 px-[20px] sm:px-[50px] w-full max-w-[550px] items-center bg-white dark:bg-slate-900 min-h-[620px]">
           <h2 className="text-center text-[30px] text-slate-800 dark:text-white font-medium">
             ¡Hola Invitado!
           </h2>
@@ -22,7 +22,7 @@ export default function SignUp() {
               Registrate con
             </p>
             <button className="flex items-center gap-2 border-2 w-[max-content] px-3 py-1 rounded-md font-medium text-slate-800 dark:text-white hover:brightness-90">
-              <img className="w-[30px]" src={google} alt="" />
+              <img className="w-[22px]" src={google} alt="" />
               Google
             </button>
           </div>
@@ -34,10 +34,10 @@ export default function SignUp() {
             Ingresa tus datos para crear tu cuenta
           </p>
           <div className="flex flex-col gap-3 w-full">
-            <input className="base-input" type="text" placeholder=" " />
-            <input className="base-input" type="text" placeholder=" " />
-            <input className="base-input" type="text" placeholder=" " />
-            <input className="base-input" type="text" placeholder=" " />
+            <input className="base-input bg-white dark:bg-slate-800" type="text" placeholder=" " />
+            <input className="base-input bg-white dark:bg-slate-800" type="text" placeholder=" " />
+            <input className="base-input bg-white dark:bg-slate-800" type="text" placeholder=" " />
+            <input className="base-input bg-white dark:bg-slate-800" type="text" placeholder=" " />
           </div>
           <div>
             <button className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300">

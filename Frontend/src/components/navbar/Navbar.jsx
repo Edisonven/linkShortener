@@ -11,7 +11,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar__container bg-white dark:bg-slate-800 shadow dark:shadow-gray-600">
+    <nav className="navbar__container bg-white dark:bg-slate-900 shadow-sm dark:shadow-gray-800">
       <div className="px-[10px] py-[10px] sm:px-[30px] sm:py-[10px] flex items-center justify-between max-w-[1600px] mx-auto">
         <div
           onClick={handleNavigateToHome}
