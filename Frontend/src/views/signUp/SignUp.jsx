@@ -1,5 +1,6 @@
 import { BiLink } from "react-icons/bi";
 import google from "/images/application/google-logo.png";
+import { Link } from "react-router-dom";
 
 export default function SignUp() {
   return (
@@ -11,7 +12,7 @@ export default function SignUp() {
             URL Shortener
           </h1>
         </div>
-        <form className="signup-form__container flex flex-col justify-between gap-2 border rounded-md shadow py-3 px-[20px] sm:px-[50px] w-full max-w-[550px] items-center bg-white dark:bg-slate-800 min-h-[600px]">
+        <form className="signup-form__container flex flex-col justify-between gap-2 border rounded-md shadow py-3 px-[20px] sm:px-[50px] w-full max-w-[550px] items-center bg-white dark:bg-slate-800 min-h-[620px]">
           <h2 className="text-center text-[30px] text-slate-800 dark:text-white font-medium">
             ¡Bienvenido!
           </h2>
@@ -42,6 +43,15 @@ export default function SignUp() {
             <button className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300">
               Registrarse
             </button>
+          </div>
+          <hr className="w-full" />
+          <div className="flex items-center gap-2">
+            <p className="font-medium text-sm text-slate-800 dark:text-white">
+              ¿Ya tienes cuenta?
+            </p>
+            <Link className="font-medium text-slate-800 dark:text-white hover:underline hover:text-teal-600 dark:hover:text-teal-500">
+              Iniciar sesión
+            </Link>
           </div>
         </form>
       </div>
