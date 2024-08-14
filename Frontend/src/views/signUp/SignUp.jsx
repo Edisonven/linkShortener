@@ -2,10 +2,32 @@ import { BiLink } from "react-icons/bi";
 import google from "/images/application/google-logo.png";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 
 export default function SignUp() {
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.registerReducer);
+  const { name, email, password, confirmPassword } = useSelector(
+    (state) => state.registerReducer
+  );
+
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleSignupChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmitData = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <section className="signup__container mt-[50px] p-5">
@@ -16,7 +38,10 @@ export default function SignUp() {
             URL Shortener
           </h1>
         </div>
-        <form className="signup-form__container flex flex-col justify-between gap-2 border rounded-md shadow py-3 px-[20px] sm:px-[50px] w-full max-w-[550px] items-center bg-white dark:bg-[#161B22] min-h-[620px]">
+        <form
+          onSubmit={handleSubmitData}
+          className="signup-form__container flex flex-col justify-between gap-2 border rounded-md shadow py-3 px-[20px] sm:px-[50px] w-full max-w-[550px] items-center bg-white dark:bg-[#161B22] min-h-[620px]"
+        >
           <h2 className="text-center text-[30px] text-slate-800 dark:text-white font-medium">
             ¡Hola Invitado!
           </h2>
@@ -40,7 +65,9 @@ export default function SignUp() {
           <div className="flex flex-col gap-5 w-full">
             <div className="base-input__container">
               <input
-                name="nombre"
+                onChange={handleSignupChange}
+                value={userData.name}
+                name="name"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
                 type="text"
                 placeholder=" "
@@ -51,6 +78,8 @@ export default function SignUp() {
             </div>
             <div className="base-input__container">
               <input
+                onChange={handleSignupChange}
+                value={userData.email}
                 name="email"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
                 type="text"
@@ -62,6 +91,8 @@ export default function SignUp() {
             </div>
             <div className="base-input__container">
               <input
+                onChange={handleSignupChange}
+                value={userData.password}
                 name="password"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
                 type="text"
@@ -73,7 +104,9 @@ export default function SignUp() {
             </div>
             <div className="base-input__container">
               <input
-                name="confirm-paswword"
+                onChange={handleSignupChange}
+                value={userData.confirmPassword}
+                name="confirmPassword"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
                 type="text"
                 placeholder=" "

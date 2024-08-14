@@ -23,12 +23,6 @@ export const registerSlice = createSlice({
     setConfirmPassword: (state, action) => {
       state.confirmPassword = action.payload;
     },
-    clearRegister: (state) => {
-      state.name = "";
-      state.email = "";
-      state.password = "";
-      state.confirmPassword = "";
-    },
   },
 });
 
