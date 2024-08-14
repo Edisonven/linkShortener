@@ -9,7 +9,7 @@ export default function UrlShortener() {
           Acorta tu URL
         </h1>
         <h3 className="text-slate-800 text-center font-medium dark:text-white">
-          Gestiona tus links de manera más practica y comparte!
+          Gestiona tus links de manera más practica y compartelos
         </h3>
 
         <form className="flex flex-col items-center mt-6 border rounded-md shadow w-full p-3">
@@ -17,7 +17,7 @@ export default function UrlShortener() {
             htmlFor="url"
             className="text-slate-800 font-medium dark:text-white mb-5"
           >
-            Ingresa una url larga
+            Ingresa una URL larga
           </label>
           <input
             name="url"

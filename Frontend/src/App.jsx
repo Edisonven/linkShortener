@@ -7,13 +7,15 @@ import SignUp from "../views/signUp/SignUp";
 
 function App() {
   return (
-    <section className="app__container max-w-[1400px] mx-auto">
+    <section className="app__container">
       <Navbar />
+      <div className="max-w-[1400px] mx-auto">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
       </Routes>
+      </div>
     </section>
   );
 }

@@ -11,8 +11,8 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar__container">
-      <div className="px-[10px] py-[10px] sm:px-[30px] sm:py-[10px] flex items-center justify-between">
+    <nav className="navbar__container shadow dark:shadow-gray-600">
+      <div className="px-[10px] py-[10px] sm:px-[30px] sm:py-[10px] flex items-center justify-between max-w-[1600px] mx-auto">
         <div onClick={handleNavigateToHome} className="flex items-center gap-3 cursor-pointer">
           <BiLink className="text-slate-800 text-xl dark:text-white" />
           <h2 className="text-slate-800 font-medium dark:text-white">
