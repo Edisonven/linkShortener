@@ -16,6 +16,9 @@ export default function SignUp() {
     (state) => state.registerReducer
   );
 
+  const emailRegexString = useSelector((state) => state.emailRegex);
+  const emailRegex = new RegExp(emailRegexString);
+
   useEffect(() => {
     dispatch(resetRegisterForm());
   }, [dispatch]);
@@ -40,16 +43,28 @@ export default function SignUp() {
           error: "Ingresa tu correo",
         })
       );
+    } else if (!emailRegex.test(email)) {
+      dispatch(
+        setRegisterErrors({
+          field: "email",
+          error: "Ingresa un formato de correo válido",
+        })
+      );
     }
 
     e.preventDefault();
   };
 
-useEffect(()=>{
-if(name !=="" || email !=="" || password !=="" || confirmPassword !==""){
- dispatch(setResetRegisterErrors())
-}
-},[name, email, password, confirmPassword])
+  useEffect(() => {
+    if (
+      name !== "" ||
+      email !== "" ||
+      password !== "" ||
+      confirmPassword !== ""
+    ) {
+      dispatch(setResetRegisterErrors());
+    }
+  }, [name, email, password, confirmPassword]);
 
   return (
     <section className="signup__container mt-[50px] p-5">
@@ -72,10 +87,10 @@ if(name !=="" || email !=="" || password !=="" || confirmPassword !==""){
             <p className="text-slate-800 font-medium dark:text-white">
               Registrate con
             </p>
-            <button className="flex items-center gap-2 border-2 w-[max-content] px-3 py-1 rounded-md font-medium text-slate-800 dark:text-white hover:brightness-90">
+            <Link className="flex items-center gap-2 border-2 w-[max-content] px-3 py-1 rounded-md font-medium text-slate-800 dark:text-white hover:brightness-90">
               <img className="w-[22px]" src={google} alt="" />
               Google
-            </button>
+            </Link>
           </div>
           <hr className="w-full" />
           <span className="text-slate-800 dark:text-white font font-medium">
@@ -113,6 +128,11 @@ if(name !=="" || email !=="" || password !=="" || confirmPassword !==""){
               <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
                 Email
               </span>
+              {errors.email && (
+                <span className="text-red-600 font-medium">
+                  {errors.email}.
+                </span>
+              )}
             </div>
             <div className="base-input__container">
               <input
