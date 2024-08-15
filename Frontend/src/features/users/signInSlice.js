@@ -41,10 +41,10 @@ const registerSlice = createSlice({
 });
 
 const initialLoginState = {
-  username: "",
+  email: "",
   password: "",
   errors: {
-    username: "",
+    email: "",
     password: "",
   },
 };
@@ -60,10 +60,16 @@ const loginSlice = createSlice({
       state.errors[action.payload.field] = action.payload.error;
     },
     resetLoginForm: (state) => {
-      state.username = "";
+      state.email = "";
       state.password = "";
       state.errors = {
-        username: "",
+        email: "",
+        password: "",
+      };
+    },
+    setResetLoginErrors: (state) => {
+      state.errors = {
+        email: "",
         password: "",
       };
     },
@@ -77,8 +83,12 @@ export const {
   resetRegisterForm,
 } = registerSlice.actions;
 
-export const { setLoginData, setLoginErrors, resetLoginForm } =
-  loginSlice.actions;
+export const {
+  setLoginData,
+  setLoginErrors,
+  setResetLoginErrors,
+  resetLoginForm,
+} = loginSlice.actions;
 
 export const registerReducer = registerSlice.reducer;
 export const loginReducer = loginSlice.reducer;
