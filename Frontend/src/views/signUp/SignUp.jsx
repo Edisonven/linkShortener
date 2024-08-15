@@ -50,8 +50,35 @@ export default function SignUp() {
           error: "Ingresa un formato de correo válido",
         })
       );
+    } else if (password.trim() === "") {
+      dispatch(
+        setRegisterErrors({
+          field: "password",
+          error: "Ingresa una contraseña",
+        })
+      );
+    } else if (password.trim().length < 8) {
+      dispatch(
+        setRegisterErrors({
+          field: "password",
+          error: "Ingresa mínimo 8 caracteres",
+        })
+      );
+    } else if (confirmPassword.trim() === "") {
+      dispatch(
+        setRegisterErrors({
+          field: "confirmPassword",
+          error: "Confirma tu contraseña",
+        })
+      );
+    } else if (confirmPassword.trim() !== password.trim()) {
+      dispatch(
+        setRegisterErrors({
+          field: "confirmPassword",
+          error: "Las contraseñas no son iguales",
+        })
+      );
     }
-
     e.preventDefault();
   };
 
@@ -146,6 +173,11 @@ export default function SignUp() {
               <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
                 Contraseña
               </span>
+              {errors.password && (
+                <span className="text-red-600 font-medium">
+                  {errors.password}.
+                </span>
+              )}
             </div>
             <div className="base-input__container">
               <input
@@ -159,6 +191,11 @@ export default function SignUp() {
               <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
                 Confirmar contraseña
               </span>
+              {errors.confirmPassword && (
+                <span className="text-red-600 font-medium">
+                  {errors.confirmPassword}.
+                </span>
+              )}
             </div>
           </div>
           <div>
