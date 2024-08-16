@@ -1,5 +1,5 @@
 import pkg from "pg";
-import "dotenv/vonfig";
+import "dotenv/config";
 const { Pool } = pkg;
 
 const pool = new Pool({
