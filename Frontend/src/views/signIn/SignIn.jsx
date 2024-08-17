@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiLink } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,6 +21,7 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignInChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +46,6 @@ export default function SignIn() {
         } else if (errorData.message === "Invalid credentials") {
           setToastMessage("Usuario o contraseña inválidos.");
         }
-        throw new Error(errorData.message);
       }
       await response.json();
     } catch (error) {
@@ -86,6 +86,11 @@ export default function SignIn() {
       );
     } else {
       await handleloginRegisteredUser();
+      if (loading) {
+        return;
+      } else {
+        navigate("/");
+      }
     }
   };
 
