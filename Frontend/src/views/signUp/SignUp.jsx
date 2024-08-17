@@ -1,6 +1,6 @@
 import { BiLink } from "react-icons/bi";
 import google from "/images/application/google-logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setRegisterData,
@@ -8,7 +8,11 @@ import {
   resetRegisterForm,
   setResetRegisterErrors,
 } from "../../features/users/usersSlice.js";
-import { useEffect } from "react";
+import { Toaster, toast } from "sonner";
+import { useEffect, useState } from "react";
+import { RotatingLines } from "react-loader-spinner";
+import { IoIosAlert } from "react-icons/io";
+import { FaCheck } from "react-icons/fa6";
 
 export default function SignUp() {
   const dispatch = useDispatch();
@@ -18,6 +22,8 @@ export default function SignUp() {
 
   const emailRegexString = useSelector((state) => state.emailRegex);
   const emailRegex = new RegExp(emailRegexString);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(resetRegisterForm());
@@ -29,6 +35,7 @@ export default function SignUp() {
   };
 
   const handleRegisterNewUser = async () => {
+    setLoading(true);
     try {
       const response = await fetch("http://localhost:3000/users/register", {
         method: "POST",
@@ -46,6 +53,19 @@ export default function SignUp() {
       await response.json();
     } catch (error) {
       console.error(error.message);
+      toast("Error al registrar usuario, intenta nuevamente.", {
+        icon: <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />,
+        duration: 3000,
+        unstyled: true,
+        classNames: {
+          toast:
+            "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
+          title: "text-white font-medium text-sm sm:text-base",
+        },
+      });
+      throw error;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -102,6 +122,21 @@ export default function SignUp() {
         })
       );
     } else {
+      await handleRegisterNewUser();
+      toast("¡Te has registrado con éxito!", {
+        icon: <FaCheck className="text-white text-[15px] sm:text-[25px]" />,
+        duration: 1000,
+        unstyled: true,
+        classNames: {
+          toast:
+            "bg-green-600 rounded shadow px-[10px] py-[15px] w-full flex items-center justify-center gap-3",
+          title: "text-white font-medium text-sm sm:text-base",
+        },
+      });
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     }
   };
 
@@ -222,12 +257,24 @@ export default function SignUp() {
             </div>
           </div>
           <div>
-            <button
-              type="submit"
-              className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300"
-            >
-              Registrarse
-            </button>
+            {loading ? (
+              <RotatingLines
+                height="50"
+                width="50"
+                color="gray"
+                strokeColor="gray"
+                strokeWidth="5"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+              />
+            ) : (
+              <button
+                type="submit"
+                className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300"
+              >
+                Registrarse
+              </button>
+            )}
           </div>
           <hr className="w-full" />
           <div className="flex items-center gap-2">
@@ -243,6 +290,7 @@ export default function SignUp() {
           </div>
         </form>
       </div>
+      <Toaster position="bottom-center" />
     </section>
   );
 }
