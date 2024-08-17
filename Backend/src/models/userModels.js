@@ -56,8 +56,18 @@ const verifyuser = async (email, password) => {
   return user;
 };
 
+const loggedInUser = async (id) => {
+  const values = [id];
+  const query = "SELECT * FROM users WHERE id = $1";
+  const {
+    rows: [user],
+  } = await pool.query(query, values);
+  return user;
+};
+
 export const userModels = {
   createUser,
   findUserByEmail,
   verifyuser,
+  loggedInUser,
 };

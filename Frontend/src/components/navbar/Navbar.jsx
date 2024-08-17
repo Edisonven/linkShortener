@@ -8,12 +8,14 @@ import Perfil from "../perfil/Perfil";
 
 export default function Navbar() {
   const userToken = useSelector((state) => state.userToken.token);
+  const user = useSelector((state) => state.userToken.user);
   const navigate = useNavigate();
 
   const handleNavigateToHome = () => {
     navigate("/");
   };
 
+  console.log(user);
   return (
     <nav className="navbar__container bg-white dark:bg-[#161B22] shadow-sm dark:shadow-gray-800">
       <div className="px-[10px] py-[10px] sm:px-[30px] sm:py-[10px] flex items-center justify-between max-w-[1600px] mx-auto">
