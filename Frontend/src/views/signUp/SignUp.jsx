@@ -28,7 +28,30 @@ export default function SignUp() {
     dispatch(setRegisterData({ field: name, value }));
   };
 
-  const handleSubmitData = (e) => {
+  const handleRegisterNewUser = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/users/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error data");
+      }
+      await response.json();
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  const handleSubmitData = async (e) => {
+    e.preventDefault();
+
     if (name.trim() === "") {
       dispatch(
         setRegisterErrors({
@@ -78,8 +101,8 @@ export default function SignUp() {
           error: "Las contraseñas no son iguales",
         })
       );
+    } else {
     }
-    e.preventDefault();
   };
 
   useEffect(() => {
