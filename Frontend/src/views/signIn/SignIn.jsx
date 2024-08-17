@@ -6,7 +6,10 @@ import {
   setLoginErrors,
   setResetLoginErrors,
 } from "../../features/users/usersSlice.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Toaster, toast } from "sonner";
+import { IoIosAlert } from "react-icons/io";
+import { RotatingLines } from "react-loader-spinner";
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -15,13 +18,60 @@ export default function SignIn() {
   );
   const emailRegexString = useSelector((state) => state.emailRegex);
   const emailRegex = new RegExp(emailRegexString);
+  const [loading, setLoading] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
 
   const handleSignInChange = (e) => {
     const { name, value } = e.target;
     dispatch(setLoginData({ field: name, value }));
   };
 
-  const handleSubmitData = (e) => {
+  const handleloginRegisteredUser = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("http://localhost:3000/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        if (errorData.message === "User not found") {
+          setToastMessage(`El usuario ${email} no está registrado.`);
+        } else if (errorData.message === "Invalid credentials") {
+          setToastMessage("Usuario o contraseña inválidos.");
+        }
+        throw new Error(errorData.message);
+      }
+      await response.json();
+    } catch (error) {
+      setShowToast(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showToast && toastMessage) {
+      toast(toastMessage, {
+        icon: <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />,
+        duration: 3000,
+        unstyled: true,
+        classNames: {
+          toast:
+            "bg-red-600 rounded shadow px-[10px] py-[15px] w-full flex items-center justify-center gap-2",
+          title: "text-white font-medium text-sm sm:text-base",
+        },
+      });
+      setShowToast(false);
+    }
+  }, [showToast, toastMessage]);
+
+  const handleSubmitData = async (e) => {
     e.preventDefault();
 
     if (email.trim() === "") {
@@ -34,6 +84,8 @@ export default function SignIn() {
       dispatch(
         setLoginErrors({ field: "password", error: "Ingresa tu contraseña" })
       );
+    } else {
+      await handleloginRegisteredUser();
     }
   };
 
@@ -89,7 +141,7 @@ export default function SignIn() {
                 value={password}
                 name="password"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-                type="text"
+                type="password"
                 placeholder=" "
               />
               <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
@@ -103,9 +155,21 @@ export default function SignIn() {
             </div>
           </div>
           <div>
-            <button className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300">
-              Iniciar sesión
-            </button>
+            {loading ? (
+              <RotatingLines
+                height="50"
+                width="50"
+                color="gray"
+                strokeColor="gray"
+                strokeWidth="5"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+              />
+            ) : (
+              <button className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300">
+                Iniciar sesión
+              </button>
+            )}
           </div>
           <hr className="w-full" />
           <div className="flex items-center gap-2">
@@ -121,6 +185,7 @@ export default function SignIn() {
           </div>
         </form>
       </div>
+      <Toaster position="bottom-center" />
     </section>
   );
 }
