@@ -101,17 +101,21 @@ const initialUserState = {
 };
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async (token) => {
-  const response = await fetch("http://localhost:3000/users/user", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
+  try {
+    const response = await fetch("http://localhost:3000/users/user", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    return data.user;
+  } catch (error) {
+    console.error(error.message);
   }
-  const data = await response.json();
-  return data.user;
 });
 
 const userSlice = createSlice({
