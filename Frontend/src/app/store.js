@@ -2,8 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import {
   registerReducer,
   loginReducer,
-  setUser,
   userToken,
+  user,
 } from "../features/users/usersSlice.js";
 import { emailRegex } from "../features/regex/regexSlice.js";
 
@@ -13,6 +13,6 @@ export const store = configureStore({
     loginReducer,
     emailRegex,
     userToken,
-    setUser,
+    user,
   },
 });

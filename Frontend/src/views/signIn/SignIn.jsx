@@ -6,7 +6,6 @@ import {
   setLoginErrors,
   setResetLoginErrors,
   setUserToken,
-  setUser,
 } from "../../features/users/usersSlice.js";
 import { useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
@@ -51,7 +50,6 @@ export default function SignIn() {
       }
       const data = await response.json();
       dispatch(setUserToken(data.token));
-      dispatch(setUser({ name: data.name, email: data.email }));
     } catch (error) {
       setShowToast(true);
     } finally {
