@@ -7,7 +7,7 @@ import {
   setRegisterErrors,
   resetRegisterForm,
   setResetRegisterErrors,
-} from "../../features/users/signInSlice";
+} from "../../features/users/usersSlice.js";
 import { useEffect } from "react";
 
 export default function SignUp() {

@@ -5,7 +5,7 @@ import {
   setLoginData,
   setLoginErrors,
   setResetLoginErrors,
-} from "../../features/users/signInSlice";
+} from "../../features/users/usersSlice.js";
 import { useEffect } from "react";
 
 export default function SignIn() {
