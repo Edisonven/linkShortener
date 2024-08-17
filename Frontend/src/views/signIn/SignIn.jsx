@@ -5,6 +5,7 @@ import {
   setLoginData,
   setLoginErrors,
   setResetLoginErrors,
+  setUserToken,
 } from "../../features/users/usersSlice.js";
 import { useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
@@ -47,7 +48,8 @@ export default function SignIn() {
           setToastMessage("Usuario o contraseña inválidos.");
         }
       }
-      await response.json();
+      const data = await response.json();
+      dispatch(setUserToken(data.token));
     } catch (error) {
       setShowToast(true);
     } finally {

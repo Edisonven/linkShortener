@@ -76,6 +76,23 @@ const loginSlice = createSlice({
   },
 });
 
+const initialTokenState = localStorage.getItem("token") || null;
+
+const tokenSlice = createSlice({
+  name: "token",
+  initialState: { token: initialTokenState },
+  reducers: {
+    setUserToken: (state, action) => {
+      state.token = action.payload;
+      localStorage.setItem("token", action.payload);
+    },
+    resetToken: (state) => {
+      state.token = null;
+      localStorage.removeItem("token");
+    },
+  },
+});
+
 export const {
   setRegisterData,
   setRegisterErrors,
@@ -90,5 +107,8 @@ export const {
   resetLoginForm,
 } = loginSlice.actions;
 
+export const { setUserToken, resetToken } = tokenSlice.actions;
+
 export const registerReducer = registerSlice.reducer;
 export const loginReducer = loginSlice.reducer;
+export const userToken = tokenSlice.reducer;

@@ -1,9 +1,13 @@
 import "../navbar/navbar.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BiLink } from "react-icons/bi";
 import DarkModeSwitch from "../darkModeSwitch/DarkModeSwitch";
+import { useSelector } from "react-redux";
+import Invited from "../invited/Invited";
+import Perfil from "../perfil/Perfil";
 
 export default function Navbar() {
+  const userToken = useSelector((state) => state.userToken.token);
   const navigate = useNavigate();
 
   const handleNavigateToHome = () => {
@@ -22,22 +26,9 @@ export default function Navbar() {
             URL Shortener
           </h2>
         </div>
-        <div className="flex items-center gap-3">
-          <Link
-            to="sign-in"
-            className="text-slate-800 font-medium text-sm sm:text-base dark:text-white"
-          >
-            Iniciar sesión
-          </Link>
-          <Link
-            to="sign-up"
-            className="text-slate-800 font-medium text-sm sm:text-base dark:text-white"
-          >
-            Registrarse
-          </Link>
-          <div>
-            <DarkModeSwitch />
-          </div>
+        <div className="flex items-center gap-2">
+          {userToken ? <Perfil /> : <Invited />}
+          <DarkModeSwitch />
         </div>
       </div>
     </nav>
