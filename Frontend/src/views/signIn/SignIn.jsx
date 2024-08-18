@@ -6,6 +6,7 @@ import {
   setLoginErrors,
   setResetLoginErrors,
   setUserToken,
+  resetLoginForm,
 } from "../../features/users/usersSlice.js";
 import { useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
@@ -88,6 +89,7 @@ export default function SignIn() {
       );
     } else {
       await handleloginRegisteredUser();
+      dispatch(resetLoginForm());
       if (loading) {
         return;
       } else {

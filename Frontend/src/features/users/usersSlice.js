@@ -62,10 +62,6 @@ const loginSlice = createSlice({
     resetLoginForm: (state) => {
       state.email = "";
       state.password = "";
-      state.errors = {
-        email: "",
-        password: "",
-      };
     },
     setResetLoginErrors: (state) => {
       state.errors = {

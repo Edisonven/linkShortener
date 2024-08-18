@@ -123,6 +123,7 @@ export default function SignUp() {
       );
     } else {
       await handleRegisterNewUser();
+      dispatch(resetRegisterForm());
       toast("¡Te has registrado con éxito!", {
         icon: <FaCheck className="text-white text-[15px] sm:text-[25px]" />,
         duration: 1000,
