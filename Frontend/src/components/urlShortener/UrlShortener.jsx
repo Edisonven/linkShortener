@@ -23,7 +23,7 @@ export default function UrlShortener() {
             name="url"
             type="text"
             placeholder="Ingresa una URL..."
-            className="w-full flex border-none outline outline-1 outline-slate-300 rounded-md p-2 focus:outline-slate-500 focus:dark:outline-white"
+            className="w-full flex border-none outline outline-1 dark:bg-[#161B22] dark:text-white outline-slate-300 rounded-md p-2 focus:outline-slate-500 focus:dark:outline-white"
           />
 
           <button

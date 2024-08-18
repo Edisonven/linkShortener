@@ -52,7 +52,7 @@ export default function Perfil() {
       <div
         ref={btnRef}
         onClick={handleOpenModal}
-        className="flex items-center gap-1 text-white dark:text-slate-800 bg-slate-500 px-2 select-none rounded shadow dark:bg-slate-100"
+        className="flex items-center gap-1 text-white bg-slate-500 px-2 select-none rounded shadow dark:bg-slate-500"
       >
         {status === "loading" ? (
           ""
