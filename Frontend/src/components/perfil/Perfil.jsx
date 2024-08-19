@@ -71,7 +71,9 @@ export default function Perfil() {
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.2 }}
           >
-            <Link className="font-medium">Mi perfil</Link>
+            <Link to="/my-profile" className="font-medium">
+              Mi perfil
+            </Link>
             <hr className="w-full" />
             <div className="flex items-center gap-1 mt-1">
               <button
