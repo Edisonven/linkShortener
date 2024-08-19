@@ -1,24 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUser, resetToken } from "../../features/users/usersSlice";
+import { resetToken } from "../../features/users/usersSlice";
 import { IoIosArrowDown } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { IoIosLogOut } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
+import useFetchUser from "../../../hooks/users/useFetchUser";
 
 export default function Perfil() {
   const dispatch = useDispatch();
-  const userToken = useSelector((state) => state.userToken.token);
-  const user = useSelector((state) => state.user);
-  const { name, email, status, error } = user;
-  const formatedName = name?.split(" ");
+
+  const { user, loading, error } = useFetchUser();
+
+  const formatedName = user?.name.split(" ");
   const [openModal, setOpenModal] = useState(false);
   const modalRef = useRef(null);
   const btnRef = useRef(null);
-
-  useEffect(() => {
-    dispatch(fetchUser(userToken));
-  }, [dispatch]);
 
   const handleOpenModal = () => {
     setOpenModal(!openModal);
@@ -54,7 +51,7 @@ export default function Perfil() {
         onClick={handleOpenModal}
         className="flex items-center gap-1 text-white bg-slate-500 px-2 select-none rounded shadow dark:bg-slate-500"
       >
-        {status === "loading" ? (
+        {loading ? (
           ""
         ) : (
           <p className="font-medium text-[25px]">

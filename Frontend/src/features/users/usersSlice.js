@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialRegisterState = {
   name: "",
@@ -89,52 +89,6 @@ const tokenSlice = createSlice({
   },
 });
 
-const initialUserState = {
-  name: "",
-  email: "",
-  status: "idle",
-  error: null,
-};
-
-export const fetchUser = createAsyncThunk("user/fetchUser", async (token) => {
-  try {
-    const response = await fetch("http://localhost:3000/users/user", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json();
-    return data.user;
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-
-const userSlice = createSlice({
-  name: "user",
-  initialState: initialUserState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchUser.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchUser.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.name = action.payload.name;
-        state.email = action.payload.email;
-      })
-      .addCase(fetchUser.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
-  },
-});
-
 export const {
   setRegisterData,
   setRegisterErrors,
@@ -154,4 +108,3 @@ export const { setUserToken, resetToken } = tokenSlice.actions;
 export const registerReducer = registerSlice.reducer;
 export const loginReducer = loginSlice.reducer;
 export const userToken = tokenSlice.reducer;
-export const user = userSlice.reducer;
