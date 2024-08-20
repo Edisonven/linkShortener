@@ -76,7 +76,7 @@ export default function UrlShortener() {
 
   return (
     <section className="url-shortener__container flex items-center justify-center h-full p-4 w-full">
-      <div className="flex flex-col items-center w-full max-w-[800px]">
+      <div className="flex flex-col items-center w-full max-w-[1200px]">
         <h1 className="text-[30px] font-semibold text-slate-800 sm:text-[60px] sm:font-semibold dark:text-white mb-3">
           Acorta tu URL
         </h1>
@@ -86,7 +86,7 @@ export default function UrlShortener() {
 
         <form
           onSubmit={handleSendLongUrl}
-          className="flex flex-col items-center mt-6 border rounded-md shadow w-full p-3 bg-white dark:bg-[#0D1117]"
+          className="flex flex-col h-[200px] items-center mt-6 rounded-[100px] shadow w-full p-5 bg-white dark:bg-[#00000048] dark:shadow-gray-900"
         >
           <label
             htmlFor="url"
@@ -94,14 +94,14 @@ export default function UrlShortener() {
           >
             Ingresa una URL larga
           </label>
-          <div className="w-full">
+          <div className="w-full relative">
             <input
               onChange={handleSubmit}
               value={longUrl}
               name="longUrl"
               type="text"
-              placeholder="Ingresa una URL..."
-              className="w-full flex border-none outline outline-1 dark:bg-[#161B22] dark:text-white outline-slate-300 rounded-md p-2 focus:outline-slate-500 focus:dark:outline-white"
+              placeholder="Ingresa una URL larga... ¡gestiona tus enlaces de manera más eficiente y comparte!"
+              className="w-full flex border-none outline h-[58px] outline-1 dark:bg-[#161B22] dark:text-white outline-slate-300 rounded-[50px] p-2 focus:outline-slate-500 focus:dark:outline-white"
             />
             {errors.longUrl && (
               <span className="text-red-600 font-medium">
@@ -114,13 +114,13 @@ export default function UrlShortener() {
                 {`${config.frontendUrl}/${shortedUrl}`}
               </span>
             )}
+            <DefaultButton
+              className="absolute top-[5px] right-[8px] default-button text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700  dark:bg-gray-300 "
+              type="submit"
+            >
+              Acortar URL
+            </DefaultButton>
           </div>
-          <DefaultButton
-            className="default-button text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 mt-6 dark:bg-gray-300 "
-            type="submit"
-          >
-            Acortar URL
-          </DefaultButton>
         </form>
       </div>
     </section>
