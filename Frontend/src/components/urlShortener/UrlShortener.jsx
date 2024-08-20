@@ -109,7 +109,7 @@ export default function UrlShortener() {
               {errors.longUrl && (
                 <div className="flex items-center gap-1 mt-2 ml-3">
                   <IoIosAlert className="text-red-600 text-[20px]" />
-                  <span className="text-red-600 font-medium">
+                  <span className="text-red-600 font-medium sm:whitespace-nowrap">
                     {errors.longUrl}.
                   </span>
                 </div>
