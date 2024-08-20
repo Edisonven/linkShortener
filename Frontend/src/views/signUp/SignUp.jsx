@@ -14,6 +14,7 @@ import { RotatingLines } from "react-loader-spinner";
 import { IoIosAlert } from "react-icons/io";
 import { FaCheck } from "react-icons/fa6";
 import useFormSubmit from "../../../hooks/forms/useFormSubmit.js";
+import config from "../../../config/config.js";
 
 export default function SignUp() {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ export default function SignUp() {
   const handleRegisterNewUser = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/users/register", {
+      const response = await fetch(`${config.backendUrl}/users/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
