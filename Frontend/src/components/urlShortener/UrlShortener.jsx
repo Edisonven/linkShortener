@@ -58,7 +58,7 @@ export default function UrlShortener() {
     if (shortUrl) {
       handleGetLongUrl();
     }
-  }, [shortUrl, handleGetLongUrl]);
+  }, [shortUrl]);
 
   useEffect(() => {
     if (urlParams && originalUrl) {
@@ -108,11 +108,11 @@ export default function UrlShortener() {
               </span>
             )}
 
-            {shortedUrl ? (
+            {shortedUrl && (
               <span className="text-slate-800 dark:text-white">
                 {`${config.frontendUrl}/${shortedUrl}`}
               </span>
-            ) : null}
+            )}
           </div>
           <button
             className="text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 rounded-md mt-6 dark:bg-gray-300 select-none px-3 py-2 hover:brightness-[80%]"

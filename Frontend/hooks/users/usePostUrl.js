@@ -33,7 +33,7 @@ const usePostUrl = () => {
 
       if (data) {
         dispatch(setLongUrl({ field: "shortUrl", value: UrlData }));
-        sessionStorage.setItem("short-url", UrlData);
+        localStorage.setItem("short-url", UrlData);
       }
     } catch (error) {
       console.error(error.message);

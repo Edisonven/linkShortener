@@ -2,7 +2,7 @@ import { useState } from "react";
 import config from "../../config/config";
 
 const useGetUrl = () => {
-  const shortUrl = sessionStorage.getItem("short-url");
+  const shortUrl = localStorage.getItem("short-url");
   const [loading, setLoading] = useState(false);
   const [shortedUrl, setShortedUrl] = useState("");
   const [originalUrl, setOriginalUrl] = useState("");

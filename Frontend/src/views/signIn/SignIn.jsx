@@ -48,6 +48,7 @@ export default function SignIn() {
         }
       }
       const data = await response.json();
+
       dispatch(setUserToken(data.token));
     } catch (error) {
       setShowToast(true);
@@ -88,6 +89,7 @@ export default function SignIn() {
     } else {
       await handleloginRegisteredUser();
       dispatch(resetLoginForm());
+      localStorage.removeItem("short-url");
       if (loading) {
         return;
       } else {
