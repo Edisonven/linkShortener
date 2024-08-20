@@ -1,5 +1,4 @@
 import "../urlShortener/urlShortener.css";
-import { FaHandScissors } from "react-icons/fa6";
 import {
   setLongUrl,
   setLongUrlErrors,
@@ -15,6 +14,9 @@ import useGetUrl from "../../../hooks/urls/useGetUrl";
 import config from "../../../config/config";
 import { useParams } from "react-router-dom";
 import DefaultButton from "../buttons/DefaultButton";
+import { IoIosAlert } from "react-icons/io";
+import { MdOutlineFileCopy } from "react-icons/md";
+import { motion } from "framer-motion";
 
 export default function UrlShortener() {
   const { longUrl, errors } = useSelector((state) => state.urls);
@@ -86,11 +88,11 @@ export default function UrlShortener() {
 
         <form
           onSubmit={handleSendLongUrl}
-          className="flex flex-col h-[200px] items-center mt-6 rounded-[100px] shadow w-full p-5 bg-white dark:bg-[#00000048] dark:shadow-gray-900"
+          className="flex flex-col min-h-[220px] sm:min-h-[200px] items-center mt-6 rounded-[100px] shadow w-full p-5 bg-white dark:bg-[#00000048] dark:shadow-gray-900"
         >
           <label
             htmlFor="url"
-            className="text-slate-800 font-medium dark:text-white mb-5"
+            className="text-slate-800 font-medium dark:text-white mb-5 text-2xl"
           >
             Ingresa una URL larga
           </label>
@@ -103,19 +105,32 @@ export default function UrlShortener() {
               placeholder="Ingresa una URL larga... ¡gestiona tus enlaces de manera más eficiente y comparte!"
               className="w-full flex border-none outline h-[58px] outline-1 dark:bg-[#161B22] dark:text-white outline-slate-300 rounded-[50px] p-2 focus:outline-slate-500 focus:dark:outline-white"
             />
-            {errors.longUrl && (
-              <span className="text-red-600 font-medium">
-                {errors.longUrl}.
-              </span>
-            )}
-
-            {shortedUrl && (
-              <span className="text-slate-800 dark:text-white">
-                {`${config.frontendUrl}/${shortedUrl}`}
-              </span>
-            )}
+            <div className="flex items-center flex-col justify-between sm:flex-row">
+              {errors.longUrl && (
+                <div className="flex items-center gap-1 mt-2 ml-3">
+                  <IoIosAlert className="text-red-600 text-[20px]" />
+                  <span className="text-red-600 font-medium">
+                    {errors.longUrl}.
+                  </span>
+                </div>
+              )}
+              {shortedUrl && (
+                <motion.div
+                  whileTap={{ scale: 0.98 }}
+                  className="w-[max-content] flex items-center gap-1 border-2 dark:border p-2 rounded-[30px] mt-3 sm:ml-auto sm:mr-5 cursor-pointer select-none dark:text-white hover:bg-gray-100 hover:dark:bg-slate-800 transition-colors duration-300"
+                >
+                  <span className=" text-[20px] sm:text-[23px] ">
+                    {config.frontendUrl}/
+                    <span className="text-red-600 font-normal">
+                      {shortedUrl}
+                    </span>
+                  </span>
+                  <MdOutlineFileCopy className="text-[20px]" />
+                </motion.div>
+              )}
+            </div>
             <DefaultButton
-              className="absolute top-[5px] right-[8px] default-button text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700  dark:bg-gray-300 "
+              className="absolute top-[5px] right-[8px] default-button text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300"
               type="submit"
             >
               Acortar URL

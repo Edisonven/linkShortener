@@ -7,6 +7,7 @@ export default function DefaultButton({ children, onClick, className }) {
         scale: 1.08,
       }}
       whileTap={{ scale: 1 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
       className={`default-button ${className}`}
       onClick={onClick}
     >
