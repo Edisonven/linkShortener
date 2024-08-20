@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
 import { IoIosAlert } from "react-icons/io";
 import { RotatingLines } from "react-loader-spinner";
+import useFormSubmit from "../../../hooks/forms/useFormSubmit.js";
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -23,12 +24,8 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const { handleSubmit } = useFormSubmit(setLoginData);
   const navigate = useNavigate();
-
-  const handleSignInChange = (e) => {
-    const { name, value } = e.target;
-    dispatch(setLoginData({ field: name, value }));
-  };
 
   const handleloginRegisteredUser = async () => {
     setLoading(true);
@@ -128,7 +125,7 @@ export default function SignIn() {
           <div className="flex flex-col gap-5 w-full">
             <div className="base-input__container">
               <input
-                onChange={handleSignInChange}
+                onChange={handleSubmit}
                 value={email}
                 name="email"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
@@ -146,7 +143,7 @@ export default function SignIn() {
             </div>
             <div className="base-input__container">
               <input
-                onChange={handleSignInChange}
+                onChange={handleSubmit}
                 value={password}
                 name="password"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"

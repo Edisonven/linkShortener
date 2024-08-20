@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
 import { IoIosAlert } from "react-icons/io";
 import { FaCheck } from "react-icons/fa6";
+import useFormSubmit from "../../../hooks/forms/useFormSubmit.js";
 
 export default function SignUp() {
   const dispatch = useDispatch();
@@ -24,15 +25,11 @@ export default function SignUp() {
   const emailRegex = new RegExp(emailRegexString);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { handleSubmit } = useFormSubmit(setRegisterData);
 
   useEffect(() => {
     dispatch(resetRegisterForm());
   }, [dispatch]);
-
-  const handleSignupChange = (e) => {
-    const { name, value } = e.target;
-    dispatch(setRegisterData({ field: name, value }));
-  };
 
   const handleRegisterNewUser = async () => {
     setLoading(true);
@@ -188,7 +185,7 @@ export default function SignUp() {
           <div className="flex flex-col gap-5 w-full">
             <div className="base-input__container">
               <input
-                onChange={handleSignupChange}
+                onChange={handleSubmit}
                 value={name}
                 name="name"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
@@ -204,7 +201,7 @@ export default function SignUp() {
             </div>
             <div className="base-input__container">
               <input
-                onChange={handleSignupChange}
+                onChange={handleSubmit}
                 value={email}
                 name="email"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
@@ -222,7 +219,7 @@ export default function SignUp() {
             </div>
             <div className="base-input__container">
               <input
-                onChange={handleSignupChange}
+                onChange={handleSubmit}
                 value={password}
                 name="password"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
@@ -240,7 +237,7 @@ export default function SignUp() {
             </div>
             <div className="base-input__container">
               <input
-                onChange={handleSignupChange}
+                onChange={handleSubmit}
                 value={confirmPassword}
                 name="confirmPassword"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"

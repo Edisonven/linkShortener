@@ -2,18 +2,15 @@ import "../urlShortener/urlShortener.css";
 import { FaHandScissors } from "react-icons/fa6";
 import { setLongUrl } from "../../features/url/urlSlice";
 import { useDispatch, useSelector } from "react-redux";
+import useFormSubmit from "../../../hooks/forms/useFormSubmit";
 
 export default function UrlShortener() {
   const { shortUrl, longUrl } = useSelector((state) => state.urls);
+  const { handleSubmit } = useFormSubmit(setLongUrl);
   const dispatch = useDispatch();
 
   const handleSendLongUrl = (e) => {
     e.preventDefault();
-  };
-
-  const handleSubmit = (e) => {
-    const { name, value } = e.target;
-    dispatch(setLongUrl({ field: name, value }));
   };
 
   return (
