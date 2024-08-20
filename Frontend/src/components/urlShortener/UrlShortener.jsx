@@ -1,9 +1,19 @@
 import "../urlShortener/urlShortener.css";
 import { FaHandScissors } from "react-icons/fa6";
+import { setLongUrl } from "../../features/url/urlSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function UrlShortener() {
+  const { shortUrl, longUrl } = useSelector((state) => state.urls);
+  const dispatch = useDispatch();
+
   const handleSendLongUrl = (e) => {
     e.preventDefault();
+  };
+
+  const handleSubmit = (e) => {
+    const { name, value } = e.target;
+    dispatch(setLongUrl({ field: name, value }));
   };
 
   return (
@@ -27,7 +37,9 @@ export default function UrlShortener() {
             Ingresa una URL larga
           </label>
           <input
-            name="url"
+            onChange={handleSubmit}
+            value={longUrl}
+            name="longUrl"
             type="text"
             placeholder="Ingresa una URL..."
             className="w-full flex border-none outline outline-1 dark:bg-[#161B22] dark:text-white outline-slate-300 rounded-md p-2 focus:outline-slate-500 focus:dark:outline-white"

@@ -5,6 +5,7 @@ import {
   userToken,
 } from "../features/users/usersSlice.js";
 import { emailRegex } from "../features/regex/regexSlice.js";
+import { urls } from "../features/url/urlSlice.js";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     loginReducer,
     emailRegex,
     userToken,
+    urls,
   },
 });
