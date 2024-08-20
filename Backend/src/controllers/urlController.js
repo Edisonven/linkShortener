@@ -19,8 +19,8 @@ const registerUrls = async (req, res) => {
 
     const shortUrl = `${part1}-${part2}`;
 
-    await urlModels.createUrl(id, longUrl, shortUrl);
-    res.status(201).json({ message: "Short-url created successfully" });
+    const urls = await urlModels.createUrl(id, longUrl, shortUrl);
+    res.status(201).json({ message: "Short-url created successfully", urls });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }

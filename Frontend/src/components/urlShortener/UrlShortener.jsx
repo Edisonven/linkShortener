@@ -9,10 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import useFormSubmit from "../../../hooks/forms/useFormSubmit";
 import { regex } from "../../../utils/regex/regex";
 import { useEffect } from "react";
+import useFetchUrl from "../../../hooks/users/useFetchUrl";
 
 export default function UrlShortener() {
-  const { shortUrl, longUrl, errors } = useSelector((state) => state.urls);
+  const { longUrl, errors } = useSelector((state) => state.urls);
   const { handleSubmit } = useFormSubmit(setLongUrl);
+  const { handleSendUrl } = useFetchUrl();
   const dispatch = useDispatch();
   const urlRegex = regex.urlRegex;
 
@@ -34,6 +36,7 @@ export default function UrlShortener() {
         })
       );
     } else {
+      handleSendUrl();
       dispatch(resetUrlErrors());
     }
   };
