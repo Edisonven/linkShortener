@@ -16,7 +16,7 @@ import useGetUrl from "../../../hooks/urls/useGetUrl";
 export default function UrlShortener() {
   const { longUrl, errors } = useSelector((state) => state.urls);
   const { handleSubmit } = useFormSubmit(setLongUrl);
-  const { handleGetLongUrl } = useGetUrl();
+  const { handleGetLongUrl, shortedUrl, originalUrl, shortUrl } = useGetUrl();
   const { handleSendUrl } = usePostUrl();
   const dispatch = useDispatch();
   const urlRegex = regex.urlRegex;
@@ -53,7 +53,7 @@ export default function UrlShortener() {
 
   useEffect(() => {
     handleGetLongUrl();
-  }, []);
+  }, [shortUrl]);
 
   return (
     <section className="url-shortener__container flex items-center justify-center h-full p-4 w-full">
@@ -89,6 +89,12 @@ export default function UrlShortener() {
                 {errors.longUrl}.
               </span>
             )}
+
+            {shortedUrl ? (
+              <span className="text-slate-800 dark:text-white">
+                {shortedUrl}
+              </span>
+            ) : null}
           </div>
           <button
             className="text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 rounded-md mt-6 dark:bg-gray-300 select-none px-3 py-2 hover:brightness-[80%]"

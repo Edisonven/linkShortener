@@ -4,6 +4,8 @@ import config from "../../config/config";
 const useGetUrl = () => {
   const shortUrl = sessionStorage.getItem("short-url");
   const [loading, setLoading] = useState(false);
+  const [shortedUrl, setShortedUrl] = useState("");
+  const [originalUrl, setOriginalUrl] = useState("");
 
   const handleGetLongUrl = async () => {
     setLoading(true);
@@ -20,7 +22,8 @@ const useGetUrl = () => {
       const data = await response.json();
 
       if (data) {
-        console.log(data);
+        setOriginalUrl(data.url.longurl);
+        setShortedUrl(data.url.shorturl);
       }
     } catch (error) {
       console.error(error.message);
@@ -32,6 +35,9 @@ const useGetUrl = () => {
   return {
     handleGetLongUrl,
     loading,
+    shortedUrl,
+    originalUrl,
+    shortUrl,
   };
 };
 
