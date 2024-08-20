@@ -3,7 +3,7 @@ import config from "../../config/config";
 import { useState } from "react";
 import { setLongUrl } from "../../src/features/url/urlSlice";
 
-const useFetchUrl = () => {
+const usePostUrl = () => {
   const token = useSelector((state) => state.userToken.token);
   const { longUrl } = useSelector((state) => state.urls);
   const dispatch = useDispatch();
@@ -27,10 +27,13 @@ const useFetchUrl = () => {
         const errorData = await response.json();
         throw new Error(errorData.message);
       }
+
       const data = await response.json();
+      const UrlData = data.urls.shorturl;
 
       if (data) {
-        dispatch(setLongUrl({ field: "shortUrl", value: data.urls.shorturl }));
+        dispatch(setLongUrl({ field: "shortUrl", value: UrlData }));
+        sessionStorage.setItem("short-url", UrlData);
       }
     } catch (error) {
       console.error(error.message);
@@ -45,4 +48,4 @@ const useFetchUrl = () => {
   };
 };
 
-export default useFetchUrl;
+export default usePostUrl;

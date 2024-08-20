@@ -28,6 +28,7 @@ const registerUrls = async (req, res) => {
     const shortUrl = `${part1}-${part2}`;
 
     const urls = await urlModels.createUrl(id, longUrl, shortUrl);
+
     res.status(201).json({ message: "Short-url created successfully", urls });
   } catch (error) {
     res
@@ -36,9 +37,17 @@ const registerUrls = async (req, res) => {
   }
 };
 
-const getShortUrl = async (req, res) => {
+const getOriginalUrl = async (req, res) => {
   try {
-    const { shortUrl } = req.body;
+    const { shortUrl } = req.params;
+
+    if (!shortUrl) {
+      return res.status(400).json({ message: "Short URL is required" });
+    }
+
+    const longUrl = await urlModels.originalURL(shortUrl);
+    console.log(longUrl);
+    res.status(200).json({ message: "Original URL found", url: longUrl });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -46,5 +55,5 @@ const getShortUrl = async (req, res) => {
 
 export const urlController = {
   registerUrls,
-  getShortUrl,
+  getOriginalUrl,
 };

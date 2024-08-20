@@ -4,17 +4,20 @@ import {
   setLongUrl,
   setLongUrlErrors,
   resetUrlErrors,
+  resetUrlForm,
 } from "../../features/url/urlSlice";
 import { useDispatch, useSelector } from "react-redux";
 import useFormSubmit from "../../../hooks/forms/useFormSubmit";
 import { regex } from "../../../utils/regex/regex";
 import { useEffect } from "react";
-import useFetchUrl from "../../../hooks/users/useFetchUrl";
+import usePostUrl from "../../../hooks/users/usePostUrl";
+import useGetUrl from "../../../hooks/urls/useGetUrl";
 
 export default function UrlShortener() {
   const { longUrl, errors } = useSelector((state) => state.urls);
   const { handleSubmit } = useFormSubmit(setLongUrl);
-  const { handleSendUrl } = useFetchUrl();
+  const { handleGetLongUrl } = useGetUrl();
+  const { handleSendUrl } = usePostUrl();
   const dispatch = useDispatch();
   const urlRegex = regex.urlRegex;
 
@@ -38,6 +41,7 @@ export default function UrlShortener() {
     } else {
       handleSendUrl();
       dispatch(resetUrlErrors());
+      dispatch(resetUrlForm());
     }
   };
 
@@ -46,6 +50,10 @@ export default function UrlShortener() {
       dispatch(resetUrlErrors());
     }
   }, [longUrl]);
+
+  useEffect(() => {
+    handleGetLongUrl();
+  }, []);
 
   return (
     <section className="url-shortener__container flex items-center justify-center h-full p-4 w-full">

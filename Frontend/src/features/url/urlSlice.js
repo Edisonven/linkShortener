@@ -23,10 +23,13 @@ export const urlSlice = createSlice({
         longUrl: "",
       };
     },
+    resetUrlForm: (state) => {
+      state.longUrl = "";
+    },
   },
 });
 
-export const { setLongUrl, setLongUrlErrors, resetUrlErrors } =
+export const { setLongUrl, setLongUrlErrors, resetUrlErrors, resetUrlForm } =
   urlSlice.actions;
 
 export const urls = urlSlice.reducer;
