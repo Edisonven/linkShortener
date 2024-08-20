@@ -88,7 +88,7 @@ export default function UrlShortener() {
 
         <form
           onSubmit={handleSendLongUrl}
-          className="flex flex-col min-h-[220px] sm:min-h-[200px] items-center mt-6 rounded-[100px] shadow w-full p-5 bg-white dark:bg-[#00000048] dark:shadow-gray-900"
+          className="flex flex-col min-h-[270px] sm:min-h-[200px] items-center mt-6 rounded-[100px] shadow w-full p-5 bg-white dark:bg-[#00000048] dark:shadow-gray-900"
         >
           <label
             htmlFor="url"
@@ -115,18 +115,23 @@ export default function UrlShortener() {
                 </div>
               )}
               {shortedUrl && (
-                <motion.div
-                  whileTap={{ scale: 0.98 }}
-                  className="w-[max-content] flex items-center gap-1 border-2 dark:border p-2 rounded-[30px] mt-3 sm:ml-auto sm:mr-5 cursor-pointer select-none dark:text-white hover:bg-gray-100 hover:dark:bg-slate-800 transition-colors duration-300"
-                >
-                  <span className=" text-[20px] sm:text-[23px] ">
-                    {config.frontendUrl}/
-                    <span className="text-red-600 font-normal">
-                      {shortedUrl}
-                    </span>
+                <div className="flex items-center flex-col lg:flex-row justify-between w-full">
+                  <span className="text-slate-800 dark:text-white max-w-[300px] sm:max-w-full ml-4 text-ellipsis overflow-hidden whitespace-nowrap mt-2">
+                    <span className="font-medium">Original:</span> {originalUrl}
                   </span>
-                  <MdOutlineFileCopy className="text-[20px]" />
-                </motion.div>
+                  <motion.div
+                    whileTap={{ scale: 0.98 }}
+                    className="w-[max-content] flex items-center gap-1 border-2 dark:border p-2 rounded-[30px] mt-3 sm:ml-auto sm:mr-5 cursor-pointer select-none dark:text-white hover:bg-gray-100 hover:dark:bg-slate-800 transition-colors duration-300"
+                  >
+                    <span className=" text-[20px] sm:text-[23px] ">
+                      {config.frontendUrl}/
+                      <span className="text-red-600 font-normal">
+                        {shortedUrl}
+                      </span>
+                    </span>
+                    <MdOutlineFileCopy className="text-[20px]" />
+                  </motion.div>
+                </div>
               )}
             </div>
             <DefaultButton
