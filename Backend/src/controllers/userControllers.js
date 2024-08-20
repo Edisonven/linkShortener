@@ -16,7 +16,9 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      res.status(400).json({ message: "Not all parameters were provided" });
+      return res
+        .status(400)
+        .json({ message: "Not all parameters were provided" });
     }
     const user = await userModels.verifyuser(email, password);
     console.log(user);
