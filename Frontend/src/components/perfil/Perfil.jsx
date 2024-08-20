@@ -43,6 +43,7 @@ export default function Perfil() {
 
   const handleCloseSesion = () => {
     dispatch(resetToken());
+    localStorage.removeItem("short-url");
   };
 
   useEffect(() => {
