@@ -46,7 +46,7 @@ const getOriginalUrl = async (req, res) => {
     }
 
     const longUrl = await urlModels.originalURL(shortUrl);
-    console.log(longUrl);
+
     res.status(200).json({ message: "Original URL found", url: longUrl });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });

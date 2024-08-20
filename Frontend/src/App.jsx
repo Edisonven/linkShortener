@@ -7,6 +7,7 @@ import SignUp from "./views/signUp/SignUp";
 import { useSelector } from "react-redux";
 import MyProfile from "./views/MyProfile/MyProfile";
 import { Navigate } from "react-router-dom";
+import UrlShortener from "./components/urlShortener/UrlShortener";
 
 function App() {
   const token = useSelector((state) => state.userToken.token);
@@ -23,6 +24,7 @@ function App() {
             path="/my-profile"
             element={token ? <MyProfile /> : <Navigate to="/sign-in" />}
           />
+          <Route path="/:urlParams" element={<UrlShortener />} />
         </Routes>
       </div>
     </section>

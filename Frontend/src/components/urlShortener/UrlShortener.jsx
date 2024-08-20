@@ -12,6 +12,8 @@ import { regex } from "../../../utils/regex/regex";
 import { useEffect } from "react";
 import usePostUrl from "../../../hooks/users/usePostUrl";
 import useGetUrl from "../../../hooks/urls/useGetUrl";
+import config from "../../../config/config";
+import { useParams } from "react-router-dom";
 
 export default function UrlShortener() {
   const { longUrl, errors } = useSelector((state) => state.urls);
@@ -19,6 +21,7 @@ export default function UrlShortener() {
   const { handleGetLongUrl, shortedUrl, originalUrl, shortUrl } = useGetUrl();
   const { handleSendUrl } = usePostUrl();
   const dispatch = useDispatch();
+  const { urlParams } = useParams();
   const urlRegex = regex.urlRegex;
 
   const handleSendLongUrl = (e) => {
@@ -49,11 +52,27 @@ export default function UrlShortener() {
     if (longUrl !== "") {
       dispatch(resetUrlErrors());
     }
-  }, [longUrl]);
+  }, [longUrl, dispatch]);
 
   useEffect(() => {
-    handleGetLongUrl();
-  }, [shortUrl]);
+    if (shortUrl) {
+      handleGetLongUrl();
+    }
+  }, [shortUrl, handleGetLongUrl]);
+
+  useEffect(() => {
+    if (urlParams && originalUrl) {
+      // Asegúrate de que `originalUrl` sea una URL completa antes de redirigir
+      if (
+        originalUrl.startsWith("http://") ||
+        originalUrl.startsWith("https://")
+      ) {
+        window.location.href = originalUrl;
+      } else {
+        console.error("La URL no es válida para redirigir:", originalUrl);
+      }
+    }
+  }, [urlParams, originalUrl]);
 
   return (
     <section className="url-shortener__container flex items-center justify-center h-full p-4 w-full">
@@ -62,7 +81,7 @@ export default function UrlShortener() {
           Acorta tu URL
         </h1>
         <h3 className="text-slate-800 text-center font-medium dark:text-white">
-          Gestiona tus links de manera más practica y compartelos
+          Gestiona tus links de manera más práctica y compártelos
         </h3>
 
         <form
@@ -92,7 +111,7 @@ export default function UrlShortener() {
 
             {shortedUrl ? (
               <span className="text-slate-800 dark:text-white">
-                {shortedUrl}
+                {`${config.frontendUrl}/${shortedUrl}`}
               </span>
             ) : null}
           </div>
