@@ -62,7 +62,6 @@ export default function UrlShortener() {
 
   useEffect(() => {
     if (urlParams && originalUrl) {
-      // Asegúrate de que `originalUrl` sea una URL completa antes de redirigir
       if (
         originalUrl.startsWith("http://") ||
         originalUrl.startsWith("https://")
