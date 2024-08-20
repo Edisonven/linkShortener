@@ -53,7 +53,20 @@ const getOriginalUrl = async (req, res) => {
   }
 };
 
+const getUserUrls = async (req, res) => {
+  try {
+    const authorization = req.header("Authorization");
+    const token = authorization.split("Bearer ")[1];
+    const { id } = jwt.decode(token);
+    const data = await urlModels.userUrls(id);
+    res.status(200).json({ message: "Data found", data });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const urlController = {
   registerUrls,
   getOriginalUrl,
+  getUserUrls,
 };

@@ -14,6 +14,7 @@ import usePostUrl from "../../../hooks/users/usePostUrl";
 import useGetUrl from "../../../hooks/urls/useGetUrl";
 import config from "../../../config/config";
 import { useParams } from "react-router-dom";
+import DefaultButton from "../buttons/DefaultButton";
 
 export default function UrlShortener() {
   const { longUrl, errors } = useSelector((state) => state.urls);
@@ -114,13 +115,12 @@ export default function UrlShortener() {
               </span>
             )}
           </div>
-          <button
-            className="text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 rounded-md mt-6 dark:bg-gray-300 select-none px-3 py-2 hover:brightness-[80%]"
+          <DefaultButton
+            className="default-button text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 mt-6 dark:bg-gray-300 "
             type="submit"
           >
             Acortar URL
-            <FaHandScissors className="text-white text-[20px] dark:text-slate-800" />
-          </button>
+          </DefaultButton>
         </form>
       </div>
     </section>

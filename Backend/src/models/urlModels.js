@@ -20,7 +20,16 @@ const originalURL = async (shortUrl) => {
   return longURL;
 };
 
+const userUrls = async (id) => {
+  const values = [id];
+  const query = "SELECT * FROM url WHERE user_id = $1";
+
+  const { rows: data } = await pool.query(query, values);
+  return data;
+};
+
 export const urlModels = {
   createUrl,
   originalURL,
+  userUrls,
 };
