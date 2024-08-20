@@ -1,7 +1,7 @@
 export default function MyProfile() {
   return (
     <section>
-      <h1>Hola soy mi perfil</h1>
+      <h1 className="text-slate-800 dark:text-white">Hola soy mi perfil</h1>
     </section>
   );
 }

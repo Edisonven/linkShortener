@@ -2,9 +2,13 @@ import "../urlShortener/urlShortener.css";
 import { FaHandScissors } from "react-icons/fa6";
 
 export default function UrlShortener() {
+  const handleSendLongUrl = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <section className="url-shortener__container flex items-center justify-center h-full p-4 w-full">
-      <div className="flex flex-col items-center w-full max-w-[600px]">
+      <div className="flex flex-col items-center w-full max-w-[800px]">
         <h1 className="text-[30px] font-semibold text-slate-800 sm:text-[60px] sm:font-semibold dark:text-white mb-3">
           Acorta tu URL
         </h1>
@@ -12,7 +16,10 @@ export default function UrlShortener() {
           Gestiona tus links de manera más practica y compartelos
         </h3>
 
-        <form className="flex flex-col items-center mt-6 border rounded-md shadow w-full p-3 bg-white dark:bg-[#0D1117]">
+        <form
+          onSubmit={handleSendLongUrl}
+          className="flex flex-col items-center mt-6 border rounded-md shadow w-full p-3 bg-white dark:bg-[#0D1117]"
+        >
           <label
             htmlFor="url"
             className="text-slate-800 font-medium dark:text-white mb-5"

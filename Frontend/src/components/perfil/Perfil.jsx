@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { resetToken } from "../../features/users/usersSlice";
 import { IoIosArrowDown } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosLogOut } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
 import useFetchUser from "../../../hooks/users/useFetchUser";
@@ -14,6 +14,7 @@ export default function Perfil() {
 
   const formatedName = user?.name.split(" ");
   const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
   const modalRef = useRef(null);
   const btnRef = useRef(null);
 
@@ -44,9 +45,14 @@ export default function Perfil() {
     dispatch(resetToken());
   };
 
+  useEffect(() => {
+    setOpenModal(false);
+  }, [navigate]);
+
   return (
     <section className="cursor-pointer relative">
-      <div
+      <motion.div
+        whileTap={{ scale: 0.9 }}
         ref={btnRef}
         onClick={handleOpenModal}
         className="flex items-center gap-1 text-white bg-slate-500 px-2 select-none rounded shadow dark:bg-slate-500"
@@ -60,7 +66,7 @@ export default function Perfil() {
           </p>
         )}
         <IoIosArrowDown />
-      </div>
+      </motion.div>
       <AnimatePresence>
         {openModal && (
           <motion.div
@@ -70,6 +76,7 @@ export default function Perfil() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.2 }}
+            style={{ originX: 1, originY: 0 }}
           >
             <Link to="/my-profile" className="font-medium">
               Mi perfil
