@@ -1,17 +1,48 @@
 import "../urlShortener/urlShortener.css";
 import { FaHandScissors } from "react-icons/fa6";
-import { setLongUrl } from "../../features/url/urlSlice";
+import {
+  setLongUrl,
+  setLongUrlErrors,
+  resetUrlErrors,
+} from "../../features/url/urlSlice";
 import { useDispatch, useSelector } from "react-redux";
 import useFormSubmit from "../../../hooks/forms/useFormSubmit";
+import { regex } from "../../../utils/regex/regex";
+import { useEffect } from "react";
 
 export default function UrlShortener() {
-  const { shortUrl, longUrl } = useSelector((state) => state.urls);
+  const { shortUrl, longUrl, errors } = useSelector((state) => state.urls);
   const { handleSubmit } = useFormSubmit(setLongUrl);
   const dispatch = useDispatch();
+  const urlRegex = regex.urlRegex;
 
   const handleSendLongUrl = (e) => {
     e.preventDefault();
+
+    if (longUrl.trim() === "") {
+      dispatch(
+        setLongUrlErrors({
+          field: "longUrl",
+          error: "Ingresa una url",
+        })
+      );
+    } else if (!urlRegex.test(longUrl)) {
+      dispatch(
+        setLongUrlErrors({
+          field: "longUrl",
+          error: "Ingresa una url válida",
+        })
+      );
+    } else {
+      dispatch(resetUrlErrors());
+    }
   };
+
+  useEffect(() => {
+    if (longUrl !== "") {
+      dispatch(resetUrlErrors());
+    }
+  }, [longUrl]);
 
   return (
     <section className="url-shortener__container flex items-center justify-center h-full p-4 w-full">
@@ -33,15 +64,21 @@ export default function UrlShortener() {
           >
             Ingresa una URL larga
           </label>
-          <input
-            onChange={handleSubmit}
-            value={longUrl}
-            name="longUrl"
-            type="text"
-            placeholder="Ingresa una URL..."
-            className="w-full flex border-none outline outline-1 dark:bg-[#161B22] dark:text-white outline-slate-300 rounded-md p-2 focus:outline-slate-500 focus:dark:outline-white"
-          />
-
+          <div className="w-full">
+            <input
+              onChange={handleSubmit}
+              value={longUrl}
+              name="longUrl"
+              type="text"
+              placeholder="Ingresa una URL..."
+              className="w-full flex border-none outline outline-1 dark:bg-[#161B22] dark:text-white outline-slate-300 rounded-md p-2 focus:outline-slate-500 focus:dark:outline-white"
+            />
+            {errors.longUrl && (
+              <span className="text-red-600 font-medium">
+                {errors.longUrl}.
+              </span>
+            )}
+          </div>
           <button
             className="text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 rounded-md mt-6 dark:bg-gray-300 select-none px-3 py-2 hover:brightness-[80%]"
             type="submit"

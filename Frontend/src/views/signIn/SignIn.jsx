@@ -13,14 +13,15 @@ import { Toaster, toast } from "sonner";
 import { IoIosAlert } from "react-icons/io";
 import { RotatingLines } from "react-loader-spinner";
 import useFormSubmit from "../../../hooks/forms/useFormSubmit.js";
+import { regex } from "../../../utils/regex/regex.js";
+import config from "../../../config/config.js";
 
 export default function SignIn() {
   const dispatch = useDispatch();
   const { email, password, errors } = useSelector(
     (state) => state.loginReducer
   );
-  const emailRegexString = useSelector((state) => state.emailRegex);
-  const emailRegex = new RegExp(emailRegexString);
+  const emailRegex = regex.emailRegex;
   const [loading, setLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [showToast, setShowToast] = useState(false);
