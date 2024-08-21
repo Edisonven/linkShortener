@@ -28,8 +28,20 @@ const userUrls = async (id) => {
   return data;
 };
 
+const modifyRegisteredUrl = async (longUrl, title, url_id, id) => {
+  const values = [longUrl, title, url_id, id];
+
+  const query =
+    "UPDATE url SET longurl = $1, title = $2 WHERE id = $3 AND user_id = $4;";
+  const {
+    rows: [urlUpdated],
+  } = await pool.query(query, values);
+  return urlUpdated;
+};
+
 export const urlModels = {
   createUrl,
   originalURL,
   userUrls,
+  modifyRegisteredUrl,
 };

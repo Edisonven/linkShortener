@@ -6,7 +6,7 @@ const registerUser = async (req, res) => {
   try {
     const user = req.body;
     await userModels.createUser(user);
-    res.status(201).json({ message: "User created successfully" });
+    return res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -27,16 +27,16 @@ const loginUser = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
-    res.status(200).json({
+    return res.status(200).json({
       name: user.name,
       email: user.email,
       token,
     });
   } catch (error) {
     if (error.code === 401) {
-      res.status(401).json({ message: error.message });
+      return res.status(401).json({ message: error.message });
     } else if (error.code === 404) {
-      res.status(404).json({ message: error.message });
+      return res.status(404).json({ message: error.message });
     } else {
       console.error(error);
       res.status(500).json({ message: "Internal server error" });
@@ -50,7 +50,7 @@ const getLoggedInUser = async (req, res) => {
     const token = authorization.split("Bearer ")[1];
     const { id } = jwt.decode(token, process.env.JWT_SECRET);
     const user = await userModels.loggedInUser(id);
-    res.status(200).json({ message: "user", user });
+    return res.status(200).json({ message: "user", user });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }

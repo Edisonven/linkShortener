@@ -29,7 +29,9 @@ const registerUrls = async (req, res) => {
 
     const urls = await urlModels.createUrl(id, longUrl, shortUrl);
 
-    res.status(201).json({ message: "Short-url created successfully", urls });
+    return res
+      .status(201)
+      .json({ message: "Short-url created successfully", urls });
   } catch (error) {
     res
       .status(500)
@@ -47,7 +49,9 @@ const getOriginalUrl = async (req, res) => {
 
     const longUrl = await urlModels.originalURL(shortUrl);
 
-    res.status(200).json({ message: "Original URL found", url: longUrl });
+    return res
+      .status(200)
+      .json({ message: "Original URL found", url: longUrl });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -59,7 +63,29 @@ const getUserUrls = async (req, res) => {
     const token = authorization.split("Bearer ")[1];
     const { id } = jwt.decode(token);
     const data = await urlModels.userUrls(id);
-    res.status(200).json({ message: "Data found", data });
+    return res.status(200).json({ message: "Data found", data });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const updateRegisteredUrl = async (req, res) => {
+  try {
+    const authorization = req.header("Authorization");
+    const token = authorization.split("Bearer ")[1];
+    const { id } = jwt.decode(token);
+
+    const url = req.body;
+    let { longUrl, title, url_id } = url;
+    if (!longUrl || !url_id) {
+      return res
+        .status(400)
+        .json({ message: "Not All parameters were provided" });
+    }
+    const content = await urlModels.modifyRegisteredUrl( longUrl, title, url_id, id);
+    return res
+      .status(200)
+      .json({ message: "content modified successfully", content });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -69,4 +95,5 @@ export const urlController = {
   registerUrls,
   getOriginalUrl,
   getUserUrls,
+  updateRegisteredUrl,
 };
