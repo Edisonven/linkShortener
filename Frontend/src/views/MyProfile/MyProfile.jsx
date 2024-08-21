@@ -7,6 +7,7 @@ import { IoMdCopy } from "react-icons/io";
 import { AiOutlineEdit } from "react-icons/ai";
 import { TbTrashXFilled } from "react-icons/tb";
 import { formatedDate } from "../../../utils/formats/formatDate";
+import { Link } from "react-router-dom";
 
 export default function MyProfile() {
   const { handleGetUserUrls, loading, userURLS } = useGetUserLoggedUrls();
@@ -35,20 +36,24 @@ export default function MyProfile() {
                     key={url.id}
                     className="bg-[#ebebeb] dark:bg-[#0D1117] py-2 px-3 rounded-md shadow flex flex-col lg:flex-row md:justify-between gap-5 w-full"
                   >
-                    <div>
+                    <div className="w-full">
                       <h3 className="text-slate-800 dark:text-white font-medium mb-1">
                         URL
                       </h3>
-                      <div className="md:w-[400px]">
-                        <p className="text-slate-800 dark:text-white">
+                      <div className="">
+                        <Link
+                          to={url.longurl}
+                          target="_blank"
+                          className="text-slate-800  dark:text-white sm:font-medium hover:text-blue-600 dark:hover:text-blue-600"
+                        >
                           {`${config.frontendUrl}/${url.shorturl}`}
-                        </p>
+                        </Link>
                         <p className="text-slate-800 dark:text-white text-[12px] font-normal max-w-[260px] md:max-w-full overflow-hidden whitespace-nowrap text-ellipsis">
                           {url.longurl}
                         </p>
                       </div>
                     </div>
-                    <div>
+                    <div className="w-full">
                       <h3 className="text-slate-800 dark:text-white font-medium mb-1">
                         Fecha
                       </h3>
@@ -56,10 +61,10 @@ export default function MyProfile() {
                         {formatedDate(url.createdat)}
                       </p>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <IoMdCopy className="text-slate-800 dark:text-white text-[24px] cursor-pointer" />
-                      <AiOutlineEdit className="text-slate-800 dark:text-white text-[24px] cursor-pointer" />
-                      <TbTrashXFilled className="text-slate-800 dark:text-white text-[24px] cursor-pointer" />
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <IoMdCopy className="text-slate-800 dark:text-gray-400 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-slate-300 duration-300" />
+                      <AiOutlineEdit className="text-blue-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-blue-200 duration-300" />
+                      <TbTrashXFilled className="text-red-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1 p-1 rounded-sm hover:bg-red-200 duration-300" />
                     </div>
                   </div>
                 ))}
