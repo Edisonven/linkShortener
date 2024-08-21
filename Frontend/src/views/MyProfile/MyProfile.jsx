@@ -9,6 +9,7 @@ import { TbTrashXFilled } from "react-icons/tb";
 import { formatedDate } from "../../../utils/formats/formatDate";
 import { Link, useNavigate } from "react-router-dom";
 import ProfilePagination from "./ProfilePagination";
+import useDeleteUrl from "../../../hooks/urls/useDeleteUrl";
 
 export default function MyProfile() {
   const {
@@ -23,10 +24,11 @@ export default function MyProfile() {
     setOrderBy,
   } = useGetUserLoggedUrls();
   const navigate = useNavigate();
+  const { handleDeleteUrl, deleteLoading } = useDeleteUrl();
 
   useEffect(() => {
     handleGetUserUrls();
-  }, [page]);
+  }, [page, deleteLoading]);
 
   const handleNavigateToEdit = (id) => {
     navigate(`/edit-url/${id}`);
@@ -90,7 +92,10 @@ export default function MyProfile() {
                         onClick={() => handleNavigateToEdit(url.id)}
                         className="text-blue-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-blue-200 duration-300 transition-colors"
                       />
-                      <TbTrashXFilled className="text-red-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1 p-1 rounded-sm hover:bg-red-200 duration-300 transition-colors" />
+                      <TbTrashXFilled
+                        onClick={() => handleDeleteUrl(url.id)}
+                        className="text-red-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1 p-1 rounded-sm hover:bg-red-200 duration-300 transition-colors"
+                      />
                     </div>
                   </div>
                 ))}
