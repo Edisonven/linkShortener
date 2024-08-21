@@ -17,8 +17,8 @@ export default function MyProfile() {
     handleGetUserUrls();
   }, []);
 
-  const handleNavigateToEdit = () => {
-    navigate("/edit-url");
+  const handleNavigateToEdit = (id) => {
+    navigate(`/edit-url/${id}`);
   };
 
   return (
@@ -69,7 +69,7 @@ export default function MyProfile() {
                     <div className="flex items-center gap-2 sm:gap-3">
                       <IoMdCopy className="text-slate-800 dark:text-gray-400 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-slate-300 duration-300 transition-colors" />
                       <AiOutlineEdit
-                        onClick={handleNavigateToEdit}
+                        onClick={() => handleNavigateToEdit(url.id)}
                         className="text-blue-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-blue-200 duration-300 transition-colors"
                       />
                       <TbTrashXFilled className="text-red-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1 p-1 rounded-sm hover:bg-red-200 duration-300 transition-colors" />

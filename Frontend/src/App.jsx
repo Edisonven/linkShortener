@@ -27,7 +27,7 @@ function App() {
             element={token ? <MyProfile /> : <Navigate to="/sign-in" />}
           />
           <Route
-            path="/edit-url"
+            path="/edit-url/:id"
             element={token ? <EditMyUrl /> : <Navigate to="/sign-in" />}
           />
           <Route path="/:urlParams" element={<UrlShortener />} />
