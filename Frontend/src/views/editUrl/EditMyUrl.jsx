@@ -11,7 +11,9 @@ import { regex } from "../../../utils/regex/regex";
 import { IoIosAlert } from "react-icons/io";
 import { useEffect, useState } from "react";
 import useGetUserLoggedUrls from "../../../hooks/users/useGetUserLoggedUrls";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import usePatchUrls from "../../../hooks/urls/usePatchUrls";
+import { Toaster, toast } from "sonner";
 
 export default function EditMyUrl() {
   const { handleSubmit } = useFormSubmit(setUpdateUrlInfo);
@@ -23,8 +25,10 @@ export default function EditMyUrl() {
   const { id } = useParams();
   const formatedID = Number(id);
   const { userURLS, handleGetUserUrls } = useGetUserLoggedUrls();
+  const { handleUpdateUrls } = usePatchUrls();
   const [urlData, setUrlData] = useState({});
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (formatedID && userURLS) {
@@ -33,7 +37,7 @@ export default function EditMyUrl() {
     }
   }, [formatedID, userURLS]);
 
-  const handleSendUpdatedInfo = (e) => {
+  const handleSendUpdatedInfo = async (e) => {
     e.preventDefault();
 
     if (longUrl.trim() === "") {
@@ -58,6 +62,30 @@ export default function EditMyUrl() {
         })
       );
     } else {
+      try {
+        const data = await handleUpdateUrls(longUrl, title, formatedID);
+        if (data.error) {
+          return toast("Error al modificar URL, intenta nuevamente.", {
+            icon: (
+              <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />
+            ),
+            duration: 3000,
+            unstyled: true,
+            classNames: {
+              toast:
+                "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
+              title: "text-white font-medium text-sm sm:text-base",
+            },
+          });
+        }
+        dispatch(resetUrlForm());
+        setTimeout(() => {
+          navigate("/my-profile");
+        }, 2000);
+      } catch (error) {
+        console.error(error.message);
+        throw error;
+      }
     }
   };
 
@@ -175,6 +203,7 @@ export default function EditMyUrl() {
           </form>
         </div>
       )}
+      <Toaster position="bottom-center" />
     </section>
   );
 }

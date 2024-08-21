@@ -77,12 +77,18 @@ const updateRegisteredUrl = async (req, res) => {
 
     const url = req.body;
     let { longUrl, title, url_id } = url;
+
     if (!longUrl || !url_id) {
       return res
         .status(400)
         .json({ message: "Not All parameters were provided" });
     }
-    const content = await urlModels.modifyRegisteredUrl( longUrl, title, url_id, id);
+    const content = await urlModels.modifyRegisteredUrl(
+      longUrl,
+      title,
+      url_id,
+      id
+    );
     return res
       .status(200)
       .json({ message: "content modified successfully", content });
