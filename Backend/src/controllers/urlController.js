@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { urlModels } from "../models/urlModels.js";
+import { HATEOASmodel } from "../models/hateoasModel.js";
 
 const registerUrls = async (req, res) => {
   try {
@@ -59,11 +60,20 @@ const getOriginalUrl = async (req, res) => {
 
 const getUserUrls = async (req, res) => {
   try {
+    const { limits = 6, page = 1, order_by = "createdat_DESC" } = req.query;
     const authorization = req.header("Authorization");
     const token = authorization.split("Bearer ")[1];
     const { id } = jwt.decode(token);
-    const data = await urlModels.userUrls(id);
-    return res.status(200).json({ message: "Data found", data });
+
+    const { data, totalResult } = await urlModels.userUrls(
+      limits,
+      page,
+      order_by,
+      id
+    );
+
+    const hateoas = HATEOASmodel.hateoasURL(data, totalResult, page);
+    return res.status(200).json(hateoas);
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }

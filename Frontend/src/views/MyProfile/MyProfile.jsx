@@ -8,21 +8,32 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { TbTrashXFilled } from "react-icons/tb";
 import { formatedDate } from "../../../utils/formats/formatDate";
 import { Link, useNavigate } from "react-router-dom";
+import ProfilePagination from "./ProfilePagination";
 
 export default function MyProfile() {
-  const { handleGetUserUrls, loading, userURLS } = useGetUserLoggedUrls();
+  const {
+    handleGetUserUrls,
+    loading,
+    userURLS,
+    page,
+    setPage,
+    total,
+    totalPerPage,
+    limit,
+    setOrderBy,
+  } = useGetUserLoggedUrls();
   const navigate = useNavigate();
 
   useEffect(() => {
     handleGetUserUrls();
-  }, []);
+  }, [page]);
 
   const handleNavigateToEdit = (id) => {
     navigate(`/edit-url/${id}`);
   };
 
   return (
-    <section className="mt-[10px] sm:mt-[30px] max-w-[1200px] mx-auto p-4">
+    <section className="mt-[10px] sm:mt-[30px] max-w-[1200px] mx-auto p-4 flex flex-col">
       <h1 className="text-slate-800 dark:text-white font-medium text-[30px] mb-2">
         Mis enlaces
       </h1>
@@ -104,6 +115,15 @@ export default function MyProfile() {
           )}
         </div>
       )}
+      <ProfilePagination
+        page={page}
+        setPage={setPage}
+        total={total}
+        totalPerPage={totalPerPage}
+        limit={limit}
+        setOrderBy={setOrderBy}
+        className="self-end mt-3"
+      />
     </section>
   );
 }

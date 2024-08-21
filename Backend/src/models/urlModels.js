@@ -1,4 +1,5 @@
 import pool from "../database/connection.js";
+import format from "pg-format";
 
 const createUrl = async (id, longUrl, shortUrl) => {
   const values = [id, longUrl, shortUrl];
@@ -20,12 +21,25 @@ const originalURL = async (shortUrl) => {
   return longURL;
 };
 
-const userUrls = async (id) => {
+const userUrls = async (limits, page, order_by, id) => {
   const values = [id];
-  const query = "SELECT * FROM url WHERE user_id = $1";
 
-  const { rows: data } = await pool.query(query, values);
-  return data;
+  const offset = (page - 1) * limits;
+  const [campo, ordenamiento] = order_by.split("_");
+
+  const query =
+    "SELECT * FROM url WHERE user_id = $1 ORDER BY %I %s LIMIT %s OFFSET %s";
+
+  const formatedQuery = format(query, campo, ordenamiento, limits, offset);
+
+  const consultaTotal = `SELECT COUNT(*) AS total FROM url WHERE user_id = $1`;
+
+  const { rows: data } = await pool.query(formatedQuery, values);
+  const {
+    rows: [totalResult],
+  } = await pool.query(consultaTotal, values);
+
+  return { data, totalResult };
 };
 
 const modifyRegisteredUrl = async (longUrl, title, url_id, id) => {
