@@ -20,7 +20,7 @@ export default function MyProfile() {
   const handleNavigateToEdit = (id) => {
     navigate(`/edit-url/${id}`);
   };
-
+  console.log(userURLS);
   return (
     <section className="mt-[10px] sm:mt-[30px] max-w-[1200px] mx-auto p-4">
       <h1 className="text-slate-800 dark:text-white font-medium text-[30px] mb-2">
@@ -33,7 +33,7 @@ export default function MyProfile() {
           {userURLS.length > 0 ? (
             <div className="bg-white dark:bg-[#161B22] shadow rounded p-4">
               <h3 className="text-slate-800 dark:text-white text-xl mb-3 font-normal">
-                Enlaces totales : <span>{userURLS.length}</span>
+                Enlaces totales: <span>{userURLS.length}</span>
               </h3>
               <div className="flex flex-col gap-4">
                 {userURLS.map((url) => (
@@ -45,6 +45,13 @@ export default function MyProfile() {
                       <h3 className="text-slate-800 dark:text-white font-medium mb-1">
                         URL
                       </h3>
+                      {url.title ? (
+                        <span className="text-slate-800  dark:text-white">
+                          {url.title}
+                        </span>
+                      ) : (
+                        ""
+                      )}
                       <div className="">
                         <Link
                           to={url.longurl}
