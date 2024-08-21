@@ -124,6 +124,12 @@ export default function EditMyUrl() {
         value: urlData?.shorturl,
       })
     );
+    dispatch(
+      setUpdateUrlInfo({
+        field: "title",
+        value: urlData?.title,
+      })
+    );
   }, [urlData]);
 
   useEffect(() => {

@@ -65,7 +65,7 @@ export default function MyProfile() {
                         URL
                       </h3>
                       {url.title ? (
-                        <span className="text-slate-800  dark:text-white">
+                        <span className="text-slate-800  dark:text-white font-normal">
                           {url.title}
                         </span>
                       ) : (

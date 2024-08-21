@@ -22,8 +22,8 @@ const useGetUrl = () => {
       const data = await response.json();
 
       if (data) {
-        setOriginalUrl(data.url.longurl);
-        setShortedUrl(data.url.shorturl);
+        setOriginalUrl(data?.url.longurl);
+        setShortedUrl(data?.url.shorturl);
       }
     } catch (error) {
       console.error(error.message);
