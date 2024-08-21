@@ -3,8 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   shortUrl: "",
   longUrl: "",
+  title: "",
   errors: {
     longUrl: "",
+    title: "",
   },
 };
 
@@ -21,15 +23,24 @@ export const urlSlice = createSlice({
     resetUrlErrors: (state) => {
       state.errors = {
         longUrl: "",
+        title: "",
       };
     },
     resetUrlForm: (state) => {
       state.longUrl = "";
     },
+    setUpdateUrlInfo: (state, action) => {
+      state[action.payload.field] = action.payload.value;
+    },
   },
 });
 
-export const { setLongUrl, setLongUrlErrors, resetUrlErrors, resetUrlForm } =
-  urlSlice.actions;
+export const {
+  setLongUrl,
+  setLongUrlErrors,
+  resetUrlErrors,
+  resetUrlForm,
+  setUpdateUrlInfo,
+} = urlSlice.actions;
 
 export const urls = urlSlice.reducer;
