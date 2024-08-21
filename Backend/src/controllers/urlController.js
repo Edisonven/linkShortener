@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { urlModels } from "../models/urlModels.js";
 import { HATEOASmodel } from "../models/hateoasModel.js";
+import "dotenv/config";
 
 const registerUrls = async (req, res) => {
   try {
@@ -9,7 +10,7 @@ const registerUrls = async (req, res) => {
 
     if (authorization) {
       const token = authorization.split("Bearer ")[1];
-      const decodedToken = jwt.decode(token);
+      const decodedToken = jwt.decode(token, process.env.JWT_SECRET);
       if (decodedToken) {
         id = decodedToken.id;
       }
@@ -63,7 +64,7 @@ const getUserUrls = async (req, res) => {
     const { limits = 6, page = 1, order_by = "createdat_DESC" } = req.query;
     const authorization = req.header("Authorization");
     const token = authorization.split("Bearer ")[1];
-    const { id } = jwt.decode(token);
+    const { id } = jwt.decode(token, process.env.JWT_SECRET);
 
     const { data, totalResult } = await urlModels.userUrls(
       limits,
@@ -83,7 +84,7 @@ const updateRegisteredUrl = async (req, res) => {
   try {
     const authorization = req.header("Authorization");
     const token = authorization.split("Bearer ")[1];
-    const { id } = jwt.decode(token);
+    const { id } = jwt.decode(token, process.env.JWT_SECRET);
 
     const url = req.body;
 
@@ -108,9 +109,26 @@ const updateRegisteredUrl = async (req, res) => {
   }
 };
 
+const deleteUserUrl = async (req, res) => {
+  try {
+    const { url_id } = req.body;
+    if (!url_id) {
+      return res.status(400).json({ message: "URL id is required" });
+    }
+    const authorization = req.header("Authorization");
+    const token = authorization.split("Bearer ")[1];
+    const { id } = jwt.decode(token, process.env.JWT_SECRET);
+    await urlModels.userUrlDeleted(url_id, id);
+    return res.status(200).json({ message: "URL deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Imternal server error" });
+  }
+};
+
 export const urlController = {
   registerUrls,
   getOriginalUrl,
   getUserUrls,
   updateRegisteredUrl,
+  deleteUserUrl,
 };

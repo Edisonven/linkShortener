@@ -55,7 +55,7 @@ export default function ProfilePagination({
             key={index}
             className={`page-item ${
               page === index + 1 ? "bg-teal-500 rounded-full" : ""
-            } cursor-pointer w-7 h-7 flex items-center justify-center rounded-full hover:bg-slate-200 transition duration-300 select-none`}
+            } cursor-pointer w-7 h-7 flex items-center justify-center rounded-full hover:bg-slate-400 transition duration-300 select-none hover:dark:text-slate-800`}
             onClick={() => setPage(index + 1)}
           >
             <div className="page-link text-slate-800 font-medium dark:text-white">

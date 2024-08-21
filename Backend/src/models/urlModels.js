@@ -53,9 +53,19 @@ const modifyRegisteredUrl = async (longUrl, title, url_id, id) => {
   return urlUpdated;
 };
 
+const userUrlDeleted = async (url_id, id) => {
+  const values = [url_id, id];
+
+  const query = "DELETE FROM url WHERE id = $1 AND user_id = $2";
+
+  const { rows: data } = await pool.query(query, values);
+  return data;
+};
+
 export const urlModels = {
   createUrl,
   originalURL,
   userUrls,
   modifyRegisteredUrl,
+  userUrlDeleted,
 };
