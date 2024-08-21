@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import usePostUrl from "../../../hooks/users/usePostUrl";
 import useGetUrl from "../../../hooks/urls/useGetUrl";
 import config from "../../../config/config";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import DefaultButton from "../buttons/DefaultButton";
 import { IoIosAlert } from "react-icons/io";
 import { MdOutlineFileCopy } from "react-icons/md";
@@ -28,6 +28,7 @@ export default function UrlShortener() {
   const { urlParams } = useParams();
   const urlRegex = regex.urlRegex;
   const [isCopied, setIsCopied] = useState(false);
+  const location = useLocation();
 
   const handleSendLongUrl = (e) => {
     e.preventDefault();
@@ -77,6 +78,10 @@ export default function UrlShortener() {
       }
     }
   }, [urlParams, originalUrl]);
+
+  useEffect(() => {
+    dispatch(resetUrlErrors());
+  }, [location.pathname]);
 
   return (
     <section className="url-shortener__container flex items-center justify-center h-full p-4 w-full">

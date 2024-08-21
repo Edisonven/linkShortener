@@ -5,12 +5,13 @@ import {
   setUpdateUrlInfo,
   setLongUrlErrors,
   resetUrlErrors,
+  resetUrlForm,
 } from "../../features/url/urlSlice";
 import { regex } from "../../../utils/regex/regex";
 import { IoIosAlert } from "react-icons/io";
 import { useEffect, useState } from "react";
 import useGetUserLoggedUrls from "../../../hooks/users/useGetUserLoggedUrls";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 export default function EditMyUrl() {
   const { handleSubmit } = useFormSubmit(setUpdateUrlInfo);
@@ -23,6 +24,7 @@ export default function EditMyUrl() {
   const formatedID = Number(id);
   const { userURLS, handleGetUserUrls } = useGetUserLoggedUrls();
   const [urlData, setUrlData] = useState({});
+  const location = useLocation();
 
   useEffect(() => {
     if (formatedID && userURLS) {
@@ -82,10 +84,16 @@ export default function EditMyUrl() {
         value: urlData?.shorturl,
       })
     );
-  }, [userURLS, urlData, dispatch]);
+  }, [urlData]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetUrlForm());
+    };
+  }, [location.pathname]);
 
   return (
-    <section className="mt-[10px] sm:mt-[30px] max-w-[600px] mx-auto p-4">
+    <section className="mt-[10px] sm:mt-[30px] max-w-[650px] mx-auto p-4">
       <h1 className="text-slate-800 dark:text-white font-medium text-[30px] mb-2">
         Editar URL
       </h1>

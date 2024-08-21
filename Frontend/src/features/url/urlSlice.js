@@ -27,7 +27,9 @@ export const urlSlice = createSlice({
       };
     },
     resetUrlForm: (state) => {
+      state.shortUrl = "";
       state.longUrl = "";
+      state.title = "";
     },
     setUpdateUrlInfo: (state, action) => {
       state[action.payload.field] = action.payload.value;
