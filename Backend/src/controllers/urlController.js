@@ -76,6 +76,7 @@ const updateRegisteredUrl = async (req, res) => {
     const { id } = jwt.decode(token);
 
     const url = req.body;
+
     let { longUrl, title, url_id } = url;
 
     if (!longUrl || !url_id) {

@@ -14,6 +14,7 @@ import useGetUserLoggedUrls from "../../../hooks/users/useGetUserLoggedUrls";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import usePatchUrls from "../../../hooks/urls/usePatchUrls";
 import { Toaster, toast } from "sonner";
+import { FaCheck } from "react-icons/fa6";
 
 export default function EditMyUrl() {
   const { handleSubmit } = useFormSubmit(setUpdateUrlInfo);
@@ -78,10 +79,21 @@ export default function EditMyUrl() {
             },
           });
         }
+        toast("URL modificada exitosamente", {
+          icon: <FaCheck className="text-white text-[15px] sm:text-[25px]" />,
+          duration: 1400,
+          unstyled: true,
+          classNames: {
+            toast:
+              "bg-green-600 rounded shadow px-[10px] py-[15px] w-full flex items-center justify-center gap-3",
+            title: "text-white font-medium text-sm sm:text-base",
+          },
+        });
+
         dispatch(resetUrlForm());
         setTimeout(() => {
           navigate("/my-profile");
-        }, 2000);
+        }, 1500);
       } catch (error) {
         console.error(error.message);
         throw error;

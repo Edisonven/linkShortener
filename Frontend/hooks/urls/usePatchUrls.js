@@ -6,7 +6,7 @@ const usePatchUrls = () => {
   const token = useSelector((state) => state.userToken.token);
   const [loading, setLoading] = useState(false);
 
-  const handleUpdateUrls = async (longUrl, title, id) => {
+  const handleUpdateUrls = async (longUrl, title, url_id) => {
     setLoading(true);
     try {
       if (token) {
@@ -19,7 +19,7 @@ const usePatchUrls = () => {
           body: JSON.stringify({
             longUrl,
             title,
-            id,
+            url_id,
           }),
         });
 
