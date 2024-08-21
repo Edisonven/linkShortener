@@ -7,14 +7,19 @@ import { IoMdCopy } from "react-icons/io";
 import { AiOutlineEdit } from "react-icons/ai";
 import { TbTrashXFilled } from "react-icons/tb";
 import { formatedDate } from "../../../utils/formats/formatDate";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function MyProfile() {
   const { handleGetUserUrls, loading, userURLS } = useGetUserLoggedUrls();
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleGetUserUrls();
   }, []);
+
+  const handleNavigateToEdit = () => {
+    navigate("/edit-url");
+  };
 
   return (
     <section className="mt-[10px] sm:mt-[30px] max-w-[1200px] mx-auto p-4">
@@ -30,7 +35,7 @@ export default function MyProfile() {
               <h3 className="text-slate-800 dark:text-white text-xl mb-3 font-normal">
                 Enlaces totales : <span>{userURLS.length}</span>
               </h3>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-4">
                 {userURLS.map((url) => (
                   <div
                     key={url.id}
@@ -62,9 +67,12 @@ export default function MyProfile() {
                       </p>
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3">
-                      <IoMdCopy className="text-slate-800 dark:text-gray-400 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-slate-300 duration-300" />
-                      <AiOutlineEdit className="text-blue-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-blue-200 duration-300" />
-                      <TbTrashXFilled className="text-red-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1 p-1 rounded-sm hover:bg-red-200 duration-300" />
+                      <IoMdCopy className="text-slate-800 dark:text-gray-400 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-slate-300 duration-300 transition-colors" />
+                      <AiOutlineEdit
+                        onClick={handleNavigateToEdit}
+                        className="text-blue-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-blue-200 duration-300 transition-colors"
+                      />
+                      <TbTrashXFilled className="text-red-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1 p-1 rounded-sm hover:bg-red-200 duration-300 transition-colors" />
                     </div>
                   </div>
                 ))}
