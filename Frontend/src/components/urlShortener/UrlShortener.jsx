@@ -105,7 +105,7 @@ export default function UrlShortener() {
               name="longUrl"
               type="text"
               placeholder="Ingresa una URL larga... ¡gestiona tus enlaces de manera más eficiente y comparte!"
-              className="w-full flex border-none outline h-[58px] outline-1 dark:bg-[#161B22] dark:text-white outline-slate-300 rounded-[50px] p-2 focus:outline-slate-500 focus:dark:outline-white"
+              className="w-full flex border-none outline h-[58px] outline-2 dark:bg-[#161B22] dark:text-white outline-slate-300 rounded-[50px] p-2 focus:outline-slate-500 focus:dark:outline-white"
             />
             <div className="flex items-center flex-col justify-between sm:flex-row">
               {errors.longUrl && (
@@ -118,7 +118,7 @@ export default function UrlShortener() {
               )}
               {shortedUrl && (
                 <div className="flex items-center flex-col lg:flex-row justify-between w-full relative">
-                  <span className="text-slate-800 dark:text-white max-w-[300px] sm:max-w-full ml-4 text-ellipsis overflow-hidden whitespace-nowrap mt-2">
+                  <span className="text-slate-800 dark:text-white max-w-[300px] sm:max-w-[600px] ml-4 text-ellipsis overflow-hidden whitespace-nowrap mt-2">
                     <span className="font-medium">Original:</span> {originalUrl}
                   </span>
                   <motion.div
