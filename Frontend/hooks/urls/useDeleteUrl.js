@@ -37,6 +37,7 @@ const useDeleteUrl = () => {
   return {
     handleDeleteUrl,
     deleteLoading,
+    setDeleteLoading,
   };
 };
 

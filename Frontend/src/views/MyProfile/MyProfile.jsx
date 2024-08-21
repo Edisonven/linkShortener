@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useGetUserLoggedUrls from "../../../hooks/users/useGetUserLoggedUrls";
 import { GoUnlink } from "react-icons/go";
 import DefaultButton from "../../components/buttons/DefaultButton";
@@ -10,6 +10,8 @@ import { formatedDate } from "../../../utils/formats/formatDate";
 import { Link, useNavigate } from "react-router-dom";
 import ProfilePagination from "./ProfilePagination";
 import useDeleteUrl from "../../../hooks/urls/useDeleteUrl";
+import DeleteConfirmModal from "../../components/modals/DeleteConfirmModal";
+import { AnimatePresence } from "framer-motion";
 
 export default function MyProfile() {
   const {
@@ -24,11 +26,15 @@ export default function MyProfile() {
     setOrderBy,
   } = useGetUserLoggedUrls();
   const navigate = useNavigate();
-  const { handleDeleteUrl, deleteLoading } = useDeleteUrl();
+  const [urlIdToDelete, seturlIdToDelete] = useState("");
+
+  const handleConfirmToDelete = (id) => {
+    seturlIdToDelete(id);
+  };
 
   useEffect(() => {
     handleGetUserUrls();
-  }, [page, deleteLoading]);
+  }, [page, urlIdToDelete]);
 
   const handleNavigateToEdit = (id) => {
     navigate(`/edit-url/${id}`);
@@ -93,7 +99,7 @@ export default function MyProfile() {
                         className="text-blue-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-blue-200 duration-300 transition-colors"
                       />
                       <TbTrashXFilled
-                        onClick={() => handleDeleteUrl(url.id)}
+                        onClick={() => handleConfirmToDelete(url.id)}
                         className="text-red-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1 p-1 rounded-sm hover:bg-red-200 duration-300 transition-colors"
                       />
                     </div>
@@ -129,6 +135,14 @@ export default function MyProfile() {
         setOrderBy={setOrderBy}
         className="self-end mt-3"
       />
+      <AnimatePresence>
+        {urlIdToDelete ? (
+          <DeleteConfirmModal
+            urlIdToDelete={urlIdToDelete}
+            seturlIdToDelete={seturlIdToDelete}
+          />
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }
