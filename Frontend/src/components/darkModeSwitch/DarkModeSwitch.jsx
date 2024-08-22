@@ -21,16 +21,16 @@ export default function ThemeSwitcher() {
   }, []);
 
   return (
-    <div>
+    <div className="bg-slate-200 dark:bg-slate-800 p-1 rounded-full hover:brightness-90 transition-[filer] duration-300 shadow">
       {theme === "light" ? (
         <MdLightMode
           onClick={handleChangeTheme}
-          className="text-yellow-400 dark:text-slate-white cursor-pointer text-[25px] select-none"
+          className="text-yellow-500 dark:text-slate-white cursor-pointer text-[25px] select-none"
         />
       ) : (
         <MdDarkMode
           onClick={handleChangeTheme}
-          className="text-gray-600 dark:text-slate-white cursor-pointer text-[25px] select-none"
+          className="text-gray-400 dark:text-slate-white cursor-pointer text-[25px] select-none"
         />
       )}
     </div>
