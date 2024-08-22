@@ -51,6 +51,11 @@ export default function SignIn() {
       dispatch(setUserToken(data.token));
     } catch (error) {
       setShowToast(true);
+      setToastMessage("Error al ingresar, Intenta nuevamente.");
+      throw {
+        error,
+        message: error.message,
+      };
     } finally {
       setLoading(false);
     }
