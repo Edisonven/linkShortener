@@ -26,6 +26,7 @@ const useFetchUser = () => {
         setUser(data.user);
       } catch (error) {
         setError(error.message);
+        return { error: error.message };
       } finally {
         setLoading(false);
       }

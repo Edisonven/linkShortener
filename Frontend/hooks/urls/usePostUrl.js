@@ -37,6 +37,7 @@ const usePostUrl = () => {
       }
     } catch (error) {
       console.error(error.message);
+      return { error: error.message };
     } finally {
       setLoading(false);
     }

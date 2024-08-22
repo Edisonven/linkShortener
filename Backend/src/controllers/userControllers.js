@@ -63,7 +63,9 @@ const updateUserData = async (req, res) => {
   try {
     const { name } = req.body;
     if (!name) {
-      return res.status(401).json({ message: "New name is required" });
+      return res
+        .status(401)
+        .json({ message: "New name is required", code: 401 });
     }
 
     const authorization = req.header("Authorization");
