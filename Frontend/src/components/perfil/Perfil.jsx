@@ -54,6 +54,7 @@ export default function Perfil() {
   return (
     <section className="cursor-pointer relative">
       <DefaultButton
+        ref={btnRef}
         onClick={handleOpenModal}
         animated={false}
         className="flex items-center gap-1 text-white bg-slate-500 px-2 select-none rounded shadow dark:bg-slate-500 overflow-hidden relative"

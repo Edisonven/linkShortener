@@ -8,7 +8,10 @@ const registerUser = async (req, res) => {
     await userModels.createUser(user);
     return res.status(201).json({ message: "User created successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
+    if (error.code === 400) {
+      return res.status(400).json({ message: error.code });
+    }
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 

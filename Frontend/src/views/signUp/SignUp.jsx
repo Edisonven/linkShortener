@@ -48,19 +48,38 @@ export default function SignUp() {
         const errorData = await response.json();
         throw new Error(errorData.message || "Error data");
       }
+
       await response.json();
     } catch (error) {
       console.error(error.message);
-      toast("Error al registrar usuario, intenta nuevamente.", {
-        icon: <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />,
-        duration: 3000,
-        unstyled: true,
-        classNames: {
-          toast:
-            "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
-          title: "text-white font-medium text-sm sm:text-base",
-        },
-      });
+      if (error.message === "400") {
+        toast("El correo ya está registrado.", {
+          icon: (
+            <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />
+          ),
+          duration: 3000,
+          unstyled: true,
+          classNames: {
+            toast:
+              "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
+            title: "text-white font-medium text-sm sm:text-base",
+          },
+        });
+      } else {
+        toast("Error al registrar usuario, intenta nuevamente.", {
+          icon: (
+            <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />
+          ),
+          duration: 3000,
+          unstyled: true,
+          classNames: {
+            toast:
+              "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
+            title: "text-white font-medium text-sm sm:text-base",
+          },
+        });
+      }
+
       throw error;
     } finally {
       setLoading(false);

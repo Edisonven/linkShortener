@@ -14,14 +14,21 @@ const createUser = async (user) => {
     let { name, email, password } = user;
 
     if (!name || !email || !password) {
-      throw new Error("Not all parameters were provided");
+      throw {
+        error: "Not all parameters were provided",
+        code: 400,
+      };
     }
 
     const existingUser = await findUserByEmail(email);
 
     if (existingUser) {
-      throw new Error("This email account already exists");
+      throw {
+        error: "This email account already exists",
+        code: 400,
+      };
     }
+
     const hashedPassword = bCrypt.hashSync(password, 10);
 
     const values = [name, email, hashedPassword];
@@ -30,10 +37,14 @@ const createUser = async (user) => {
     const {
       rows: [userRegistered],
     } = await pool.query(query, values);
+
     return userRegistered;
   } catch (error) {
-    console.error("Error creating user:", error.message);
-    throw error;
+    console.error("Error creating user:", error.error || error.message);
+    throw {
+      error: error.error || "An unexpected error occurred",
+      code: error.code || 500,
+    };
   }
 };
 
