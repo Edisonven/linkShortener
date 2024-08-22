@@ -2,7 +2,12 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import "../buttons/DefaultButton.css";
 
-export default function DefaultButton({ children, onClick, className }) {
+export default function DefaultButton({
+  children,
+  onClick,
+  className,
+  animated = true,
+}) {
   const [ripples, setRipples] = useState([]);
 
   const createRipple = (event) => {
@@ -35,9 +40,11 @@ export default function DefaultButton({ children, onClick, className }) {
 
   return (
     <motion.button
-      whileHover={{ scale: 1.08 }}
-      whileTap={{ scale: 1 }}
-      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+      whileHover={animated ? { scale: 1.08 } : undefined}
+      whileTap={animated ? { scale: 1 } : undefined}
+      transition={
+        animated ? { type: "spring", stiffness: 400, damping: 17 } : undefined
+      }
       className={`default-button ${className}`}
       onClick={handleClick}
     >
