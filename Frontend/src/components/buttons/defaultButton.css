@@ -1,9 +1,11 @@
 .default-button {
   overflow: hidden;
+  cursor: pointer;
   outline: none;
 }
 
 .ripple {
+  pointer-events: none;
   position: absolute;
   width: 20px;
   height: 20px;

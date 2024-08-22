@@ -169,7 +169,7 @@ export default function UrlShortener() {
               )}
             </div>
             <DefaultButton
-              className="absolute top-[5px] right-[8px] default-button text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300 select-none"
+              className="absolute top-[5px] right-[8px] default-button text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300 select-none py-[12px] px-[20px] rounded-[30px]"
               type="submit"
             >
               Acortar URL
