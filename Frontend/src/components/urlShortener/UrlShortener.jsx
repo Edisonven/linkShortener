@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useFormSubmit from "../../../hooks/forms/useFormSubmit";
 import { regex } from "../../../utils/regex/regex";
 import { useEffect, useState } from "react";
-import usePostUrl from "../../../hooks/users/usePostUrl";
+import usePostUrl from "../../../hooks/urls/usePostUrl";
 import useGetUrl from "../../../hooks/urls/useGetUrl";
 import config from "../../../config/config";
 import { useLocation, useParams } from "react-router-dom";

@@ -11,6 +11,7 @@ import UrlShortener from "./components/urlShortener/UrlShortener";
 import NotFound from "./views/notFound/NotFound";
 import EditMyUrl from "./views/editUrl/EditMyUrl";
 import MyLinks from "./views/myLinks/MyLinks";
+import EditUserInfo from "./views/MyProfile/EditUserInfo";
 
 function App() {
   const token = useSelector((state) => state.userToken.token);
@@ -34,6 +35,10 @@ function App() {
           <Route
             path="/my-links"
             element={token ? <MyLinks /> : <Navigate to="/sign-in" />}
+          />
+          <Route
+            path="/edit-info"
+            element={token ? <EditUserInfo /> : <Navigate to="/sign-in" />}
           />
           <Route path="/:urlParams" element={<UrlShortener />} />
           <Route path="/*" element={<NotFound />} />

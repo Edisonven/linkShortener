@@ -89,7 +89,7 @@ export default function SignUp() {
   const handleSubmitData = async (e) => {
     e.preventDefault();
 
-    if (name.trim() === "") {
+    if (name.trim() === "" || name.trim().length < 10) {
       dispatch(
         setRegisterErrors({
           field: "name",
