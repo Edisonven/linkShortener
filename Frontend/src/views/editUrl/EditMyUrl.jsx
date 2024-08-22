@@ -182,7 +182,7 @@ export default function EditMyUrl() {
                 Título (opcional)
               </label>
               <input
-                value={title}
+                value={title || ""}
                 onChange={handleSubmit}
                 name="title"
                 className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white mt-1"
