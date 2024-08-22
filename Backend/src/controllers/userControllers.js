@@ -59,8 +59,26 @@ const getLoggedInUser = async (req, res) => {
   }
 };
 
+const updateUserData = async (req, res) => {
+  try {
+    const { name } = req.body;
+    if (!name) {
+      return res.status(401).json({ message: "New name is required" });
+    }
+
+    const authorization = req.header("Authorization");
+    const token = authorization.split("Bearer ")[1];
+    const { id } = jwt.decode(token, process.env.JWT_SECRET);
+    const user = await userModels.changeUserData(name, id);
+    res.status(200).json({ message: "User data updated successfully", user });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const userControllers = {
   registerUser,
   loginUser,
   getLoggedInUser,
+  updateUserData,
 };

@@ -76,9 +76,20 @@ const loggedInUser = async (id) => {
   return user;
 };
 
+const changeUserData = async (name, id) => {
+  const values = [name, id];
+  const query = "UPDATE users SET name = $1 WHERE id = $2";
+
+  const {
+    rows: [user],
+  } = await pool.query(query, values);
+  return user;
+};
+
 export const userModels = {
   createUser,
   findUserByEmail,
   verifyuser,
   loggedInUser,
+  changeUserData,
 };
