@@ -40,6 +40,10 @@ export default function MyProfile() {
     navigate(`/edit-url/${id}`);
   };
 
+  const handleRedirectToHome = () => {
+    navigate("/");
+  };
+
   return (
     <section className="mt-[10px] sm:mt-[30px] max-w-[1200px] mx-auto p-4 flex flex-col">
       <h1 className="text-slate-800 dark:text-white font-medium text-[30px] mb-2">
@@ -118,7 +122,10 @@ export default function MyProfile() {
                   Cuando comiences a acortar enlaces podrás gestionarlos dese
                   acá
                 </p>
-                <DefaultButton className="default-button text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 mt-6 dark:bg-gray-300">
+                <DefaultButton
+                  onClick={handleRedirectToHome}
+                  className="default-button text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 mt-6 dark:bg-gray-300 py-[12px] px-[20px] rounded-[30px] relative overflow-hidden"
+                >
                   Acortar
                 </DefaultButton>
               </div>
