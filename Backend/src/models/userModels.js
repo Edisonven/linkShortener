@@ -67,6 +67,22 @@ const verifyuser = async (email, password) => {
   return user;
 };
 
+const verifyUserPassword = async (password, email) => {
+  const values = [email];
+
+  const query = "SELECT * FROM users WHERE email = $1";
+
+  const {
+    rows: [userPassword],
+  } = await pool.query(query, values);
+
+  const comparePassword = bCrypt.compareSync(password, userPassword.password);
+
+  if (!comparePassword) {
+    throw { code: 401, message: "Invalid password" };
+  }
+};
+
 const loggedInUser = async (id) => {
   const values = [id];
   const query = "SELECT * FROM users WHERE id = $1";
@@ -86,10 +102,24 @@ const changeUserData = async (name, id) => {
   return user;
 };
 
+const changeUserPassword = async (newPassword, id) => {
+  const hashedPassword = bCrypt.hashSync(newPassword, 10);
+
+  const values = [hashedPassword, id];
+  const query = "UPDATE users SET password = $1 WHERE id = $2";
+
+  const {
+    rows: [userPassword],
+  } = await pool.query(query, values);
+  return userPassword;
+};
+
 export const userModels = {
   createUser,
   findUserByEmail,
   verifyuser,
   loggedInUser,
   changeUserData,
+  verifyUserPassword,
+  changeUserPassword,
 };

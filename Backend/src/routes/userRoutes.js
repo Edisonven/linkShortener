@@ -8,5 +8,6 @@ router.post("/register", userControllers.registerUser);
 router.post("/login", userControllers.loginUser);
 router.get("/user", verifyValidToken, userControllers.getLoggedInUser);
 router.patch("/user", verifyValidToken, userControllers.updateUserData);
+router.patch("/user/password", verifyValidToken, userControllers.updateUserPassword);
 
 export default router;

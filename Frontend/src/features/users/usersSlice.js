@@ -5,11 +5,13 @@ const initialRegisterState = {
   email: "",
   password: "",
   confirmPassword: "",
+  newPassword: "",
   errors: {
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
+    newPassword: "",
   },
 };
 
@@ -28,6 +30,7 @@ const registerSlice = createSlice({
       state.email = "";
       state.password = "";
       state.confirmPassword = "";
+      state.newPassword = "";
     },
     setResetRegisterErrors: (state) => {
       state.errors = {
@@ -35,6 +38,7 @@ const registerSlice = createSlice({
         email: "",
         password: "",
         confirmPassword: "",
+        newPassword: "",
       };
     },
   },

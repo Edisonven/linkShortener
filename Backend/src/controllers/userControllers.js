@@ -6,7 +6,7 @@ const registerUser = async (req, res) => {
   try {
     const user = req.body;
     await userModels.createUser(user);
-    return res.status(201).json({ message: "User created successfully" });
+    res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     if (error.code === 400) {
       return res.status(400).json({ message: error.code });
@@ -30,7 +30,7 @@ const loginUser = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
-    return res.status(200).json({
+    res.status(200).json({
       name: user.name,
       email: user.email,
       token,
@@ -53,7 +53,7 @@ const getLoggedInUser = async (req, res) => {
     const token = authorization.split("Bearer ")[1];
     const { id } = jwt.decode(token, process.env.JWT_SECRET);
     const user = await userModels.loggedInUser(id);
-    return res.status(200).json({ message: "user", user });
+    res.status(200).json({ message: "user", user });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -78,9 +78,37 @@ const updateUserData = async (req, res) => {
   }
 };
 
+const updateUserPassword = async (req, res) => {
+  try {
+    const { password, newPassword } = req.body;
+    if (!password || !newPassword) {
+      return res
+        .status(401)
+        .json({ message: "Not all parameters were provided" });
+    }
+
+    const authorization = req.header("Authorization");
+    const token = authorization.split("Bearer ")[1];
+    const { id, email } = jwt.decode(token, process.env.JWT_SECRET);
+
+    await userModels.verifyUserPassword(password, email);
+
+    await userModels.changeUserPassword(newPassword, id);
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    if (error.code === 401) {
+      return res.status(401).json({ message: "Invalid password" });
+    } else {
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+};
+
 export const userControllers = {
   registerUser,
   loginUser,
   getLoggedInUser,
   updateUserData,
+  updateUserPassword,
 };

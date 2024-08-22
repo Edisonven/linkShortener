@@ -1,9 +1,68 @@
+import { useDispatch, useSelector } from "react-redux";
 import DefaultButton from "../../components/buttons/DefaultButton";
+import {
+  setRegisterData,
+  setRegisterErrors,
+  setResetRegisterErrors,
+  resetRegisterForm,
+} from "../../features/users/usersSlice";
+import useFormSubmit from "../../../hooks/forms/useFormSubmit";
+import { useEffect } from "react";
 
 export default function EditUserPassword() {
+  const { password, newPassword, errors, confirmPassword } = useSelector(
+    (state) => state.registerReducer
+  );
+  const dispatch = useDispatch();
+  const { handleSubmit } = useFormSubmit(setRegisterData);
+
   const handleSendNewPassword = (e) => {
     e.preventDefault();
+
+    if (password.trim() === "") {
+      dispatch(
+        setRegisterErrors({
+          field: "password",
+          error: "Ingresa tu contraseña actual",
+        })
+      );
+    } else if (newPassword.trim() === "") {
+      dispatch(
+        setRegisterErrors({
+          field: "newPassword",
+          error: "Ingresa una contraseña nueva",
+        })
+      );
+    } else if (newPassword.length < 8) {
+      dispatch(
+        setRegisterErrors({
+          field: "newPassword",
+          error: "La contraseña debe ser mínimo de 8 caracteres",
+        })
+      );
+    } else if (newPassword !== confirmPassword) {
+      dispatch(
+        setRegisterErrors({
+          field: "confirmPassword",
+          error: "Las contraseñas no coinciden",
+        })
+      );
+    } else if (newPassword === password) {
+      dispatch(
+        setRegisterErrors({
+          field: "confirmPassword",
+          error: "La contraseña no puede ser igual a la actual",
+        })
+      );
+    } else {
+    }
   };
+
+  useEffect(() => {
+    if (password !== "" || newPassword !== " " || confirmPassword !== "") {
+      dispatch(setResetRegisterErrors());
+    }
+  }, [password, newPassword, confirmPassword]);
 
   return (
     <section className="mt-[10px] sm:mt-[30px] max-w-[1000px] mx-auto p-4">
@@ -17,7 +76,9 @@ export default function EditUserPassword() {
         >
           <div className="base-input__container">
             <input
-              name="name"
+              onChange={handleSubmit}
+              value={password}
+              name="password"
               className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
               type="password"
               placeholder=" "
@@ -25,13 +86,17 @@ export default function EditUserPassword() {
             <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
               Contraseña actual
             </span>
-            {/*     {errors.name && (
-              <span className="text-red-600 font-medium">{errors.name}.</span>
-            )} */}
+            {errors.password && (
+              <span className="text-red-600 font-medium">
+                {errors.password}.
+              </span>
+            )}
           </div>
           <div className="base-input__container">
             <input
-              name="name"
+              onChange={handleSubmit}
+              value={newPassword}
+              name="newPassword"
               className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
               type="password"
               placeholder=" "
@@ -39,13 +104,17 @@ export default function EditUserPassword() {
             <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
               Nueva contraseña
             </span>
-            {/*     {errors.name && (
-              <span className="text-red-600 font-medium">{errors.name}.</span>
-            )} */}
+            {errors.newPassword && (
+              <span className="text-red-600 font-medium">
+                {errors.newPassword}.
+              </span>
+            )}
           </div>
           <div className="base-input__container">
             <input
-              name="name"
+              onChange={handleSubmit}
+              value={confirmPassword}
+              name="confirmPassword"
               className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
               type="password"
               placeholder=" "
@@ -53,9 +122,11 @@ export default function EditUserPassword() {
             <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
               Confirmar contraseña
             </span>
-            {/*     {errors.name && (
-              <span className="text-red-600 font-medium">{errors.name}.</span>
-            )} */}
+            {errors.confirmPassword && (
+              <span className="text-red-600 font-medium">
+                {errors.confirmPassword}.
+              </span>
+            )}
           </div>
           <div className="mt-4">
             <DefaultButton className="default-button w-[max-content] text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300 select-none px-[15px] py-[10px] rounded-[30px] relative overflow-hidden">
