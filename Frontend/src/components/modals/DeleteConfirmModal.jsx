@@ -1,6 +1,6 @@
 import useDeleteUrl from "../../../hooks/urls/useDeleteUrl";
 import DefaultButton from "../buttons/DefaultButton";
-import "../modals/DeleteConfirmModal.css";
+import "../modals/deleteConfirmModal.css";
 import { motion } from "framer-motion";
 
 export default function DeleteConfirmModal({
