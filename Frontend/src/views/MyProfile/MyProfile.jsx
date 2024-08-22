@@ -32,6 +32,7 @@ export default function MyProfile() {
             Editar información personal
           </Link>
           <Link
+            to="/edit-password"
             aria-label="Editar información del usuario"
             className="text-slate-800 dark:text-white font-normal flex items-center gap-2 hover:text-teal-600 dark:hover:text-teal-400"
           >

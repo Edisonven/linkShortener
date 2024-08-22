@@ -12,6 +12,7 @@ import NotFound from "./views/notFound/NotFound";
 import EditMyUrl from "./views/editUrl/EditMyUrl";
 import MyLinks from "./views/myLinks/MyLinks";
 import EditUserInfo from "./views/MyProfile/EditUserInfo";
+import EditUserPassword from "./views/MyProfile/EditUserPassword";
 
 function App() {
   const token = useSelector((state) => state.userToken.token);
@@ -39,6 +40,10 @@ function App() {
           <Route
             path="/edit-info"
             element={token ? <EditUserInfo /> : <Navigate to="/sign-in" />}
+          />
+          <Route
+            path="/edit-password"
+            element={token ? <EditUserPassword /> : <Navigate to="/sign-in" />}
           />
           <Route path="/:urlParams" element={<UrlShortener />} />
           <Route path="/*" element={<NotFound />} />
