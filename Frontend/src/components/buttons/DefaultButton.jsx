@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import "../buttons/DefaultButton.css";
+import "../buttons/defaultButton.css";
 
 export default function DefaultButton({
   children,
