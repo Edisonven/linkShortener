@@ -1,17 +1,54 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
+import "../buttons/DefaultButton.css";
 
 export default function DefaultButton({ children, onClick, className }) {
+  const [ripples, setRipples] = useState([]);
+
+  const createRipple = (event) => {
+    const button = event.currentTarget;
+    const rect = button.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const newRipple = {
+      x,
+      y,
+      key: Date.now(),
+    };
+
+    setRipples((prevRipples) => [...prevRipples, newRipple]);
+
+    setTimeout(() => {
+      setRipples((prevRipples) =>
+        prevRipples.filter((ripple) => ripple.key !== newRipple.key)
+      );
+    }, 600);
+  };
+
+  const handleClick = (event) => {
+    createRipple(event);
+    if (onClick) {
+      onClick(event);
+    }
+  };
+
   return (
     <motion.button
-      whileHover={{
-        scale: 1.08,
-      }}
+      whileHover={{ scale: 1.08 }}
       whileTap={{ scale: 1 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       className={`default-button ${className}`}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {children}
+      {ripples.map((ripple) => (
+        <span
+          key={ripple.key}
+          className="ripple"
+          style={{ left: ripple.x, top: ripple.y }}
+        />
+      ))}
     </motion.button>
   );
 }
