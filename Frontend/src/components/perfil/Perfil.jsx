@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoIosLogOut } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
 import useFetchUser from "../../../hooks/users/useFetchUser";
+import DefaultButton from "../buttons/DefaultButton";
 
 export default function Perfil() {
   const dispatch = useDispatch();
@@ -52,11 +53,10 @@ export default function Perfil() {
 
   return (
     <section className="cursor-pointer relative">
-      <motion.div
-        whileTap={{ scale: 0.9 }}
-        ref={btnRef}
+      <DefaultButton
         onClick={handleOpenModal}
-        className="flex items-center gap-1 text-white bg-slate-500 px-2 select-none rounded shadow dark:bg-slate-500"
+        animated={false}
+        className="flex items-center gap-1 text-white bg-slate-500 px-2 select-none rounded shadow dark:bg-slate-500 overflow-hidden relative"
       >
         {loading ? (
           ""
@@ -67,26 +67,29 @@ export default function Perfil() {
           </p>
         )}
         <IoIosArrowDown />
-      </motion.div>
+      </DefaultButton>
       <AnimatePresence>
         {openModal && (
           <motion.div
             ref={modalRef}
-            className="modal bg-white dark:bg-[#161b22] dark:text-white absolute top-[55px] right-[0] w-[150px] h-[80px] rounded shadow flex items-center justify-center flex-col gap-2 p-5"
+            className="modal bg-white dark:bg-[#161b22] dark:text-white absolute top-[55px] right-[0] w-[150px]  rounded shadow flex items-center justify-center flex-col gap-2 px-2 py-3"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.2 }}
             style={{ originX: 1, originY: 0 }}
           >
-            <Link to="/my-profile" className="font-medium">
+            <Link
+              to="/my-profile"
+              className="font-medium hover:bg-[#0000001c] w-full text-center rounded p-1"
+            >
               Mi perfil
             </Link>
             <hr className="w-full" />
-            <div className="flex items-center gap-1 mt-1">
+            <div className="flex items-center justify-center gap-1 mt-1 hover:bg-[#0000001c] w-full rounded">
               <button
                 onClick={handleCloseSesion}
-                className="text-sm font-medium"
+                className="text-sm font-medium p-1"
               >
                 Cerrar sesión
               </button>

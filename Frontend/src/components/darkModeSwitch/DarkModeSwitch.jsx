@@ -22,17 +22,14 @@ export default function ThemeSwitcher() {
   }, []);
 
   return (
-    <DefaultButton className="default-button bg-slate-200 dark:bg-slate-800 p-1 rounded-full hover:brightness-90 transition-[filer] duration-300 shadow relative">
+    <DefaultButton
+      onClick={handleChangeTheme}
+      className="default-button bg-slate-200 dark:bg-slate-800 p-1 rounded-full hover:brightness-90 transition-[filer] duration-300 shadow relative"
+    >
       {theme === "light" ? (
-        <MdLightMode
-          onClick={handleChangeTheme}
-          className="text-yellow-500 dark:text-slate-white cursor-pointer text-[25px] select-none"
-        />
+        <MdLightMode className="text-yellow-500 dark:text-slate-white cursor-pointer text-[25px] select-none w-full h-full" />
       ) : (
-        <MdDarkMode
-          onClick={handleChangeTheme}
-          className="text-gray-400 dark:text-slate-white cursor-pointer text-[25px] select-none"
-        />
+        <MdDarkMode className="text-gray-400 dark:text-slate-white cursor-pointer text-[25px] select-none w-full h-full" />
       )}
     </DefaultButton>
   );

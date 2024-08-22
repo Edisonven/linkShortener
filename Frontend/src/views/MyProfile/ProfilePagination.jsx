@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { useLocation } from "react-router-dom";
+import DefaultButton from "../../components/buttons/DefaultButton";
 
 export default function ProfilePagination({
   className,
@@ -40,15 +41,16 @@ export default function ProfilePagination({
   return (
     <section className={className}>
       <div className="flex items-center gap-3">
-        <button
+        <DefaultButton
+          animated={false}
           onClick={handlePrev}
           className={`page-item ${
             page === 1 ? "hidden" : ""
-          } flex items-center hover:bg-slate-200 py-1 px-2 rounded transition duration-300 select-none text-slate-800 dark:text-white font-medium`}
+          } flex items-center hover:bg-slate-200 py-1 px-2 rounded transition duration-300 select-none text-slate-800 dark:text-white font-medium relative overflow-hidden dark:hover:bg-slate-700`}
         >
           <IoIosArrowBack />
           Anterior
-        </button>
+        </DefaultButton>
 
         {[...Array(totalPages)].map((_, index) => (
           <div
@@ -64,15 +66,16 @@ export default function ProfilePagination({
           </div>
         ))}
 
-        <button
+        <DefaultButton
+          animated={false}
           onClick={handleNext}
           className={`page-item ${
             page === totalPages ? "disabled" : ""
-          } flex items-center hover:bg-slate-200 py-1 px-2 rounded transition duration-300 select-none text-slate-800 dark:text-white font-medium`}
+          } flex items-center hover:bg-slate-200 py-1 px-2 rounded transition duration-300 select-none text-slate-800 dark:text-white font-medium relative overflow-hidden dark:hover:bg-slate-700`}
         >
           Siguiente
           <IoIosArrowForward />
-        </button>
+        </DefaultButton>
       </div>
     </section>
   );

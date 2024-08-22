@@ -52,7 +52,7 @@ export default function MyProfile() {
           {userURLS.length > 0 ? (
             <div className="bg-white dark:bg-[#161B22] shadow rounded p-4">
               <h3 className="text-slate-800 dark:text-white text-xl mb-3 font-normal">
-                Enlaces totales: <span>{userURLS.length}</span>
+                Enlaces totales: <span>{total}</span>
               </h3>
               <div className="flex flex-col gap-4">
                 {userURLS.map((url) => (
