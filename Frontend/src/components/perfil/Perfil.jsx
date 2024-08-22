@@ -86,6 +86,12 @@ export default function Perfil() {
             >
               Mi perfil
             </Link>
+            <Link
+              to="/my-links"
+              className="font-medium hover:bg-[#0000001c] w-full text-center rounded p-1"
+            >
+              Mis enlaces
+            </Link>
             <hr className="w-full" />
             <div className="flex items-center justify-center gap-1 mt-1 hover:bg-[#0000001c] w-full rounded">
               <button

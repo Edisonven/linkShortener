@@ -10,6 +10,7 @@ import { Navigate } from "react-router-dom";
 import UrlShortener from "./components/urlShortener/UrlShortener";
 import NotFound from "./views/notFound/NotFound";
 import EditMyUrl from "./views/editUrl/EditMyUrl";
+import MyLinks from "./views/myLinks/MyLinks";
 
 function App() {
   const token = useSelector((state) => state.userToken.token);
@@ -29,6 +30,10 @@ function App() {
           <Route
             path="/edit-url/:id"
             element={token ? <EditMyUrl /> : <Navigate to="/sign-in" />}
+          />
+          <Route
+            path="/my-links"
+            element={token ? <MyLinks /> : <Navigate to="/sign-in" />}
           />
           <Route path="/:urlParams" element={<UrlShortener />} />
           <Route path="/*" element={<NotFound />} />
