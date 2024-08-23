@@ -21,7 +21,11 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <p className="text-slate-800 dark:text-white font-semibold">Short</p>
           <figure className="cursor-pointer" onClick={handleNavigateToHome}>
-            <img className="w-full max-w-[50px]" src={logo} alt="" />
+            <img
+              className="w-full max-w-[50px] hover:scale-110 transition duration-300"
+              src={logo}
+              alt=""
+            />
           </figure>
           <p className="text-slate-800 dark:text-white font-semibold">URL</p>
         </div>
