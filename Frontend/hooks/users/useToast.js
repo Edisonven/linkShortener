@@ -5,10 +5,18 @@ const useToast = () => {
     toast(message, {
       duration: duration,
       unstyled: true,
+      style: {
+        backgroundColor: error ? "#DC2626" : "#16A34A",
+        borderRadius: "8px",
+        boxShadow: "0 2px 10px rgba(0, 0, 0, 0.15)",
+        padding: "15px 10px",
+        width: "400px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "8px",
+      },
       classNames: {
-        toast: `${
-          error ? "bg-red-600" : "bg-green-600"
-        } rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2`,
         title: "text-white font-medium text-sm sm:text-base",
       },
     });
