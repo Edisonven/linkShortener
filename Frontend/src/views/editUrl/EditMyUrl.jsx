@@ -92,7 +92,7 @@ export default function EditMyUrl() {
 
         dispatch(resetUrlForm());
         setTimeout(() => {
-          navigate("/my-profile");
+          navigate("/my-links");
         }, 1500);
       } catch (error) {
         console.error(error.message);
@@ -214,7 +214,7 @@ export default function EditMyUrl() {
             </div>
             <DefaultButton
               onClick={handleSendUpdatedInfo}
-              className="default-button w-[max-content] text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300 select-none"
+              className="default-button w-[max-content] text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300 select-none px-[15px] py-[10px] rounded-[30px] relative overflow-hidden"
             >
               Actualizar
             </DefaultButton>

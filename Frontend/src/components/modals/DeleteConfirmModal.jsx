@@ -39,13 +39,13 @@ export default function DeleteConfirmModal({
           <div className="flex items-center justify-center gap-3">
             <DefaultButton
               onClick={cancelDelete}
-              className="text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300 select-none py-[10px] px-[20px] rounded-[30px]"
+              className="text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300 select-none py-[10px] px-[20px] rounded-[30px] relative overflow-hidden"
             >
               Cancelar
             </DefaultButton>
             <DefaultButton
               onClick={() => confirmDelete(urlIdToDelete)}
-              className="text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300 select-none py-[10px] px-[20px] rounded-[30px]"
+              className="text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300 select-none py-[10px] px-[20px] rounded-[30px] relative overflow-hidden"
             >
               Confirmar
             </DefaultButton>
