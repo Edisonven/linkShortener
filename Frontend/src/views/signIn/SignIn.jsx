@@ -17,6 +17,7 @@ import { regex } from "../../../utils/regex/regex.js";
 import config from "../../../config/config.js";
 import InputField from "../../components/input/InputField.jsx";
 import DefaultButton from "../../components/buttons/DefaultButton.jsx";
+import useToast from "../../../hooks/users/useToast.js";
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const { handleSubmit } = useFormSubmit(setLoginData);
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const handleloginRegisteredUser = async () => {
     setLoading(true);
@@ -45,18 +47,9 @@ export default function SignIn() {
         } else if (errorData.message === "Invalid credentials") {
           message = "Usuario o contraseña inválidos.";
         }
-        toast(message, {
-          icon: (
-            <IoIosAlert className="text-white text-[15px] sm:text-[25px]" />
-          ),
-          duration: 2000,
-          unstyled: true,
-          classNames: {
-            toast:
-              "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
-            title: "text-white font-medium text-sm sm:text-base",
-          },
-        });
+
+        showToast({ message, error: true, duration: 2000 });
+
         return false;
       }
 
@@ -64,15 +57,10 @@ export default function SignIn() {
       dispatch(setUserToken(data.token));
       return true;
     } catch (error) {
-      toast("Error al ingresar, intenta nuevamente.", {
-        icon: <IoIosAlert className="text-white text-[15px] sm:text-[25px]" />,
+      showToast({
+        message: "Error al ingresar, intenta nuevamente",
+        error: true,
         duration: 2000,
-        unstyled: true,
-        classNames: {
-          toast:
-          "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
-        title: "text-white font-medium text-sm sm:text-base",
-        },
       });
     } finally {
       setLoading(false);
