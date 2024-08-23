@@ -27,7 +27,6 @@ export default function SignIn() {
   const [showToast, setShowToast] = useState(false);
   const { handleSubmit } = useFormSubmit(setLoginData);
   const navigate = useNavigate();
-
   const handleloginRegisteredUser = async () => {
     setLoading(true);
     try {
@@ -39,23 +38,26 @@ export default function SignIn() {
           password,
         }),
       });
+
       if (!response.ok) {
         const errorData = await response.json();
         if (errorData.message === "User not found") {
           setToastMessage(`El usuario ${email} no está registrado.`);
+          setShowToast(true);
+          return false;
         } else if (errorData.message === "Invalid credentials") {
           setToastMessage("Usuario o contraseña inválidos.");
+          setShowToast(true);
+          return false;
         }
       }
+
       const data = await response.json();
       dispatch(setUserToken(data.token));
+      return true;
     } catch (error) {
+      setToastMessage("Error al ingresar, intenta nuevamente.");
       setShowToast(true);
-      setToastMessage("Error al ingresar, Intenta nuevamente.");
-      throw {
-        error,
-        message: error.message,
-      };
     } finally {
       setLoading(false);
     }
@@ -76,28 +78,30 @@ export default function SignIn() {
       setShowToast(false);
     }
   }, [showToast, toastMessage]);
-
   const handleSubmitData = async (e) => {
     e.preventDefault();
 
     if (email.trim() === "") {
       dispatch(setLoginErrors({ field: "email", error: "Ingresa tu correo" }));
-    } else if (!emailRegex.test(email)) {
+      return;
+    }
+    if (!emailRegex.test(email)) {
       dispatch(
         setLoginErrors({ field: "email", error: "Ingresa un correo válido" })
       );
-    } else if (password.trim() === "") {
+      return;
+    }
+    if (password.trim() === "") {
       dispatch(
         setLoginErrors({ field: "password", error: "Ingresa tu contraseña" })
       );
-    } else {
-      await handleloginRegisteredUser();
+      return;
+    }
+
+    const loginSuccessful = await handleloginRegisteredUser();
+    if (loginSuccessful) {
       dispatch(resetLoginForm());
-      if (loading) {
-        return;
-      } else {
-        navigate("/");
-      }
+      navigate("/");
     }
   };
 

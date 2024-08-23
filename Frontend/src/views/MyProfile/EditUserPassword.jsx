@@ -5,9 +5,15 @@ import {
   setRegisterErrors,
   setResetRegisterErrors,
   resetRegisterForm,
+  resetToken,
 } from "../../features/users/usersSlice";
 import useFormSubmit from "../../../hooks/forms/useFormSubmit";
 import { useEffect } from "react";
+import usePathcUserPassword from "../../../hooks/users/usePatchUserPassword";
+import { toast, Toaster } from "sonner";
+import { FaCheck } from "react-icons/fa";
+import { IoIosAlert } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 export default function EditUserPassword() {
   const { password, newPassword, errors, confirmPassword } = useSelector(
@@ -15,8 +21,10 @@ export default function EditUserPassword() {
   );
   const dispatch = useDispatch();
   const { handleSubmit } = useFormSubmit(setRegisterData);
+  const { handleUpdateUserPassword } = usePathcUserPassword();
+  const navigate = useNavigate();
 
-  const handleSendNewPassword = (e) => {
+  const handleSendNewPassword = async (e) => {
     e.preventDefault();
 
     if (password.trim() === "") {
@@ -55,11 +63,56 @@ export default function EditUserPassword() {
         })
       );
     } else {
+      const data = await handleUpdateUserPassword(password, newPassword);
+      if (data?.error === "Invalid password") {
+        return toast("La contraseña actual es incorrecta", {
+          icon: (
+            <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />
+          ),
+          duration: 3000,
+          unstyled: true,
+          classNames: {
+            toast:
+              "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
+            title: "text-white font-medium text-sm sm:text-base",
+          },
+        });
+      } else if (data?.error) {
+        return toast("Ha ocurrido un error, intenta nuevamente", {
+          icon: (
+            <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />
+          ),
+          duration: 3000,
+          unstyled: true,
+          classNames: {
+            toast:
+              "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
+            title: "text-white font-medium text-sm sm:text-base",
+          },
+        });
+      }
+
+      toast("Contraseña actualizada con éxito", {
+        icon: <FaCheck className="text-white text-[15px] sm:text-[25px]" />,
+        duration: 1500,
+        unstyled: true,
+        classNames: {
+          toast:
+            "bg-green-600 rounded shadow px-[10px] py-[15px] w-full flex items-center justify-center gap-3",
+          title: "text-white font-medium text-sm sm:text-base",
+        },
+      });
+      setTimeout(() => {
+        resetRegisterForm();
+        dispatch(resetToken());
+        localStorage.removeItem("short-url");
+        navigate("/");
+      }, 1500);
     }
   };
 
   useEffect(() => {
-    if (password !== "" || newPassword !== " " || confirmPassword !== "") {
+    if (password !== "" || newPassword !== "" || confirmPassword !== "") {
       dispatch(setResetRegisterErrors());
     }
   }, [password, newPassword, confirmPassword]);
@@ -135,6 +188,7 @@ export default function EditUserPassword() {
           </div>
         </form>
       </div>
+      <Toaster position="bottom-center" />
     </section>
   );
 }
