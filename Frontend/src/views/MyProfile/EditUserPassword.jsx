@@ -96,6 +96,10 @@ export default function EditUserPassword() {
     }
   }, [password, newPassword, confirmPassword]);
 
+  useEffect(() => {
+    dispatch(resetRegisterForm());
+  }, []);
+
   return (
     <section className="mt-[10px] sm:mt-[30px] max-w-[1000px] mx-auto p-4">
       <div className="max-w-[600px] mx-auto p-6 shadow rounded bg-white dark:bg-[#161B22]">

@@ -1,7 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { BiLink } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import {setLoginData,setLoginErrors,setResetLoginErrors,setUserToken,resetLoginForm,} from "../../features/users/usersSlice.js";
+import {
+  setLoginData,
+  setLoginErrors,
+  setResetLoginErrors,
+  setUserToken,
+  resetLoginForm,
+} from "../../features/users/usersSlice.js";
 import { useEffect, useState } from "react";
 import { Toaster } from "sonner";
 import { RotatingLines } from "react-loader-spinner";
@@ -65,23 +71,16 @@ export default function SignIn() {
 
     if (email.trim() === "") {
       dispatch(setLoginErrors({ field: "email", error: "Ingresa tu correo" }));
-      return;
-    }
-    if (!emailRegex.test(email)) {
+    } else if (!emailRegex.test(email)) {
       dispatch(
         setLoginErrors({ field: "email", error: "Ingresa un correo válido" })
       );
-      return;
-    }
-    if (password.trim() === "") {
+    } else if (password.trim() === "") {
       dispatch(
         setLoginErrors({ field: "password", error: "Ingresa tu contraseña" })
       );
-      return;
-    }
-
-    const loginSuccessful = await handleloginRegisteredUser();
-    if (loginSuccessful) {
+    } else {
+      await handleloginRegisteredUser();
       dispatch(resetLoginForm());
       navigate("/");
     }
