@@ -103,7 +103,7 @@ export default function EditUserPassword() {
         },
       });
       setTimeout(() => {
-        resetRegisterForm();
+        dispatch(resetRegisterForm());
         dispatch(resetToken());
         localStorage.removeItem("short-url");
         navigate("/");
