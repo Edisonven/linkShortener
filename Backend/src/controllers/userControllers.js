@@ -105,10 +105,28 @@ const updateUserPassword = async (req, res) => {
   }
 };
 
+const deleteUserAccount = async (req, res) => {
+  try {
+    const { accepted } = req.body;
+    if (!accepted) {
+      return res.status(401).json({ message: "Parameter not provided" });
+    }
+
+    const authorization = req.header("Authorization");
+    const token = authorization.split("Bearer ")[1];
+    const { id } = jwt.decode(token, process.env.JWT_SECRET);
+    await userModels.deleteUser(id);
+    res.status(200).json({ message: "Account deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const userControllers = {
   registerUser,
   loginUser,
   getLoggedInUser,
   updateUserData,
   updateUserPassword,
+  deleteUserAccount,
 };

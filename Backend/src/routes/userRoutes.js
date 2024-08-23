@@ -9,5 +9,6 @@ router.post("/login", userControllers.loginUser);
 router.get("/user", verifyValidToken, userControllers.getLoggedInUser);
 router.patch("/user", verifyValidToken, userControllers.updateUserData);
 router.patch("/user/password", verifyValidToken, userControllers.updateUserPassword);
+router.delete("/user/delete", verifyValidToken, userControllers.deleteUserAccount);
 
 export default router;

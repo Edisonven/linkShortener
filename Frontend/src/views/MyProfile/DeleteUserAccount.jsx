@@ -1,6 +1,13 @@
+import { useState } from "react";
 import DefaultButton from "../../components/buttons/DefaultButton";
 
 export default function DeleteUserAccount() {
+  const [accepted, setAccepted] = useState(false);
+
+  const handleChange = (e) => {
+    setAccepted(e.target.checked);
+  };
+
   return (
     <section className="mt-[10px] sm:mt-[30px] max-w-[1000px] mx-auto p-4">
       <div className="max-w-[600px] mx-auto p-6 shadow rounded bg-white dark:bg-[#161B22]">
@@ -12,11 +19,11 @@ export default function DeleteUserAccount() {
           recuperarse.
         </p>
         <div className="flex items-baseline gap-2 mt-4">
-          <input type="checkbox" />
+          <input onChange={handleChange} value={accepted} type="checkbox" />
           <p className="text-slate-800 dark:text-white font-medium">
             Entiendo que al eliminar mi cuenta, se eliminará toso los enlaces
             cortos asociados a esta cuenta, asumiendo lo que esto implique en
-            mis datos almacenados.{" "}
+            mis datos almacenados.
             <span className="font-medium text-red-600">
               Esta acción es irreversible*.
             </span>

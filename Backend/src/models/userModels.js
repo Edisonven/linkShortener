@@ -114,6 +114,13 @@ const changeUserPassword = async (newPassword, id) => {
   return userPassword;
 };
 
+const deleteUser = async (id) => {
+  const values = [id];
+  const query = "DELETE FROM users WHERE id = $1";
+  const { rows: userDeleted } = await pool.query(query, values);
+  return userDeleted;
+};
+
 export const userModels = {
   createUser,
   findUserByEmail,
@@ -122,4 +129,5 @@ export const userModels = {
   changeUserData,
   verifyUserPassword,
   changeUserPassword,
+  deleteUser,
 };
