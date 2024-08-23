@@ -1,6 +1,5 @@
 import "../navbar/navbar.css";
 import { useNavigate } from "react-router-dom";
-import { BiLink } from "react-icons/bi";
 import DarkModeSwitch from "../darkModeSwitch/DarkModeSwitch";
 import { useSelector } from "react-redux";
 import Invited from "../invited/Invited";

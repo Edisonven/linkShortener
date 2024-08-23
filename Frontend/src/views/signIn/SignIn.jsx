@@ -15,6 +15,8 @@ import { RotatingLines } from "react-loader-spinner";
 import useFormSubmit from "../../../hooks/forms/useFormSubmit.js";
 import { regex } from "../../../utils/regex/regex.js";
 import config from "../../../config/config.js";
+import InputField from "../../components/input/InputField.jsx";
+import DefaultButton from "../../components/buttons/DefaultButton.jsx";
 
 export default function SignIn() {
   const dispatch = useDispatch();
@@ -133,42 +135,22 @@ export default function SignIn() {
             Por favor, ingresa tus datos para ingresar
           </p>
           <div className="flex flex-col gap-5 w-full">
-            <div className="base-input__container">
-              <input
-                onChange={handleSubmit}
-                value={email}
-                name="email"
-                className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-                type="text"
-                placeholder=" "
-              />
-              <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
-                Email
-              </span>
-              {errors.email && (
-                <span className="text-red-600 font-medium">
-                  {errors.email}.
-                </span>
-              )}
-            </div>
-            <div className="base-input__container">
-              <input
-                onChange={handleSubmit}
-                value={password}
-                name="password"
-                className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-                type="password"
-                placeholder=" "
-              />
-              <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
-                Contraseña
-              </span>
-              {errors.password && (
-                <span className="text-red-600 font-medium">
-                  {errors.password}.
-                </span>
-              )}
-            </div>
+            <InputField
+              handleSubmit={handleSubmit}
+              value={email}
+              name="email"
+              type="text"
+              placeholder="Email"
+              error={errors.email}
+            />
+            <InputField
+              handleSubmit={handleSubmit}
+              value={password}
+              name="password"
+              type="password"
+              placeholder="Contraseña"
+              error={errors.password}
+            />
           </div>
           <div>
             {loading ? (
@@ -182,9 +164,12 @@ export default function SignIn() {
                 ariaLabel="rotating-lines-loading"
               />
             ) : (
-              <button className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300">
+              <DefaultButton
+                animated={false}
+                className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 overflow-hidden relative"
+              >
                 Iniciar sesión
-              </button>
+              </DefaultButton>
             )}
           </div>
           <hr className="w-full" />

@@ -15,6 +15,9 @@ import { IoIosAlert } from "react-icons/io";
 import { FaCheck } from "react-icons/fa6";
 import useFormSubmit from "../../../hooks/forms/useFormSubmit.js";
 import config from "../../../config/config.js";
+import InputField from "../../components/input/InputField.jsx";
+import { regex } from "../../../utils/regex/regex.js";
+import DefaultButton from "../../components/buttons/DefaultButton.jsx";
 
 export default function SignUp() {
   const dispatch = useDispatch();
@@ -22,8 +25,7 @@ export default function SignUp() {
     (state) => state.registerReducer
   );
 
-  const emailRegexString = useSelector((state) => state.emailRegex);
-  const emailRegex = new RegExp(emailRegexString);
+  const emailRegex = regex.emailRegex;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { handleSubmit } = useFormSubmit(setRegisterData);
@@ -204,76 +206,38 @@ export default function SignUp() {
             Ingresa tus datos para crear tu cuenta
           </p>
           <div className="flex flex-col gap-5 w-full">
-            <div className="base-input__container">
-              <input
-                onChange={handleSubmit}
-                value={name}
-                name="name"
-                className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-                type="text"
-                placeholder=" "
-              />
-              <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
-                Nombre completo
-              </span>
-              {errors.name && (
-                <span className="text-red-600 font-medium">{errors.name}.</span>
-              )}
-            </div>
-            <div className="base-input__container">
-              <input
-                onChange={handleSubmit}
-                value={email}
-                name="email"
-                className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-                type="text"
-                placeholder=" "
-              />
-              <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
-                Email
-              </span>
-              {errors.email && (
-                <span className="text-red-600 font-medium">
-                  {errors.email}.
-                </span>
-              )}
-            </div>
-            <div className="base-input__container">
-              <input
-                onChange={handleSubmit}
-                value={password}
-                name="password"
-                className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-                type="password"
-                placeholder=" "
-              />
-              <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
-                Contraseña
-              </span>
-              {errors.password && (
-                <span className="text-red-600 font-medium">
-                  {errors.password}.
-                </span>
-              )}
-            </div>
-            <div className="base-input__container">
-              <input
-                onChange={handleSubmit}
-                value={confirmPassword}
-                name="confirmPassword"
-                className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-                type="password"
-                placeholder=" "
-              />
-              <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
-                Confirmar contraseña
-              </span>
-              {errors.confirmPassword && (
-                <span className="text-red-600 font-medium">
-                  {errors.confirmPassword}.
-                </span>
-              )}
-            </div>
+            <InputField
+              handleSubmit={handleSubmit}
+              value={name}
+              name="name"
+              type="text"
+              placeholder="Nombre completo"
+              error={errors.name}
+            />
+            <InputField
+              handleSubmit={handleSubmit}
+              value={email}
+              name="email"
+              type="text"
+              placeholder="Email"
+              error={errors.email}
+            />
+            <InputField
+              handleSubmit={handleSubmit}
+              value={password}
+              name="password"
+              type="password"
+              placeholder="Contraseña"
+              error={errors.password}
+            />
+            <InputField
+              handleSubmit={handleSubmit}
+              value={confirmPassword}
+              name="confirmPassword"
+              type="confirmPassword"
+              placeholder="Confirmar COntraseña"
+              error={errors.confirmPassword}
+            />
           </div>
           <div>
             {loading ? (
@@ -287,12 +251,12 @@ export default function SignUp() {
                 ariaLabel="rotating-lines-loading"
               />
             ) : (
-              <button
-                type="submit"
-                className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 hover:brightness-75 transition duration-300"
+              <DefaultButton
+                animated={false}
+                className="bg-teal-400 w-[180px] h-[45px] rounded-[50px] shadow text-slate-800 font-semibold dark:bg-slate-400 overflow-hidden relative"
               >
                 Registrarse
-              </button>
+              </DefaultButton>
             )}
           </div>
           <hr className="w-full" />

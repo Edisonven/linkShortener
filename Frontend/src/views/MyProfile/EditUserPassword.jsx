@@ -14,6 +14,7 @@ import { toast, Toaster } from "sonner";
 import { FaCheck } from "react-icons/fa";
 import { IoIosAlert } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import InputField from "../../components/input/InputField";
 
 export default function EditUserPassword() {
   const { password, newPassword, errors, confirmPassword } = useSelector(
@@ -127,60 +128,30 @@ export default function EditUserPassword() {
           onSubmit={handleSendNewPassword}
           className="mt-6 flex flex-col gap-6"
         >
-          <div className="base-input__container">
-            <input
-              onChange={handleSubmit}
-              value={password}
-              name="password"
-              className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-              type="password"
-              placeholder=" "
-            />
-            <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
-              Contraseña actual
-            </span>
-            {errors.password && (
-              <span className="text-red-600 font-medium">
-                {errors.password}.
-              </span>
-            )}
-          </div>
-          <div className="base-input__container">
-            <input
-              onChange={handleSubmit}
-              value={newPassword}
-              name="newPassword"
-              className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-              type="password"
-              placeholder=" "
-            />
-            <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
-              Nueva contraseña
-            </span>
-            {errors.newPassword && (
-              <span className="text-red-600 font-medium">
-                {errors.newPassword}.
-              </span>
-            )}
-          </div>
-          <div className="base-input__container">
-            <input
-              onChange={handleSubmit}
-              value={confirmPassword}
-              name="confirmPassword"
-              className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-              type="password"
-              placeholder=" "
-            />
-            <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
-              Confirmar contraseña
-            </span>
-            {errors.confirmPassword && (
-              <span className="text-red-600 font-medium">
-                {errors.confirmPassword}.
-              </span>
-            )}
-          </div>
+          <InputField
+            handleSubmit={handleSubmit}
+            value={password}
+            name="password"
+            type="password"
+            placeholder="Contraseña actual"
+            error={errors.password}
+          />
+          <InputField
+            handleSubmit={handleSubmit}
+            value={newPassword}
+            name="newPassword"
+            type="password"
+            placeholder="Nueva contraseña"
+            error={errors.newPassword}
+          />
+          <InputField
+            handleSubmit={handleSubmit}
+            value={confirmPassword}
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirmar contraseña"
+            error={errors.confirmPassword}
+          />
           <div className="mt-4">
             <DefaultButton className="default-button w-[max-content] text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300 select-none px-[15px] py-[10px] rounded-[30px] relative overflow-hidden">
               Guardar

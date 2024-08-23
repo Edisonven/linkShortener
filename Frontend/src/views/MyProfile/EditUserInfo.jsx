@@ -14,6 +14,7 @@ import { toast, Toaster } from "sonner";
 import { FaCheck } from "react-icons/fa";
 import { IoIosAlert } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import InputField from "../../components/input/InputField";
 
 export default function EditUserInfo() {
   const { user } = useFetchUser();
@@ -86,22 +87,14 @@ export default function EditUserInfo() {
           <h1 className="text-slate-800 dark:text-gray-300 mb-6 ml-2 font-medium">
             Correo asociado * <span>{user?.email}</span>
           </h1>
-          <div className="base-input__container">
-            <input
-              onChange={handleSubmit}
-              value={name}
-              name="name"
-              className="base-input bg-white dark:bg-[#161B22] text-slate-800 dark:text-white"
-              type="text"
-              placeholder=" "
-            />
-            <span className="base-input__paragraph text-[15px] text-gray-500 font-medium bg-white dark:bg-[#161B22] dark:text-white">
-              Nombre
-            </span>
-            {errors.name && (
-              <span className="text-red-600 font-medium">{errors.name}.</span>
-            )}
-          </div>
+          <InputField
+            handleSubmit={handleSubmit}
+            value={name}
+            name="name"
+            type="text"
+            placeholder="Nombre"
+            error={errors.name}
+          />
           <div className="mt-4">
             <DefaultButton className="default-button w-[max-content] text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300 select-none px-[15px] py-[10px] rounded-[30px] relative overflow-hidden">
               Guardar
