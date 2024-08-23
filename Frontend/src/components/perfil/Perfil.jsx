@@ -23,7 +23,6 @@ export default function Perfil() {
   const handleOpenModal = () => {
     setOpenModal(!openModal);
   };
-
   const handleClickOutside = (event) => {
     if (
       modalRef.current &&
