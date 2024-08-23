@@ -71,19 +71,19 @@ export default function SignIn() {
 
     if (email.trim() === "") {
       dispatch(setLoginErrors({ field: "email", error: "Ingresa tu correo" }));
-      return;
     } else if (!emailRegex.test(email)) {
       dispatch(
         setLoginErrors({ field: "email", error: "Ingresa un correo válido" })
       );
-      return;
     } else if (password.trim() === "") {
       dispatch(
         setLoginErrors({ field: "password", error: "Ingresa tu contraseña" })
       );
-      return;
     } else {
-      await handleloginRegisteredUser();
+      const data = await handleloginRegisteredUser();
+      if (!data) {
+        return;
+      }
       dispatch(resetLoginForm());
       navigate("/");
     }
