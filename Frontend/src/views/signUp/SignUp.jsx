@@ -8,11 +8,9 @@ import {
   resetRegisterForm,
   setResetRegisterErrors,
 } from "../../features/users/usersSlice.js";
-import { Toaster, toast } from "sonner";
+import { Toaster } from "sonner";
 import { useEffect, useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
-import { IoIosAlert } from "react-icons/io";
-import { FaCheck } from "react-icons/fa6";
 import useFormSubmit from "../../../hooks/forms/useFormSubmit.js";
 import config from "../../../config/config.js";
 import InputField from "../../components/input/InputField.jsx";
@@ -171,7 +169,7 @@ export default function SignUp() {
           <hr className="w-full" />
           <div className="my-2 flex items-center gap-3 mb-2">
             <p className="text-slate-800 font-medium dark:text-white">
-              Registrate con
+              Acceder con
             </p>
             <Link className="flex items-center gap-2 border-2 w-[max-content] px-3 py-1 rounded-md font-medium text-slate-800 dark:text-white hover:brightness-90">
               <img className="w-[22px]" src={google} alt="" />

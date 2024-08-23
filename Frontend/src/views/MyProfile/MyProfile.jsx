@@ -5,9 +5,8 @@ import { FaKey } from "react-icons/fa";
 import { TbTrashXFilled } from "react-icons/tb";
 
 export default function MyProfile() {
-  const { user } = useFetchUser();
+  const { user, error } = useFetchUser();
   const formatedName = user?.name ? user.name.split(" ") : [];
-
   const initial1 = formatedName[0]?.charAt(0).toUpperCase() || "";
   const initial2 = formatedName[1]?.charAt(0).toUpperCase() || "";
 

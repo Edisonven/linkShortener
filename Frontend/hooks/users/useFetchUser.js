@@ -6,7 +6,7 @@ const useFetchUser = () => {
   const token = useSelector((state) => state.userToken.token);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -19,14 +19,15 @@ const useFetchUser = () => {
         });
 
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Network response was not ok");
         }
 
         const data = await response.json();
+
         setUser(data.user);
       } catch (error) {
         setError(error.message);
-        return { error: error.message };
       } finally {
         setLoading(false);
       }
@@ -37,7 +38,7 @@ const useFetchUser = () => {
     }
   }, [token]);
 
-  return { user, loading, error };
+  return { user, loading, error, setError };
 };
 
 export default useFetchUser;
