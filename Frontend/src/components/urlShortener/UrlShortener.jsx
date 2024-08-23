@@ -18,11 +18,13 @@ import { IoIosAlert } from "react-icons/io";
 import { MdOutlineFileCopy } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Loader from "../loader/Loader";
 
 export default function UrlShortener() {
   const { longUrl, errors } = useSelector((state) => state.urls);
   const { handleSubmit } = useFormSubmit(setLongUrl);
-  const { handleGetLongUrl, shortedUrl, originalUrl, shortUrl } = useGetUrl();
+  const { handleGetLongUrl, shortedUrl, originalUrl, shortUrl, loading } =
+    useGetUrl();
   const { handleSendUrl } = usePostUrl();
   const dispatch = useDispatch();
   const { urlParams } = useParams();
@@ -112,62 +114,67 @@ export default function UrlShortener() {
               placeholder="Ingresa una URL larga... ¡gestiona tus enlaces de manera más eficiente y comparte!"
               className="w-full flex border-none outline h-[58px] outline-2 dark:bg-[#161B22] dark:text-white outline-slate-300 rounded-[50px] p-2 focus:outline-slate-500 focus:dark:outline-white"
             />
-            <div className="flex items-center flex-col justify-between sm:flex-row">
-              {errors.longUrl && (
-                <div className="flex items-center gap-1 mt-2 ml-3">
-                  <IoIosAlert className="text-red-600 text-[20px]" />
-                  <span className="text-red-600 font-medium sm:whitespace-nowrap">
-                    {errors.longUrl}.
-                  </span>
-                </div>
-              )}
-              {shortedUrl && (
-                <div className="flex items-center flex-col lg:flex-row justify-between w-full relative">
-                  <span className="text-slate-800 dark:text-white max-w-[300px] sm:max-w-[600px] ml-4 text-ellipsis overflow-hidden whitespace-nowrap mt-2">
-                    <span className="font-medium">Original:</span> {originalUrl}
-                  </span>
-                  <motion.div
-                    whileTap={{ scale: 0.98 }}
-                    className="w-[max-content] flex items-center gap-1 border-2 dark:border p-2 rounded-[30px] mt-3 sm:ml-auto sm:mr-5 cursor-pointer select-none dark:text-white hover:bg-gray-100 hover:dark:bg-slate-800 transition-colors duration-300"
-                  >
-                    <CopyToClipboard
-                      text={`${config.frontendUrl}/${shortedUrl}`}
+            {loading ? (
+              <Loader />
+            ) : (
+              <div className="flex items-center flex-col justify-between sm:flex-row">
+                {errors.longUrl && (
+                  <div className="flex items-center gap-1 mt-2 ml-3">
+                    <IoIosAlert className="text-red-600 text-[20px]" />
+                    <span className="text-red-600 font-medium sm:whitespace-nowrap">
+                      {errors.longUrl}.
+                    </span>
+                  </div>
+                )}
+                {shortedUrl && (
+                  <div className="flex items-center flex-col lg:flex-row justify-between w-full relative">
+                    <span className="text-slate-800 dark:text-white max-w-[300px] sm:max-w-[600px] ml-4 text-ellipsis overflow-hidden whitespace-nowrap mt-2">
+                      <span className="font-medium">Original:</span>{" "}
+                      {originalUrl}
+                    </span>
+                    <motion.div
+                      whileTap={{ scale: 0.98 }}
+                      className="w-[max-content] flex items-center gap-1 border-2 dark:border p-2 rounded-[30px] mt-3 sm:ml-auto sm:mr-5 cursor-pointer select-none dark:text-white hover:bg-gray-100 hover:dark:bg-slate-800 transition-colors duration-300"
                     >
-                      <div
-                        onClick={() => {
-                          setIsCopied(true);
-                          setTimeout(() => {
-                            setIsCopied(false);
-                          }, 2000);
-                        }}
-                        className="relative text-[20px] sm:text-[23px]"
+                      <CopyToClipboard
+                        text={`${config.frontendUrl}/${shortedUrl}`}
                       >
-                        {config.frontendUrl}/
-                        <span className="text-red-600 font-normal">
-                          {shortedUrl}
-                        </span>
-                        <AnimatePresence>
-                          {isCopied && (
-                            <motion.div
-                              initial={{ opacity: 0, scale: 0.9 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              exit={{ opacity: 0, scale: 0.9 }}
-                              transition={{ duration: 0.2 }}
-                              className="bg-white shadow rounded h-[50px] absolute top-[50px] right-[20px] p-3 flex items-center justify-center dark:bg-[#161B22] dark:text-white pointer-events-none"
-                            >
-                              <span className="text-slate-800 dark:text-white text-sm font-medium">
-                                texto copiado al portapapeles
-                              </span>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    </CopyToClipboard>
-                    <MdOutlineFileCopy className="text-[20px]" />
-                  </motion.div>
-                </div>
-              )}
-            </div>
+                        <div
+                          onClick={() => {
+                            setIsCopied(true);
+                            setTimeout(() => {
+                              setIsCopied(false);
+                            }, 2000);
+                          }}
+                          className="relative text-[20px] sm:text-[23px]"
+                        >
+                          {config.frontendUrl}/
+                          <span className="text-red-600 font-normal">
+                            {shortedUrl}
+                          </span>
+                          <AnimatePresence>
+                            {isCopied && (
+                              <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                transition={{ duration: 0.2 }}
+                                className="bg-white shadow rounded h-[50px] absolute top-[50px] right-[20px] p-3 flex items-center justify-center dark:bg-[#161B22] dark:text-white pointer-events-none"
+                              >
+                                <span className="text-slate-800 dark:text-white text-sm font-medium">
+                                  texto copiado al portapapeles
+                                </span>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      </CopyToClipboard>
+                      <MdOutlineFileCopy className="text-[20px]" />
+                    </motion.div>
+                  </div>
+                )}
+              </div>
+            )}
             <DefaultButton
               className="absolute top-[5px] right-[8px] default-button text-white font-medium dark:text-slate-800 flex items-center gap-1 bg-teal-700 dark:bg-gray-300 select-none py-[12px] px-[20px] rounded-[30px]"
               type="submit"
