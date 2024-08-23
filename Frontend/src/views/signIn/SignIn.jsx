@@ -25,61 +25,60 @@ export default function SignIn() {
   );
   const emailRegex = regex.emailRegex;
   const [loading, setLoading] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [showToast, setShowToast] = useState(false);
   const { handleSubmit } = useFormSubmit(setLoginData);
   const navigate = useNavigate();
+
   const handleloginRegisteredUser = async () => {
     setLoading(true);
     try {
       const response = await fetch(`${config.backendUrl}/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
+        body: JSON.stringify({ email, password }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
+        let message = "Error al ingresar, intenta nuevamente.";
         if (errorData.message === "User not found") {
-          setToastMessage(`El usuario ${email} no está registrado.`);
-          setShowToast(true);
-          return false;
+          message = `El usuario ${email} no está registrado.`;
         } else if (errorData.message === "Invalid credentials") {
-          setToastMessage("Usuario o contraseña inválidos.");
-          setShowToast(true);
-          return false;
+          message = "Usuario o contraseña inválidos.";
         }
+        toast(message, {
+          icon: (
+            <IoIosAlert className="text-white text-[15px] sm:text-[25px]" />
+          ),
+          duration: 2000,
+          unstyled: true,
+          classNames: {
+            toast:
+              "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
+            title: "text-white font-medium text-sm sm:text-base",
+          },
+        });
+        return false;
       }
 
       const data = await response.json();
       dispatch(setUserToken(data.token));
       return true;
     } catch (error) {
-      setToastMessage("Error al ingresar, intenta nuevamente.");
-      setShowToast(true);
+      toast("Error al ingresar, intenta nuevamente.", {
+        icon: <IoIosAlert className="text-white text-[15px] sm:text-[25px]" />,
+        duration: 2000,
+        unstyled: true,
+        classNames: {
+          toast:
+          "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
+        title: "text-white font-medium text-sm sm:text-base",
+        },
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    if (showToast && toastMessage) {
-      toast(toastMessage, {
-        icon: <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />,
-        duration: 3000,
-        unstyled: true,
-        classNames: {
-          toast:
-            "bg-red-600 rounded shadow px-[10px] py-[15px] w-full flex items-center justify-center gap-2",
-          title: "text-white font-medium text-sm sm:text-base",
-        },
-      });
-      setShowToast(false);
-    }
-  }, [showToast, toastMessage]);
   const handleSubmitData = async (e) => {
     e.preventDefault();
 

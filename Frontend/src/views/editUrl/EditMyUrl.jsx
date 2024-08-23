@@ -55,7 +55,7 @@ export default function EditMyUrl() {
           error: "Ingresa una url válida",
         })
       );
-    } else if (title.length > 20) {
+    } else if (title?.length > 20) {
       dispatch(
         setLongUrlErrors({
           field: "title",
