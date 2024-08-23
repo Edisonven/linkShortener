@@ -132,15 +132,19 @@ export default function MyLinks() {
           )}
         </div>
       )}
-      <ProfilePagination
-        page={page}
-        setPage={setPage}
-        total={total}
-        totalPerPage={totalPerPage}
-        limit={limit}
-        setOrderBy={setOrderBy}
-        className="self-end mt-3"
-      />
+      {total < 6 ? (
+        ""
+      ) : (
+        <ProfilePagination
+          page={page}
+          setPage={setPage}
+          total={total}
+          totalPerPage={totalPerPage}
+          limit={limit}
+          setOrderBy={setOrderBy}
+          className="self-end mt-3"
+        />
+      )}
       <AnimatePresence>
         {urlIdToDelete ? (
           <DeleteConfirmModal
