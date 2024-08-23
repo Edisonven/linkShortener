@@ -2,17 +2,17 @@ import { useState } from "react";
 import DefaultButton from "../../components/buttons/DefaultButton";
 import useDeleteAccount from "../../../hooks/users/useDeleteAccount";
 import { useNavigate } from "react-router-dom";
-import { toast, Toaster } from "sonner";
+import { Toaster } from "sonner";
 import { resetToken } from "../../features/users/usersSlice";
 import { useDispatch } from "react-redux";
-import { FaCheck } from "react-icons/fa";
-import { IoIosAlert } from "react-icons/io";
+import useToast from "../../../hooks/users/useToast";
 
 export default function DeleteUserAccount() {
   const [accepted, setAccepted] = useState(false);
   const { handleDeleteUserAccount } = useDeleteAccount();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { showToast } = useToast();
 
   const handleChange = (e) => {
     setAccepted(e.target.checked);
@@ -21,31 +21,18 @@ export default function DeleteUserAccount() {
   const handleDeleAccount = () => {
     if (accepted) {
       handleDeleteUserAccount(accepted);
-      toast("Cuenta eliminada exitosamente", {
-        icon: <FaCheck className="text-white text-[15px] sm:text-[25px]" />,
-        duration: 1000,
-        unstyled: true,
-        classNames: {
-          toast:
-            "bg-green-600 rounded shadow px-[10px] py-[15px] w-full flex items-center justify-center gap-3",
-          title: "text-white font-medium text-sm sm:text-base",
-        },
-      });
+      showToast({ message: "Cuenta eliminada exitosamente.", duration: 1500 });
+
       setTimeout(() => {
         dispatch(resetToken());
         localStorage.removeItem("short-url");
         navigate("/");
       }, 2000);
     } else {
-      toast("Confirma que deseas elminar tu cuenta.", {
-        icon: <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />,
-        duration: 3000,
-        unstyled: true,
-        classNames: {
-          toast:
-            "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
-          title: "text-white font-medium text-sm sm:text-base",
-        },
+      showToast({
+        message: "Confirma que deseas elminar tu cuenta.",
+        duration: 1500,
+        error: true,
       });
     }
   };

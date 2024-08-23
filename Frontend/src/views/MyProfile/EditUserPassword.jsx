@@ -10,11 +10,10 @@ import {
 import useFormSubmit from "../../../hooks/forms/useFormSubmit";
 import { useEffect } from "react";
 import usePathcUserPassword from "../../../hooks/users/usePatchUserPassword";
-import { toast, Toaster } from "sonner";
-import { FaCheck } from "react-icons/fa";
-import { IoIosAlert } from "react-icons/io";
+import { Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/input/InputField";
+import useToast from "../../../hooks/users/useToast";
 
 export default function EditUserPassword() {
   const { password, newPassword, errors, confirmPassword } = useSelector(
@@ -24,6 +23,7 @@ export default function EditUserPassword() {
   const { handleSubmit } = useFormSubmit(setRegisterData);
   const { handleUpdateUserPassword } = usePathcUserPassword();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const handleSendNewPassword = async (e) => {
     e.preventDefault();
@@ -66,43 +66,21 @@ export default function EditUserPassword() {
     } else {
       const data = await handleUpdateUserPassword(password, newPassword);
       if (data?.error === "Invalid password") {
-        return toast("La contraseña actual es incorrecta", {
-          icon: (
-            <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />
-          ),
-          duration: 3000,
-          unstyled: true,
-          classNames: {
-            toast:
-              "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
-            title: "text-white font-medium text-sm sm:text-base",
-          },
+        return showToast({
+          message: "La contraseña actual es incorrecta.",
+          error: true,
         });
       } else if (data?.error) {
-        return toast("Ha ocurrido un error, intenta nuevamente", {
-          icon: (
-            <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />
-          ),
-          duration: 3000,
-          unstyled: true,
-          classNames: {
-            toast:
-              "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
-            title: "text-white font-medium text-sm sm:text-base",
-          },
+        return showToast({
+          message: "Ha ocurrido un error, intenta nuevamente.",
+          error: true,
         });
       }
-
-      toast("Contraseña actualizada con éxito", {
-        icon: <FaCheck className="text-white text-[15px] sm:text-[25px]" />,
+      showToast({
+        message: "Contraseña actualizada con éxito.",
         duration: 1500,
-        unstyled: true,
-        classNames: {
-          toast:
-            "bg-green-600 rounded shadow px-[10px] py-[15px] w-full flex items-center justify-center gap-3",
-          title: "text-white font-medium text-sm sm:text-base",
-        },
       });
+
       setTimeout(() => {
         dispatch(resetRegisterForm());
         dispatch(resetToken());

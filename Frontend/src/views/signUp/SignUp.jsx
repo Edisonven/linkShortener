@@ -18,13 +18,14 @@ import config from "../../../config/config.js";
 import InputField from "../../components/input/InputField.jsx";
 import { regex } from "../../../utils/regex/regex.js";
 import DefaultButton from "../../components/buttons/DefaultButton.jsx";
+import useToast from "../../../hooks/users/useToast.js";
 
 export default function SignUp() {
   const dispatch = useDispatch();
   const { name, email, password, confirmPassword, errors } = useSelector(
     (state) => state.registerReducer
   );
-
+  const { showToast } = useToast();
   const emailRegex = regex.emailRegex;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -56,30 +57,16 @@ export default function SignUp() {
     } catch (error) {
       console.error(error.message);
       if (error.message === "400") {
-        toast("El correo ya está registrado.", {
-          icon: (
-            <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />
-          ),
+        showToast({
+          message: "El correo ya está registrado.",
+          error: true,
           duration: 3000,
-          unstyled: true,
-          classNames: {
-            toast:
-              "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
-            title: "text-white font-medium text-sm sm:text-base",
-          },
         });
       } else {
-        toast("Error al registrar usuario, intenta nuevamente.", {
-          icon: (
-            <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />
-          ),
+        showToast({
+          message: "Error al registrar usuario, intenta nuevamente.",
+          error: true,
           duration: 3000,
-          unstyled: true,
-          classNames: {
-            toast:
-              "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
-            title: "text-white font-medium text-sm sm:text-base",
-          },
         });
       }
 
@@ -144,17 +131,10 @@ export default function SignUp() {
     } else {
       await handleRegisterNewUser();
       dispatch(resetRegisterForm());
-      toast("¡Te has registrado con éxito!", {
-        icon: <FaCheck className="text-white text-[15px] sm:text-[25px]" />,
-        duration: 1000,
-        unstyled: true,
-        classNames: {
-          toast:
-            "bg-green-600 rounded shadow px-[10px] py-[15px] w-full flex items-center justify-center gap-3",
-          title: "text-white font-medium text-sm sm:text-base",
-        },
+      showToast({
+        message: "¡Te has registrado con éxito!",
+        duration: 3000,
       });
-
       setTimeout(() => {
         navigate("/");
       }, 1000);
@@ -234,8 +214,8 @@ export default function SignUp() {
               handleSubmit={handleSubmit}
               value={confirmPassword}
               name="confirmPassword"
-              type="confirmPassword"
-              placeholder="Confirmar COntraseña"
+              type="password"
+              placeholder="Confirmar contraseña"
               error={errors.confirmPassword}
             />
           </div>

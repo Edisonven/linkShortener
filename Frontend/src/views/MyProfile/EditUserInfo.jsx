@@ -10,18 +10,17 @@ import {
 } from "../../features/users/usersSlice";
 import { useEffect } from "react";
 import usePatchUserData from "../../../hooks/users/usePatchUserData";
-import { toast, Toaster } from "sonner";
-import { FaCheck } from "react-icons/fa";
-import { IoIosAlert } from "react-icons/io";
+import { Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/input/InputField";
+import useToast from "../../../hooks/users/useToast";
 
 export default function EditUserInfo() {
   const { user } = useFetchUser();
   const dispatch = useDispatch();
   const { name, errors } = useSelector((state) => state.registerReducer);
   const { handleSubmit } = useFormSubmit(setRegisterData);
-
+  const { showToast } = useToast();
   const { handleUpdateUserData } = usePatchUserData(name);
   const navigate = useNavigate();
 
@@ -38,30 +37,18 @@ export default function EditUserInfo() {
     } else {
       const data = await handleUpdateUserData(name);
       if (data?.error) {
-        return toast("Error al actualizar usuario, intenta nuevamente.", {
-          icon: (
-            <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />
-          ),
-          duration: 3000,
-          unstyled: true,
-          classNames: {
-            toast:
-              "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
-            title: "text-white font-medium text-sm sm:text-base",
-          },
+        return showToast({
+          message: "Error al actualizar usuario, intenta nuevamente.",
+          error: true,
         });
       }
+
       dispatch(resetRegisterForm());
-      toast("Datos actualizados con éxito", {
-        icon: <FaCheck className="text-white text-[15px] sm:text-[25px]" />,
+      showToast({
+        message: "Datos actualizados con éxito.",
         duration: 1500,
-        unstyled: true,
-        classNames: {
-          toast:
-            "bg-green-600 rounded shadow px-[10px] py-[15px] w-full flex items-center justify-center gap-3",
-          title: "text-white font-medium text-sm sm:text-base",
-        },
       });
+
       setTimeout(() => {
         navigate("/my-profile");
       }, 1500);

@@ -1,16 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { BiLink } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setLoginData,
-  setLoginErrors,
-  setResetLoginErrors,
-  setUserToken,
-  resetLoginForm,
-} from "../../features/users/usersSlice.js";
+import {setLoginData,setLoginErrors,setResetLoginErrors,setUserToken,resetLoginForm,} from "../../features/users/usersSlice.js";
 import { useEffect, useState } from "react";
-import { Toaster, toast } from "sonner";
-import { IoIosAlert } from "react-icons/io";
+import { Toaster } from "sonner";
 import { RotatingLines } from "react-loader-spinner";
 import useFormSubmit from "../../../hooks/forms/useFormSubmit.js";
 import { regex } from "../../../utils/regex/regex.js";

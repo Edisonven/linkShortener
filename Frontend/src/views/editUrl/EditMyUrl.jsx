@@ -13,8 +13,8 @@ import { useEffect, useState } from "react";
 import useGetUserLoggedUrls from "../../../hooks/users/useGetUserLoggedUrls";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import usePatchUrls from "../../../hooks/urls/usePatchUrls";
-import { Toaster, toast } from "sonner";
-import { FaCheck } from "react-icons/fa6";
+import { Toaster } from "sonner";
+import useToast from "../../../hooks/users/useToast";
 
 export default function EditMyUrl() {
   const { handleSubmit } = useFormSubmit(setUpdateUrlInfo);
@@ -30,6 +30,7 @@ export default function EditMyUrl() {
   const [urlData, setUrlData] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (formatedID && userURLS) {
@@ -66,28 +67,14 @@ export default function EditMyUrl() {
       try {
         const data = await handleUpdateUrls(longUrl, title, formatedID);
         if (data.error) {
-          return toast("Error al modificar URL, intenta nuevamente.", {
-            icon: (
-              <IoIosAlert className="text-white text-[20px] sm:text-[25px]" />
-            ),
-            duration: 3000,
-            unstyled: true,
-            classNames: {
-              toast:
-                "bg-red-600 rounded shadow px-[10px] py-[15px] w-[400px] flex items-center justify-center gap-2",
-              title: "text-white font-medium text-sm sm:text-base",
-            },
+          return showToast({
+            message: "Error al modificar URL, intenta nuevamente.",
+            error: true,
           });
         }
-        toast("URL modificada exitosamente", {
-          icon: <FaCheck className="text-white text-[15px] sm:text-[25px]" />,
-          duration: 1400,
-          unstyled: true,
-          classNames: {
-            toast:
-              "bg-green-600 rounded shadow px-[10px] py-[15px] w-full flex items-center justify-center gap-3",
-            title: "text-white font-medium text-sm sm:text-base",
-          },
+        showToast({
+          message: "URL modificada exitosamente",
+          duration: 1500,
         });
 
         dispatch(resetUrlForm());
