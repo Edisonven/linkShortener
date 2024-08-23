@@ -7,6 +7,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
 import useFetchUser from "../../../hooks/users/useFetchUser";
 import DefaultButton from "../buttons/DefaultButton";
+import { resetUrlForm } from "../../features/url/urlSlice";
 
 export default function Perfil() {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ export default function Perfil() {
   const handleCloseSesion = () => {
     dispatch(resetToken());
     localStorage.removeItem("short-url");
+    dispatch(resetUrlForm());
   };
 
   useEffect(() => {
