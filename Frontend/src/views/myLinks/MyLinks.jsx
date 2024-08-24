@@ -11,6 +11,7 @@ import { AnimatePresence } from "framer-motion";
 import useGetUserLoggedUrls from "../../../hooks/users/useGetUserLoggedUrls";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Loader from "../../components/loader/Loader";
 
 export default function MyLinks() {
   const {
@@ -49,7 +50,7 @@ export default function MyLinks() {
         Mis enlaces
       </h1>
       {loading ? (
-        <p>Cargando...</p>
+        <Loader />
       ) : (
         <div className="">
           {userURLS.length > 0 ? (
