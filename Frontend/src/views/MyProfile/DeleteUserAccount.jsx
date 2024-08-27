@@ -50,7 +50,7 @@ export default function DeleteUserAccount() {
         <div className="flex items-baseline gap-2 mt-4">
           <input onChange={handleChange} value={accepted} type="checkbox" />
           <p className="text-slate-800 dark:text-white font-medium">
-            Entiendo que al eliminar mi cuenta, se eliminará toso los enlaces
+            Entiendo que al eliminar mi cuenta, se eliminarán todos los enlaces
             cortos asociados a esta cuenta, asumiendo lo que esto implique en
             mis datos almacenados.
             <span className="font-medium text-red-600">
