@@ -19,6 +19,7 @@ import { MdOutlineFileCopy } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Loader from "../loader/Loader";
+import { setUserToken } from "../../features/users/usersSlice";
 
 export default function UrlShortener() {
   const { longUrl, errors } = useSelector((state) => state.urls);
@@ -31,6 +32,14 @@ export default function UrlShortener() {
   const urlRegex = regex.urlRegex;
   const [isCopied, setIsCopied] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const tokenParam = searchParams.get("token");
+    if (tokenParam) {
+      dispatch(setUserToken(tokenParam));
+    }
+  }, []);
 
   const handleSendLongUrl = (e) => {
     e.preventDefault();
