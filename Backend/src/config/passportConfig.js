@@ -1,0 +1,60 @@
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import "dotenv/config";
+import { userModels } from "../models/userModels.js";
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:3000/auth/google/callback",
+    },
+
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        const email = profile.emails[0].value;
+        const name = profile.displayName || "Unknown";
+
+        let user = await userModels.findUserByEmail(email);
+
+        if (!user) {
+          const password = "123456789109910";
+          user = await userModels.createUser({ name, email, password });
+        }
+
+        console.log("Usuario registrado: ", user);
+        return done(null, user);
+      } catch (error) {
+        console.log("Error during authentication", error);
+        return done(error, null);
+      }
+    }
+  )
+);
+
+passport.serializeUser(async (user, done) => {
+  try {
+    console.log("Serializing user: ", user);
+    done(null, user.id);
+  } catch (error) {
+    console.error("Error serializing user", error);
+    done(error, null);
+  }
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    console.log("Deserializing user ID:", id);
+    const user = await userModels.findUserById(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    done(null, user);
+  } catch (error) {
+    console.error("Error deserializing user", error);
+    done(error, null);
+  }
+});
+
+export default passport;

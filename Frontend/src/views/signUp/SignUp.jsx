@@ -33,6 +33,10 @@ export default function SignUp() {
     dispatch(resetRegisterForm());
   }, [dispatch]);
 
+  const handleLogin = () => {
+    window.location.href = `${config.backendUrl}/google`;
+  };
+
   const handleRegisterNewUser = async () => {
     setLoading(true);
     try {
@@ -171,10 +175,13 @@ export default function SignUp() {
             <p className="text-slate-800 font-medium dark:text-white">
               Acceder con
             </p>
-            <Link className="flex items-center gap-2 border-2 w-[max-content] px-3 py-1 rounded-md font-medium text-slate-800 dark:text-white hover:brightness-90">
+            <div
+              onClick={handleLogin}
+              className="flex items-center gap-2 border-2 w-[max-content] px-3 py-1 rounded-md font-medium text-slate-800 dark:text-white hover:brightness-90 cursor-pointer"
+            >
               <img className="w-[22px]" src={google} alt="" />
               Google
-            </Link>
+            </div>
           </div>
           <hr className="w-full" />
           <span className="text-slate-800 dark:text-white font font-medium">
