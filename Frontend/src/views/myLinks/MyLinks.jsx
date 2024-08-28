@@ -55,7 +55,7 @@ export default function MyLinks() {
   }, [navigate]);
 
   useEffect(() => {
-    if (urlParams && originalUrl) {
+    if (originalUrl) {
       if (
         originalUrl.startsWith("http://") ||
         originalUrl.startsWith("https://")
