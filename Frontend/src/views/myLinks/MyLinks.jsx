@@ -9,10 +9,11 @@ import ProfilePagination from "../MyProfile/ProfilePagination";
 import DeleteConfirmModal from "../../components/modals/DeleteConfirmModal";
 import { AnimatePresence, motion } from "framer-motion";
 import useGetUserLoggedUrls from "../../../hooks/users/useGetUserLoggedUrls";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Loader from "../../components/loader/Loader";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import useGetUrl from "../../../hooks/urls/useGetUrl";
 
 export default function MyLinks() {
   const {
@@ -29,6 +30,8 @@ export default function MyLinks() {
   const navigate = useNavigate();
   const [isCopied, setIsCopied] = useState("");
   const [deleteConfirmed, setDeleteConfirmed] = useState(false);
+  const { originalUrl } = useGetUrl();
+  const { urlParams } = useParams();
 
   const handleNavigateToEdit = (id) => {
     navigate(`/edit-url/${id}`);
@@ -50,6 +53,19 @@ export default function MyLinks() {
   useEffect(() => {
     setDeleteConfirmed(false);
   }, [navigate]);
+
+  useEffect(() => {
+    if (urlParams && originalUrl) {
+      if (
+        originalUrl.startsWith("http://") ||
+        originalUrl.startsWith("https://")
+      ) {
+        window.location.href = originalUrl;
+      } else {
+        console.error("La URL no es válida para redirigir:", originalUrl);
+      }
+    }
+  }, [urlParams, originalUrl]);
 
   return (
     <section className="mt-[10px] sm:mt-[30px] max-w-[1200px] mx-auto p-4 flex flex-col">

@@ -78,13 +78,15 @@ export default function UrlShortener() {
   }, [shortUrl]);
 
   useEffect(() => {
-    if (
-      originalUrl.startsWith("http://") ||
-      originalUrl.startsWith("https://")
-    ) {
-      window.location.href = originalUrl;
-    } else {
-      console.error("La URL no es válida para redirigir:", originalUrl);
+    if (urlParams && originalUrl) {
+      if (
+        originalUrl.startsWith("http://") ||
+        originalUrl.startsWith("https://")
+      ) {
+        window.location.href = originalUrl;
+      } else {
+        console.error("La URL no es válida para redirigir:", originalUrl);
+      }
     }
   }, [urlParams, originalUrl]);
 
