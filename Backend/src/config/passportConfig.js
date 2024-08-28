@@ -54,8 +54,7 @@ passport.deserializeUser(async (id, done) => {
     const user = await userModels.loggedInUser(id);
     if (!user) {
       console.log("User not found, trying to create the user again...");
-      // Opcional: Redirigir a la página de inicio de sesión o tomar alguna otra acción
-      done(null, false); // Pasar 'false' o 'null' en lugar de un usuario válido
+      done(null, false);
     } else {
       done(null, user);
     }
