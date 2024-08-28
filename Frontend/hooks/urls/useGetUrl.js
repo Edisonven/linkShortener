@@ -9,6 +9,7 @@ const useGetUrl = () => {
 
   const handleGetLongUrl = async () => {
     setLoading(true);
+
     try {
       const response = await fetch(
         `${config.backendUrl}/urls/long-url/${shortUrl}`
@@ -38,6 +39,7 @@ const useGetUrl = () => {
     loading,
     shortedUrl,
     originalUrl,
+    setOriginalUrl,
     shortUrl,
   };
 };

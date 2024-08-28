@@ -30,13 +30,12 @@ export default function MyLinks() {
   const navigate = useNavigate();
   const [isCopied, setIsCopied] = useState("");
   const [deleteConfirmed, setDeleteConfirmed] = useState(false);
-  const { originalUrl } = useGetUrl();
+  const { originalUrl, setOriginalUrl } = useGetUrl();
   const { urlParams } = useParams();
 
   const handleNavigateToEdit = (id) => {
     navigate(`/edit-url/${id}`);
   };
-
   const handleRedirectToHome = () => {
     navigate("/");
   };
@@ -53,19 +52,6 @@ export default function MyLinks() {
   useEffect(() => {
     setDeleteConfirmed(false);
   }, [navigate]);
-
-  useEffect(() => {
-    if (originalUrl) {
-      if (
-        originalUrl.startsWith("http://") ||
-        originalUrl.startsWith("https://")
-      ) {
-        window.location.href = originalUrl;
-      } else {
-        console.error("La URL no es válida para redirigir:", originalUrl);
-      }
-    }
-  }, [urlParams, originalUrl]);
 
   return (
     <section className="mt-[10px] sm:mt-[30px] max-w-[1200px] mx-auto p-4 flex flex-col">
@@ -103,7 +89,7 @@ export default function MyLinks() {
                         <Link
                           to={url.longurl}
                           target="_blank"
-                          className="text-slate-800  dark:text-white sm:font-medium hover:text-blue-600 dark:hover:text-blue-600"
+                          className="text-slate-800  dark:text-white sm:font-medium hover:text-blue-600 dark:hover:text-blue-600 select-none"
                         >
                           {`${config.frontendUrl}/${url.shorturl}`}
                         </Link>
@@ -128,6 +114,8 @@ export default function MyLinks() {
                           <IoMdCopy
                             onClick={() => {
                               setIsCopied(url.id);
+                              localStorage.setItem("short-url", url.shorturl);
+                              setOriginalUrl(url.longurl);
                               setTimeout(() => {
                                 setIsCopied("");
                               }, 2000);
