@@ -171,7 +171,7 @@ export default function UrlShortener() {
                                 className="bg-white shadow rounded h-[50px] absolute top-[50px] right-[20px] p-3 flex items-center justify-center dark:bg-[#161B22] dark:text-white pointer-events-none"
                               >
                                 <span className="text-slate-800 dark:text-white text-sm font-medium">
-                                  texto copiado al portapapeles
+                                  Enlace copiado al portapapeles
                                 </span>
                               </motion.div>
                             )}

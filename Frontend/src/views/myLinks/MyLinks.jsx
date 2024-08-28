@@ -7,11 +7,12 @@ import { TbTrashXFilled } from "react-icons/tb";
 import { formatedDate } from "../../../utils/formats/formatDate";
 import ProfilePagination from "../MyProfile/ProfilePagination";
 import DeleteConfirmModal from "../../components/modals/DeleteConfirmModal";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import useGetUserLoggedUrls from "../../../hooks/users/useGetUserLoggedUrls";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Loader from "../../components/loader/Loader";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export default function MyLinks() {
   const {
@@ -26,6 +27,7 @@ export default function MyLinks() {
     handleGetUserUrls,
   } = useGetUserLoggedUrls();
   const navigate = useNavigate();
+  const [isCopied, setIsCopied] = useState("");
 
   const handleNavigateToEdit = (id) => {
     navigate(`/edit-url/${id}`);
@@ -75,6 +77,7 @@ export default function MyLinks() {
                       ) : (
                         ""
                       )}
+
                       <div className="">
                         <Link
                           to={url.longurl}
@@ -96,17 +99,46 @@ export default function MyLinks() {
                         {formatedDate(url.createdat)}
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <IoMdCopy className="text-slate-800 dark:text-gray-400 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-slate-300 duration-300 transition-colors" />
-                      <AiOutlineEdit
-                        onClick={() => handleNavigateToEdit(url.id)}
-                        className="text-blue-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-blue-200 duration-300 transition-colors"
-                      />
-                      <TbTrashXFilled
-                        onClick={() => handleConfirmToDelete(url.id)}
-                        className="text-red-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1 p-1 rounded-sm hover:bg-red-200 duration-300 transition-colors"
-                      />
-                    </div>
+                    <CopyToClipboard
+                      text={`${config.frontendUrl}/${url.shorturl}`}
+                    >
+                      <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="relative">
+                          <IoMdCopy
+                            onClick={() => {
+                              setIsCopied(url.id);
+                              setTimeout(() => {
+                                setIsCopied("");
+                              }, 2000);
+                            }}
+                            className="text-slate-800 dark:text-gray-400 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-slate-300 duration-300 transition-colors"
+                          />
+                          <AnimatePresence>
+                            {isCopied === url.id && (
+                              <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                transition={{ duration: 0.2 }}
+                                className="bg-white shadow rounded h-[50px] absolute top-[40px] right-[10px] p-3 flex items-center justify-center dark:bg-[#161B22] dark:text-white pointer-events-none"
+                              >
+                                <span className="text-slate-800 dark:text-white text-sm font-medium whitespace-nowrap">
+                                  Enlace copiado al portapapeles
+                                </span>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                        <AiOutlineEdit
+                          onClick={() => handleNavigateToEdit(url.id)}
+                          className="text-blue-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1  p-1 rounded-sm hover:bg-blue-200 duration-300 transition-colors"
+                        />
+                        <TbTrashXFilled
+                          onClick={() => handleConfirmToDelete(url.id)}
+                          className="text-red-700 text-[24px] cursor-pointer select-none sm:text-[32px] outline outline-1 p-1 rounded-sm hover:bg-red-200 duration-300 transition-colors"
+                        />
+                      </div>
+                    </CopyToClipboard>
                   </div>
                 ))}
               </div>
