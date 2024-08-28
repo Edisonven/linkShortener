@@ -28,6 +28,7 @@ export default function MyLinks() {
   } = useGetUserLoggedUrls();
   const navigate = useNavigate();
   const [isCopied, setIsCopied] = useState("");
+  const [deleteConfirmed, setDeleteConfirmed] = useState(false);
 
   const handleNavigateToEdit = (id) => {
     navigate(`/edit-url/${id}`);
@@ -44,7 +45,11 @@ export default function MyLinks() {
 
   useEffect(() => {
     handleGetUserUrls();
-  }, [page, urlIdToDelete]);
+  }, [page, deleteConfirmed]);
+
+  useEffect(() => {
+    setDeleteConfirmed(false);
+  }, [navigate]);
 
   return (
     <section className="mt-[10px] sm:mt-[30px] max-w-[1200px] mx-auto p-4 flex flex-col">
@@ -183,6 +188,8 @@ export default function MyLinks() {
           <DeleteConfirmModal
             urlIdToDelete={urlIdToDelete}
             seturlIdToDelete={seturlIdToDelete}
+            setDeleteConfirmed={setDeleteConfirmed}
+            deleteConfirmed={deleteConfirmed}
           />
         ) : null}
       </AnimatePresence>

@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 export default function DeleteConfirmModal({
   urlIdToDelete,
   seturlIdToDelete,
+  setDeleteConfirmed,
+  deleteConfirmed,
 }) {
   const { handleDeleteUrl } = useDeleteUrl();
 
@@ -15,6 +17,7 @@ export default function DeleteConfirmModal({
   const confirmDelete = (urlIdToDelete) => {
     handleDeleteUrl(urlIdToDelete);
     seturlIdToDelete("");
+    setDeleteConfirmed(!deleteConfirmed);
   };
 
   return (
