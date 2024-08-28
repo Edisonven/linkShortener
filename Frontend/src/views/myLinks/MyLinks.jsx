@@ -47,6 +47,7 @@ export default function MyLinks() {
 
   useEffect(() => {
     handleGetUserUrls();
+    setDeleteConfirmed(false);
   }, [page, deleteConfirmed]);
 
   useEffect(() => {
