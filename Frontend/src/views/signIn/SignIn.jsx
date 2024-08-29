@@ -38,12 +38,17 @@ export default function SignIn() {
         body: JSON.stringify({ email, password }),
       });
 
+      const ERROR_TYPES = {
+        USER_NOT_FOUND: "User not found",
+        INVALID_CREDENTIALS: "Invalid credentials",
+      };
+
       if (!response.ok) {
         const errorData = await response.json();
         let message = "Error al ingresar, intenta nuevamente.";
-        if (errorData.message === "User not found") {
+        if (errorData.message === ERROR_TYPES.USER_NOT_FOUND) {
           message = `El usuario ${email} no está registrado.`;
-        } else if (errorData.message === "Invalid credentials") {
+        } else if (errorData.message === ERROR_TYPES.INVALID_CREDENTIALS) {
           message = "Usuario o contraseña inválidos.";
         }
 
